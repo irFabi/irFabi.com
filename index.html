@@ -331,8 +331,8 @@
         // Data configuration with all requested specific links
         const CONFIG = {
             profile: {
-                name: "the_farbie",
-                handle: "@the_farbie",
+                name: "ir_Fabi",
+                handle: "@ir_Fabi",
                 bio: "Content Creator & Streamer. Welcome to my digital hub!",
                 avatarUrl: "https://placehold.co/400x400/var(--md-primary-container)/var(--md-on-primary-container)?text=F"
             },
@@ -348,30 +348,30 @@
                 },
                 {
                     name: "Twitch",
-                    subtitle: "the_farbie",
-                    url: "https://twitch.tv/the_farbie",
+                    subtitle: "ir_Fabi",
+                    url: "https://twitch.tv/ir_fabi",
                     icon: "ph-fill ph-twitch-logo",
                     iconColor: "#9146FF",
                     isLive: false // Will be updated dynamically via API
                 },
                 {
                     name: "Instagram",
-                    subtitle: "@the_farbie",
-                    url: "https://instagram.com/the_farbie",
+                    subtitle: "@ir_Fabi",
+                    url: "https://instagram.com/ir_fabi",
                     icon: "ph-fill ph-instagram-logo",
                     iconColor: "#E1306C"
                 },
                 {
                     name: "Twitter",
-                    subtitle: "@the_farbie",
-                    url: "https://twitter.com/the_farbie",
+                    subtitle: "@ir_fabi",
+                    url: "https://twitter.com/ir_fabi_",
                     icon: "ph-fill ph-twitter-logo",
                     iconColor: "#1DA1F2"
                 },
                 {
                     name: "TikTok",
-                    subtitle: "@the_farbie",
-                    url: "https://tiktok.com/@the_farbie",
+                    subtitle: "@ir_fabi",
+                    url: "https://tiktok.com/@ir_fabi",
                     icon: "ph-fill ph-tiktok-logo",
                     iconColor: "#ff0050"
                 },
@@ -387,7 +387,7 @@
 
         async function checkTwitchLiveStatus() {
             try {
-                const response = await fetch('https://decapi.me/twitch/uptime/the_farbie');
+                const response = await fetch('https://decapi.me/twitch/uptime/ir_fabi');
                 const text = await response.text();
                 
                 const twitchLink = CONFIG.links.find(l => l.name === "Twitch");
