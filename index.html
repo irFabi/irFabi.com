@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ir_Fabi | Links</title>
+    <title>ir_fabi | Links</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,6 +13,8 @@
 
     <script>
         tailwind.config = {
+            // OPTIMIZATION: Disables heavy hover effects on touch screens to prevent "sticky hovers" and lag
+            future: { hoverOnlyWhenSupported: true },
             darkMode: 'class',
             theme: {
                 extend: {
@@ -98,22 +100,18 @@
 
         /* Green Theme */
         [data-theme="green"] {
-            --md-primary: #386a20; --md-on-primary: #ffffff;
-            --md-primary-container: #b7f397; --md-on-primary-container: #042100;
+            --md-primary: #386a20; --md-primary-container: #b7f397; --md-on-primary-container: #042100;
             --md-secondary-container: #d6e8ce; --md-on-secondary-container: #111f0f;
-            --md-surface: #fdfdf6; --md-on-surface: #1a1c18;
+            --md-surface: #fdfdf6; --md-on-surface: #1a1c18; --md-body-bg: #edf0e6;
+            --md-surface-container-high: #e8f5e9; --md-surface-container: #edf0e6;
             --md-surface-variant: #dfe4d7; --md-on-surface-variant: #43483e;
-            --md-surface-container: #edf0e6; --md-surface-container-high: #e8f5e9;
-            --md-surface-container-highest: #c8e6c9; --md-outline: #73796f; --md-body-bg: #edf0e6;
         }
         .dark[data-theme="green"] {
-            --md-primary: #9cd67d; --md-on-primary: #0c3900;
-            --md-primary-container: #205107; --md-on-primary-container: #b7f397;
+            --md-primary: #9cd67d; --md-primary-container: #205107; --md-on-primary-container: #b7f397;
             --md-secondary-container: #3d4a36; --md-on-secondary-container: #d6e8ce;
-            --md-surface: #1a1c18; --md-on-surface: #e3e3dc;
+            --md-surface: #1a1c18; --md-on-surface: #e3e3dc; --md-body-bg: #1a1c18;
+            --md-surface-container-high: #2b3028; --md-surface-container: #20241e;
             --md-surface-variant: #43483e; --md-on-surface-variant: #c3c8bb;
-            --md-surface-container: #20241e; --md-surface-container-high: #2b3028;
-            --md-surface-container-highest: #363b33; --md-outline: #8c9388; --md-body-bg: #1a1c18;
         }
 
         /* Rose Theme */
@@ -121,35 +119,31 @@
             --md-primary: #b3261e; --md-primary-container: #f9dedc; --md-on-primary-container: #410e0b;
             --md-secondary-container: #ffdad6; --md-on-secondary-container: #410002;
             --md-surface: #fff8f7; --md-on-surface: #201a19; --md-body-bg: #f9eeed;
-            --md-surface-container-highest: #f4e2e1; --md-surface-container-high: #f9e7e6;
-            --md-surface-container: #f9eeed; --md-surface-variant: #f4dddb; --md-on-surface-variant: #534341;
+            --md-surface-container-high: #f9e7e6; --md-surface-container: #f9eeed;
+            --md-surface-variant: #f4dddb; --md-on-surface-variant: #534341;
         }
         .dark[data-theme="rose"] {
             --md-primary: #f2b8b5; --md-primary-container: #8c1d18; --md-on-primary-container: #f9dedc;
             --md-secondary-container: #93000a; --md-on-secondary-container: #ffdad6;
             --md-surface: #201a19; --md-on-surface: #ede0df; --md-body-bg: #201a19;
-            --md-surface-container-highest: #3f3332; --md-surface-container-high: #352b2a;
-            --md-surface-container: #2a2221; --md-surface-variant: #534341; --md-on-surface-variant: #d8c2bf;
+            --md-surface-container-high: #352b2a; --md-surface-container: #2a2221;
+            --md-surface-variant: #534341; --md-on-surface-variant: #d8c2bf;
         }
 
         /* Mint Theme */
         [data-theme="mint"] {
-            --md-primary: #006b5b; --md-on-primary: #ffffff;
-            --md-primary-container: #79f8d9; --md-on-primary-container: #00201a;
+            --md-primary: #006b5b; --md-primary-container: #79f8d9; --md-on-primary-container: #00201a;
             --md-secondary-container: #cce8e0; --md-on-secondary-container: #05201a;
-            --md-surface: #fafdfa; --md-on-surface: #191c1b;
+            --md-surface: #fafdfa; --md-on-surface: #191c1b; --md-body-bg: #eef1ef;
+            --md-surface-container-high: #e8ebe9; --md-surface-container: #eef1ef;
             --md-surface-variant: #dbe5e0; --md-on-surface-variant: #3f4945;
-            --md-surface-container: #eef1ef; --md-surface-container-high: #e8ebe9;
-            --md-surface-container-highest: #e2e5e3; --md-outline: #6f7975; --md-body-bg: #eef1ef;
         }
         .dark[data-theme="mint"] {
-            --md-primary: #59dbbd; --md-on-primary: #00382f;
-            --md-primary-container: #005044; --md-on-primary-container: #79f8d9;
+            --md-primary: #59dbbd; --md-primary-container: #005044; --md-on-primary-container: #79f8d9;
             --md-secondary-container: #334b44; --md-on-secondary-container: #cce8e0;
-            --md-surface: #191c1b; --md-on-surface: #e1e3e0;
+            --md-surface: #191c1b; --md-on-surface: #e1e3e0; --md-body-bg: #191c1b;
+            --md-surface-container-high: #2b2f2d; --md-surface-container: #212523;
             --md-surface-variant: #3f4945; --md-on-surface-variant: #bfc9c4;
-            --md-surface-container: #212523; --md-surface-container-high: #2b2f2d;
-            --md-surface-container-highest: #363a38; --md-outline: #89938e; --md-body-bg: #191c1b;
         }
 
         /* Peach Theme */
@@ -157,15 +151,15 @@
             --md-primary: #984816; --md-primary-container: #ffdbca; --md-on-primary-container: #341100;
             --md-secondary-container: #ffdbcb; --md-on-secondary-container: #2b160a;
             --md-surface: #fff8f6; --md-on-surface: #221a15; --md-body-bg: #f9eee9;
-            --md-surface-container: #f9eee9; --md-surface-container-high: #f4e8e2;
-            --md-surface-container-highest: #eedcda; --md-surface-variant: #f4ded4; --md-on-surface-variant: #52443c;
+            --md-surface-container-high: #f4e8e2; --md-surface-container: #f9eee9;
+            --md-surface-variant: #f4ded4; --md-on-surface-variant: #52443c;
         }
         .dark[data-theme="peach"] {
             --md-primary: #ffb68f; --md-primary-container: #763300; --md-on-primary-container: #ffdbca;
             --md-secondary-container: #5d3f31; --md-on-secondary-container: #ffdbcb;
             --md-surface: #221a15; --md-on-surface: #efe0d9; --md-body-bg: #221a15;
-            --md-surface-container: #2b221d; --md-surface-container-high: #362c27;
-            --md-surface-container-highest: #423731; --md-surface-variant: #52443c; --md-on-surface-variant: #d7c2b9;
+            --md-surface-container-high: #362c27; --md-surface-container: #2b221d;
+            --md-surface-variant: #52443c; --md-on-surface-variant: #d7c2b9;
         }
 
         /* Amber Theme */
@@ -173,15 +167,15 @@
             --md-primary: #785900; --md-primary-container: #ffdf9e; --md-on-primary-container: #261a00;
             --md-secondary-container: #eaddb6; --md-on-secondary-container: #231b04;
             --md-surface: #fff9f1; --md-on-surface: #1e1b13; --md-body-bg: #f6efe4;
-            --md-surface-container: #f6efe4; --md-surface-container-high: #f0e9de;
-            --md-surface-container-highest: #eadfd3; --md-surface-variant: #e8e2d4; --md-on-surface-variant: #4a4739;
+            --md-surface-container-high: #f0e9de; --md-surface-container: #f6efe4;
+            --md-surface-variant: #e8e2d4; --md-on-surface-variant: #4a4739;
         }
         .dark[data-theme="amber"] {
             --md-primary: #eec148; --md-primary-container: #5a4300; --md-on-primary-container: #ffdf9e;
             --md-secondary-container: #4e4632; --md-on-secondary-container: #eaddb6;
             --md-surface: #1e1b13; --md-on-surface: #e8e2d9; --md-body-bg: #1e1b13;
-            --md-surface-container: #28251c; --md-surface-container-high: #333026;
-            --md-surface-container-highest: #3e3b31; --md-surface-variant: #4a4739; --md-on-surface-variant: #cdc6b8;
+            --md-surface-container-high: #333026; --md-surface-container: #28251c;
+            --md-surface-variant: #4a4739; --md-on-surface-variant: #cdc6b8;
         }
 
         /* Cyan Theme */
@@ -189,15 +183,15 @@
             --md-primary: #006874; --md-primary-container: #97f0ff; --md-on-primary-container: #001f24;
             --md-secondary-container: #cbe6eb; --md-on-secondary-container: #051f23;
             --md-surface: #f8fdff; --md-on-surface: #191c1d; --md-body-bg: #eff4f5;
-            --md-surface-container: #eff4f5; --md-surface-container-high: #e9eff0;
-            --md-surface-container-highest: #e3e9ea; --md-surface-variant: #dae4e6; --md-on-surface-variant: #3f484a;
+            --md-surface-container-high: #e9eff0; --md-surface-container: #eff4f5;
+            --md-surface-variant: #dae4e6; --md-on-surface-variant: #3f484a;
         }
         .dark[data-theme="cyan"] {
             --md-primary: #4fd8eb; --md-primary-container: #004f58; --md-on-primary-container: #97f0ff;
             --md-secondary-container: #334b4f; --md-on-secondary-container: #cbe6eb;
             --md-surface: #191c1d; --md-on-surface: #e1e3e4; --md-body-bg: #191c1d;
-            --md-surface-container: #1d2021; --md-surface-container-high: #272a2b;
-            --md-surface-container-highest: #323536; --md-surface-variant: #3f484a; --md-on-surface-variant: #bfc8ca;
+            --md-surface-container-high: #272a2b; --md-surface-container: #1d2021;
+            --md-surface-variant: #3f484a; --md-on-surface-variant: #bfc8ca;
         }
 
         body { -webkit-tap-highlight-color: transparent; }
@@ -228,7 +222,6 @@
         input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
         input[type="color"]::-moz-color-swatch { border: none; border-radius: 50%; }
 
-        /* Draggable FAB - Dynamic CSS Positioning */
         #fab-container {
             touch-action: none;
             transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -252,6 +245,35 @@
             cursor: grab !important;
         }
         .fab-collapsed:active { cursor: grabbing !important; }
+
+        /* Optimized Hardware-Accelerated Expand/Collapse Classes */
+        .expand-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: grid-template-rows;
+        }
+        .expand-wrapper.expanded {
+            grid-template-rows: 1fr;
+        }
+        .expand-wrapper.collapsing {
+            transition: grid-template-rows 300ms cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+
+        .expand-inner {
+            opacity: 0;
+            transform: translateY(-16px) scale(0.95);
+            transform-origin: top;
+            transition: transform 450ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 350ms ease-out;
+            will-change: transform, opacity;
+        }
+        .expand-wrapper.expanded .expand-inner {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .expand-wrapper.collapsing .expand-inner {
+            transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms ease-in;
+        }
     </style>
     
     <style id="custom-theme-style"></style>
@@ -259,23 +281,16 @@
 
 <body class="text-md-onSurface bg-md-bodyBg min-h-screen flex flex-col justify-center items-center p-4 sm:p-8 relative selection:bg-md-primaryContainer selection:text-md-onPrimaryContainer transition-colors duration-300 overflow-x-hidden">
 
-    <main class="max-w-[440px] w-full mx-auto flex flex-col gap-8 relative z-10 p-6 sm:p-10 bg-md-surface shadow-m3-3 border border-md-outline/5 rounded-[3rem] transition-colors duration-300 ease-bouncy my-8 sm:my-0">
+    <main class="max-w-[440px] w-full mx-auto flex flex-col gap-8 relative z-10 p-6 sm:p-10 bg-md-surface shadow-m3-3 border border-md-outline/5 rounded-[3rem] transition-colors duration-300 ease-bouncy my-auto">
         <!-- Header -->
         <header id="profile-header" class="flex flex-col items-center text-center fade-in-up" style="animation-delay: 0s;"></header>
 
         <!-- Links Container -->
-        <section id="links-container" class="flex flex-col gap-4 w-full relative"></section>
-        
-        <!-- Export Button -->
-        <div class="mt-4 flex justify-center fade-in-up" style="animation-delay: 0.2s;">
-            <button onclick="exportConfig()" class="ripple-surface bg-md-surfaceContainerHighest text-md-onSurface px-6 py-3 rounded-full text-sm font-medium flex items-center gap-2 shadow-m3-1 hover:bg-md-primaryContainer hover:text-md-onPrimaryContainer hover:shadow-m3-2 transition-all duration-300 ease-bouncy border border-md-outline/10 active:scale-95">
-                <i class="ph ph-code text-lg"></i>
-                Export Config
-            </button>
-        </div>
+        <section id="links-container" class="flex flex-col gap-4 w-full relative z-20 pb-4"></section>
     </main>
 
-    <div id="fab-container" class="fixed top-6 right-6 z-50 flex items-center justify-center bg-md-surfaceContainerHigh text-md-onSurface shadow-m3-4 border border-md-outline/10 fab-collapsed overflow-hidden">
+    <!-- Draggable FAB Customization Menu -->
+    <div id="fab-container" class="fixed top-6 right-6 z-50 flex items-center justify-center bg-md-surfaceContainerHigh text-md-onSurface shadow-m3-4 border border-md-outline/10 fab-collapsed overflow-hidden touch-manipulation">
         
         <div id="fab-icon-view" class="absolute inset-0 flex items-center justify-center opacity-100 transition-opacity duration-200 pointer-events-none">
             <i class="ph-bold ph-palette text-2xl text-md-primary"></i>
@@ -284,14 +299,14 @@
         <div id="fab-panel-view" class="absolute inset-0 p-5 opacity-0 transition-opacity duration-200 pointer-events-none flex flex-col gap-4">
             <div class="flex justify-between items-center border-b border-md-outline/20 pb-3">
                 <h3 class="font-bold text-md-onSurface">Customization</h3>
-                <button id="close-fab-btn" class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-md-surfaceVariant transition-colors duration-200 ease-bouncy text-md-onSurfaceVariant">
+                <button id="close-fab-btn" class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-md-surfaceVariant transition-colors duration-200 ease-bouncy text-md-onSurfaceVariant touch-manipulation">
                     <i class="ph-bold ph-x text-lg"></i>
                 </button>
             </div>
 
             <div class="flex items-center justify-between mt-1">
                 <span class="text-sm font-medium text-md-onSurfaceVariant">Appearance</span>
-                <button id="dark-mode-toggle" onclick="toggleDarkMode()" class="px-4 py-2 rounded-full flex items-center gap-2 bg-md-surface text-md-onSurface border border-md-outline/20 shadow-sm hover:bg-md-surfaceVariant transition-all duration-300 ease-bouncy text-sm font-medium active:scale-95">
+                <button id="dark-mode-toggle" onclick="toggleDarkMode()" class="px-4 py-2 rounded-full flex items-center gap-2 bg-md-surface text-md-onSurface border border-md-outline/20 shadow-sm hover:bg-md-surfaceVariant transition-all duration-300 ease-bouncy text-sm font-medium active:scale-95 touch-manipulation">
                     <i id="theme-icon" class="ph-bold ph-moon"></i>
                     <span id="theme-text">Dark Mode</span>
                 </button>
@@ -302,17 +317,17 @@
             <div>
                 <span class="text-sm font-medium text-md-onSurfaceVariant mb-3 block">Color Theme</span>
                 <div class="grid grid-cols-5 gap-3">
-                    <button onclick="setTheme('lavender')" class="theme-btn w-8 h-8 rounded-full bg-[#6750a4] ring-2 ring-offset-2 ring-offset-md-surfaceContainerHigh ring-md-primary hover:scale-125 transition-all duration-300 ease-bouncy" data-target="lavender"></button>
-                    <button onclick="setTheme('blue')" class="theme-btn w-8 h-8 rounded-full bg-[#0061a4] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy" data-target="blue"></button>
-                    <button onclick="setTheme('green')" class="theme-btn w-8 h-8 rounded-full bg-[#386a20] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy" data-target="green"></button>
-                    <button onclick="setTheme('rose')" class="theme-btn w-8 h-8 rounded-full bg-[#b3261e] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy" data-target="rose"></button>
-                    <button onclick="setTheme('peach')" class="theme-btn w-8 h-8 rounded-full bg-[#984816] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy" data-target="peach"></button>
+                    <button onclick="setTheme('lavender')" class="theme-btn w-8 h-8 rounded-full bg-[#6750a4] ring-2 ring-offset-2 ring-offset-md-surfaceContainerHigh ring-md-primary hover:scale-125 transition-all duration-300 ease-bouncy touch-manipulation" data-target="lavender"></button>
+                    <button onclick="setTheme('blue')" class="theme-btn w-8 h-8 rounded-full bg-[#0061a4] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy touch-manipulation" data-target="blue"></button>
+                    <button onclick="setTheme('green')" class="theme-btn w-8 h-8 rounded-full bg-[#386a20] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy touch-manipulation" data-target="green"></button>
+                    <button onclick="setTheme('rose')" class="theme-btn w-8 h-8 rounded-full bg-[#b3261e] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy touch-manipulation" data-target="rose"></button>
+                    <button onclick="setTheme('peach')" class="theme-btn w-8 h-8 rounded-full bg-[#984816] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy touch-manipulation" data-target="peach"></button>
                     
-                    <button onclick="setTheme('mint')" class="theme-btn w-8 h-8 rounded-full bg-[#006b5b] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy" data-target="mint"></button>
-                    <button onclick="setTheme('amber')" class="theme-btn w-8 h-8 rounded-full bg-[#785900] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy" data-target="amber"></button>
-                    <button onclick="setTheme('cyan')" class="theme-btn w-8 h-8 rounded-full bg-[#006874] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy" data-target="cyan"></button>
+                    <button onclick="setTheme('mint')" class="theme-btn w-8 h-8 rounded-full bg-[#006b5b] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy touch-manipulation" data-target="mint"></button>
+                    <button onclick="setTheme('amber')" class="theme-btn w-8 h-8 rounded-full bg-[#785900] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy touch-manipulation" data-target="amber"></button>
+                    <button onclick="setTheme('cyan')" class="theme-btn w-8 h-8 rounded-full bg-[#006874] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy touch-manipulation" data-target="cyan"></button>
 
-                    <div class="relative w-8 h-8 rounded-full ring-offset-2 ring-offset-md-surfaceContainerHigh hover:scale-125 transition-all duration-300 ease-bouncy shadow-inner flex items-center justify-center overflow-hidden border-2 border-md-outline/30 bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500">
+                    <div class="relative w-8 h-8 rounded-full ring-offset-2 ring-offset-md-surfaceContainerHigh hover:scale-125 transition-all duration-300 ease-bouncy shadow-inner flex items-center justify-center overflow-hidden border-2 border-md-outline/30 bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500 touch-manipulation">
                         <input type="color" id="custom-color-picker" onchange="generateCustomTheme(this.value)" oninput="generateCustomTheme(this.value)">
                         <i class="ph-bold ph-plus absolute text-white pointer-events-none drop-shadow-md"></i>
                     </div>
@@ -321,69 +336,82 @@
         </div>
     </div>
 
+    <!-- Bottom Pill Navigation for Hidden Links -->
+    <div id="bottom-pill" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-md-surfaceContainerHigh px-2 py-2 flex rounded-full shadow-m3-4 border border-md-outline/10 transition-all duration-500 ease-bouncy translate-y-24 opacity-0 scale-95 pointer-events-none z-40 overflow-x-auto max-w-[90vw]">
+    </div>
+
     <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-md-onSurface text-md-surface px-5 py-3 rounded-xl shadow-m3-2 font-medium opacity-0 pointer-events-none transition-all duration-300 ease-bouncy translate-y-8 z-50 flex items-center gap-3">
+    <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 bg-md-onSurface text-md-surface px-5 py-3 rounded-xl shadow-m3-2 font-medium opacity-0 pointer-events-none transition-all duration-300 ease-bouncy -translate-y-8 z-50 flex items-center gap-3">
         <i class="ph-fill ph-check-circle text-md-primaryContainer text-xl"></i>
         <span id="toast-message">Copied!</span>
     </div>
 
     <script>
-        // Data configuration with all requested specific links
         const CONFIG = {
             profile: {
-                name: "ir_Fabi",
-                handle: "@ir_Fabi",
+                name: "ir_fabi",
+                handle: "@ir_fabi",
                 bio: "Content Creator & Streamer. Welcome to my digital hub!",
                 avatarUrl: "https://placehold.co/400x400/var(--md-primary-container)/var(--md-on-primary-container)?text=F"
             },
             links: [
                 {
+                    name: "Stream Schedule",
+                    subtitle: "What I'm playing next",
+                    url: "#",
+                    icon: "./calendar.png",
+                    isExpandable: true,
+                    isSchedule: true,
+                    scheduleData: [
+                        { day: "Monday", game: "Zelda: Tears of the Kingdom", time: "18:00 CEST" },
+                        { day: "Wednesday", game: "Splatoon 3", time: "19:00 CEST" },
+                        { day: "Friday", game: "Paper Mario", time: "20:00 CEST" }
+                    ]
+                },
+                {
                     name: "YouTube",
                     subtitle: "@ir_Fabi",
                     url: "https://youtube.com/@ir_Fabi",
-                    icon: "ph-fill ph-youtube-logo", 
-                    iconColor: "#FF0000",
+                    icon: "./youtube.png",
                     isExpandable: true,
                     videoId: "dQw4w9WgXcQ"
                 },
                 {
                     name: "Twitch",
-                    subtitle: "ir_Fabi",
+                    subtitle: "ir_fabi",
                     url: "https://twitch.tv/ir_fabi",
-                    icon: "ph-fill ph-twitch-logo",
-                    iconColor: "#9146FF",
-                    isLive: false // Will be updated dynamically via API
+                    icon: "./twitch.png",
+                    isLive: false 
                 },
                 {
                     name: "Instagram",
-                    subtitle: "@ir_Fabi",
+                    subtitle: "@ir_fabi",
                     url: "https://instagram.com/ir_fabi",
-                    icon: "ph-fill ph-instagram-logo",
-                    iconColor: "#E1306C"
+                    icon: "./instagram.png"
                 },
                 {
-                    name: "Twitter",
-                    subtitle: "@ir_fabi",
+                    name: "X / Twitter",
+                    subtitle: "@ir_fabi_",
                     url: "https://twitter.com/ir_fabi_",
-                    icon: "ph-fill ph-twitter-logo",
-                    iconColor: "#1DA1F2"
+                    icon: "./twitter.png"
                 },
                 {
                     name: "TikTok",
                     subtitle: "@ir_fabi",
                     url: "https://tiktok.com/@ir_fabi",
-                    icon: "ph-fill ph-tiktok-logo",
-                    iconColor: "#ff0050"
+                    icon: "./tiktok.png"
                 },
                 {
                     name: "Discord",
                     subtitle: "Join the server",
                     url: "https://discord.gg/",
-                    icon: "ph-fill ph-discord-logo",
-                    iconColor: "#5865F2"
+                    icon: "./discord.png"
                 }
             ]
         };
+
+        let linkObserver;
+        window.renderedLinks = [];
 
         async function checkTwitchLiveStatus() {
             try {
@@ -394,9 +422,23 @@
                 if (twitchLink) {
                     const statusText = text.toLowerCase();
                     if (!statusText.includes('offline') && !statusText.includes('not found')) {
+                        const [titleRes, gameRes] = await Promise.all([
+                            fetch('https://decapi.me/twitch/title/ir_fabi'),
+                            fetch('https://decapi.me/twitch/game/ir_fabi')
+                        ]);
+                        
+                        const titleText = await titleRes.text();
+                        const gameText = await gameRes.text();
+                        
                         twitchLink.isLive = true;
+                        twitchLink.isExpandable = true; 
+                        twitchLink.streamTitle = titleText;
+                        twitchLink.streamGame = gameText;
                     } else {
                         twitchLink.isLive = false;
+                        twitchLink.isExpandable = false;
+                        twitchLink.streamTitle = "";
+                        twitchLink.streamGame = "";
                     }
                     renderLinks(); 
                 }
@@ -408,10 +450,9 @@
         function initApp() {
             renderHeader();
             renderLinks();
-            checkTwitchLiveStatus(); // Check live status and re-render if needed
+            checkTwitchLiveStatus(); 
             setupDraggableFAB();
             
-            // Auto dark mode detection
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 if(!document.documentElement.classList.contains('dark')) toggleDarkMode(true);
             }
@@ -432,7 +473,6 @@
                 text.textContent = "Dark Mode";
             }
             
-            // Regenerate custom theme if active
             if(html.getAttribute('data-theme') === 'custom') {
                 generateCustomTheme(document.getElementById('custom-color-picker').value);
             }
@@ -542,7 +582,6 @@
                 if (isExpanded) return;
                 if (e.target.closest('#fab-panel-view')) return; 
 
-                // Prevent text selection across the site while dragging
                 document.body.style.userSelect = 'none';
 
                 const rect = fab.getBoundingClientRect();
@@ -580,7 +619,6 @@
                 }
 
                 if (isDragging) {
-                    // Suspend transitions during active drag to lock to pointer
                     fab.style.transition = 'none';
                     fab.style.left = `${initialLeft + dx}px`;
                     fab.style.top = `${initialTop + dy}px`;
@@ -595,16 +633,13 @@
                 document.removeEventListener('mouseup', dragEnd);
                 document.removeEventListener('touchend', dragEnd);
 
-                // Restore user text selection
                 document.body.style.userSelect = '';
 
                 if (!isDragging && !isExpanded) {
                     expandFAB();
                 } else if (isDragging) {
-                    // Re-enable smooth transitions for pinning and expanding
                     fab.style.transition = '';
                     
-                    // Logic to snap and pin to edges so it expands inward based on quadrant
                     const rect = fab.getBoundingClientRect();
                     const winW = window.innerWidth;
                     const winH = window.innerHeight;
@@ -671,7 +706,7 @@
         function renderHeader() {
             const headerContainer = document.getElementById('profile-header');
             headerContainer.innerHTML = `
-                <div class="relative group cursor-pointer mb-5 mx-auto flex justify-center items-center">
+                <div class="relative group cursor-pointer mb-5 mx-auto flex justify-center items-center touch-manipulation">
                     <div class="w-28 h-28 rounded-[2rem] bg-md-primaryContainer text-md-onPrimaryContainer flex items-center justify-center overflow-hidden shadow-m3-2 transition-all duration-300 ease-bouncy group-hover:shadow-m3-3 group-hover:scale-110 relative z-10 border-2 border-transparent group-hover:border-md-primary/30 mx-auto">
                         <img src="${CONFIG.profile.avatarUrl}" alt="${CONFIG.profile.name}" class="w-full h-full object-cover transition-opacity duration-200" onerror="this.style.display='none'">
                         <i class="ph-fill ph-user text-5xl absolute -z-10"></i>
@@ -691,9 +726,24 @@
 
         function renderLinks() {
             const container = document.getElementById('links-container');
+            const pillContainer = document.getElementById('bottom-pill');
             container.innerHTML = ''; 
+            pillContainer.innerHTML = '';
 
-            // Live sorting logic: If isLive is true, sort to the top
+            if (linkObserver) linkObserver.disconnect();
+            window.renderedLinks = [];
+            
+            linkObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const id = entry.target.dataset.id;
+                    const linkItem = window.renderedLinks.find(item => item.id === id);
+                    if (linkItem) {
+                        linkItem.isVisible = entry.isIntersecting;
+                    }
+                });
+                renderBottomPill();
+            }, { threshold: 0.1 });
+
             const sortedLinks = [...CONFIG.links].sort((a, b) => {
                 if (a.isLive && !b.isLive) return -1;
                 if (!a.isLive && b.isLive) return 1;
@@ -702,16 +752,19 @@
 
             sortedLinks.forEach((link, index) => {
                 const delay = 0.1 + (index * 0.1);
+                const linkId = 'link-' + index;
                 
-                // Create a container block for each link so it handles expansion cleanly
                 const linkBlock = document.createElement('div');
-                linkBlock.className = `fade-in-up flex flex-col w-full bg-md-surfaceContainerHigh border border-md-outline/5 rounded-[28px] shadow-m3-1 transition-all duration-300 ease-bouncy hover:shadow-m3-2 overflow-hidden`;
+                // Added transform-gpu to force rendering on mobile GPU
+                linkBlock.className = `fade-in-up flex flex-col w-full bg-md-surfaceContainerHigh border border-md-outline/5 rounded-[28px] shadow-m3-1 transition-all duration-300 ease-bouncy hover:shadow-m3-2 overflow-hidden transform-gpu`;
                 linkBlock.style.animationDelay = `${delay}s`;
+                linkBlock.dataset.id = linkId;
                 
-                // Construct the inner clickable content logic
                 const innerContent = `
-                    <div class="w-[56px] h-[56px] shrink-0 flex items-center justify-center bg-md-secondaryContainer/40 text-md-onSecondaryContainer rounded-[28px] shadow-sm transition-all duration-300 ease-bouncy group-hover:w-[112px] group-hover:rounded-[16px] group-hover:shadow-m3-1 group-hover:bg-md-primaryContainer/50 z-10 overflow-hidden relative" style="transition-property: width, border-radius, box-shadow, background-color;">
-                        <i class="${link.icon} text-2xl transition-transform duration-300 ease-bouncy group-hover:scale-125 absolute" style="color: ${link.iconColor}"></i>
+                    <div class="w-[56px] h-[56px] shrink-0 flex items-center justify-center bg-md-secondaryContainer/40 text-md-onSecondaryContainer rounded-[28px] shadow-sm transition-all duration-300 ease-bouncy group-hover:w-[112px] group-hover:rounded-[16px] group-hover:shadow-m3-1 group-hover:bg-md-primaryContainer/50 group-hover:text-md-primary z-10 overflow-hidden relative" style="transition-property: width, border-radius, box-shadow, background-color, color;">
+                        <div class="w-8 h-8 transition-transform duration-300 ease-bouncy group-hover:scale-110 absolute flex items-center justify-center drop-shadow-sm">
+                            <img src="${link.icon}" alt="${link.name} logo" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/100x100/transparent/var(--md-on-surface)?text=${link.name.charAt(0)}'">
+                        </div>
                     </div>
                     
                     <div class="ml-4 flex flex-col justify-center flex-grow z-10 overflow-hidden">
@@ -736,67 +789,186 @@
                 `;
 
                 if (link.isExpandable) {
-                    // Header acts as the toggle
                     const header = document.createElement('div');
-                    header.className = "group ripple-surface flex items-center p-3 w-full cursor-pointer hover:bg-md-surfaceContainerHighest transition-colors duration-300 ease-bouncy relative";
+                    // touch-manipulation and select-none to ensure instant native-like tapping
+                    header.className = "group ripple-surface flex items-center p-3 w-full cursor-pointer hover:bg-md-surfaceContainerHighest transition-colors duration-300 ease-bouncy relative touch-manipulation select-none";
                     header.innerHTML = innerContent;
                     
-                    // The expandable content powered by CSS grid transitions
                     const expandedContainer = document.createElement('div');
-                    expandedContainer.className = "grid transition-all duration-300 ease-bouncy";
-                    expandedContainer.style.gridTemplateRows = "0fr";
+                    expandedContainer.className = "expand-wrapper";
                     
+                    let expandedInnerHtml = '';
+                    
+                    if (link.videoId) {
+                        expandedInnerHtml = `
+                            <div class="w-full aspect-video rounded-2xl overflow-hidden bg-black/5 relative shadow-inner">
+                                <iframe class="absolute top-0 left-0 w-full h-full border-0" src="https://www.youtube.com/embed/${link.videoId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <a href="${link.url}" target="_blank" class="w-full py-3 bg-md-primary text-md-onPrimary rounded-xl flex items-center justify-center gap-2 font-medium hover:opacity-90 transition-opacity active:scale-[0.98] ripple-surface touch-manipulation">
+                                <i class="ph-bold ph-arrow-square-out text-lg"></i> Open Channel
+                            </a>
+                        `;
+                    } else if (link.isSchedule) {
+                        const scheduleItemsHtml = link.scheduleData.map(item => `
+                            <div class="flex justify-between items-center bg-md-surfaceVariant/30 p-3 rounded-xl border border-md-outline/5 transition-colors hover:bg-md-surfaceVariant/60">
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-md-primary text-sm">${item.day}</span>
+                                    <span class="text-md-onSurface font-medium">${item.game}</span>
+                                </div>
+                                <span class="text-xs font-bold text-md-onSurfaceVariant bg-md-surfaceContainerHighest px-2 py-1 rounded-md">${item.time}</span>
+                            </div>
+                        `).join('');
+                        
+                        expandedInnerHtml = `
+                            <div class="flex flex-col gap-2 bg-md-surfaceContainerLow p-2 rounded-2xl">
+                                ${scheduleItemsHtml}
+                            </div>
+                        `;
+                    } else if (link.name === "Twitch" && link.isLive) {
+                        expandedInnerHtml = `
+                            <div class="bg-md-primaryContainer/30 p-4 rounded-2xl border border-md-primary/20 flex flex-col gap-1 mb-2">
+                                <span class="text-[10px] font-bold text-md-primary uppercase tracking-widest flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span> NOW STREAMING</span>
+                                <span class="text-md-onSurface font-bold text-lg leading-tight mt-1">${link.streamTitle || 'Live on Twitch!'}</span>
+                                <div class="flex items-center gap-1.5 mt-2">
+                                    <i class="ph-fill ph-game-controller text-md-primary"></i>
+                                    <span class="text-md-onSurfaceVariant text-sm font-medium">${link.streamGame || 'Just Chatting'}</span>
+                                </div>
+                            </div>
+                            <a href="${link.url}" target="_blank" class="w-full py-3 bg-md-primary text-md-onPrimary rounded-xl flex items-center justify-center gap-2 font-medium hover:opacity-90 transition-opacity active:scale-[0.98] ripple-surface touch-manipulation">
+                                <i class="ph-bold ph-video-camera text-lg"></i> Watch Live Now
+                            </a>
+                        `;
+                    }
+
                     expandedContainer.innerHTML = `
                         <div class="overflow-hidden">
-                            <div class="p-3 pt-0 w-full flex flex-col gap-3">
-                                <div class="w-full aspect-video rounded-2xl overflow-hidden bg-black/5 relative shadow-inner">
-                                    <iframe class="absolute top-0 left-0 w-full h-full border-0" src="https://www.youtube.com/embed/${link.videoId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                </div>
-                                <a href="${link.url}" target="_blank" class="w-full py-3 bg-md-primary text-md-onPrimary rounded-xl flex items-center justify-center gap-2 font-medium hover:opacity-90 transition-opacity active:scale-[0.98] ripple-surface">
-                                    <i class="ph-bold ph-arrow-square-out text-lg"></i> Open Channel
-                                </a>
+                            <div class="expand-inner p-3 pt-0 w-full flex flex-col gap-3">
+                                ${expandedInnerHtml}
                             </div>
                         </div>
                     `;
 
-                    header.addEventListener('click', (e) => {
-                        const isExpanded = expandedContainer.style.gridTemplateRows === "1fr";
-                        expandedContainer.style.gridTemplateRows = isExpanded ? "0fr" : "1fr";
-                        
+                    // Single handler flag to prevent double-firing on mobile
+                    let isHandlingTap = false;
+
+                    const handleToggle = (e) => {
+                        if (isHandlingTap) return;
+                        isHandlingTap = true;
+                        setTimeout(() => { isHandlingTap = false; }, 300);
+
+                        const isExpanded = expandedContainer.classList.contains('expanded');
                         const icon = header.querySelector('.expand-icon');
-                        if (icon) icon.style.transform = isExpanded ? "rotate(0deg)" : "rotate(180deg)";
-                    });
+                        
+                        if (isExpanded) {
+                            expandedContainer.classList.remove('expanded');
+                            expandedContainer.classList.add('collapsing');
+                            if (icon) {
+                                icon.style.transition = "transform 300ms cubic-bezier(0.4, 0, 0.2, 1)";
+                                icon.style.transform = "rotate(0deg)";
+                            }
+                            
+                            setTimeout(() => {
+                                expandedContainer.classList.remove('collapsing');
+                            }, 300);
+                        } else {
+                            expandedContainer.classList.remove('collapsing');
+                            expandedContainer.classList.add('expanded');
+                            if (icon) {
+                                icon.style.transition = "transform 450ms cubic-bezier(0.34, 1.56, 0.64, 1)";
+                                icon.style.transform = "rotate(180deg)";
+                            }
+                        }
+                        createRipple(e);
+                    };
+
+                    header.addEventListener('click', handleToggle);
                     
                     linkBlock.appendChild(header);
                     linkBlock.appendChild(expandedContainer);
                 } else {
-                    // Standard Link Action
                     const a = document.createElement('a');
                     a.href = link.url;
                     a.target = "_blank"; 
-                    a.className = "group ripple-surface flex items-center p-3 w-full hover:bg-md-surfaceContainerHighest transition-colors duration-300 ease-bouncy no-underline";
+                    a.className = "group ripple-surface flex items-center p-3 w-full hover:bg-md-surfaceContainerHighest transition-colors duration-300 ease-bouncy no-underline touch-manipulation select-none";
                     a.innerHTML = innerContent;
                     
-                    a.addEventListener('mousedown', createRipple);
+                    // Optimized mobile ripple event binding
+                    let isTouch = false;
                     a.addEventListener('touchstart', (e) => {
+                        isTouch = true;
                         if(e.touches.length > 0) createRipple({currentTarget: a, clientX: e.touches[0].clientX, clientY: e.touches[0].clientY});
                     }, {passive: true});
+                    
+                    a.addEventListener('mousedown', (e) => {
+                        if (!isTouch) createRipple(e);
+                        isTouch = false; // reset flag
+                    });
                     
                     linkBlock.appendChild(a);
                 }
 
                 container.appendChild(linkBlock);
+                
+                window.renderedLinks.push({
+                    id: linkId,
+                    data: link,
+                    isVisible: true,
+                    element: linkBlock
+                });
+                linkObserver.observe(linkBlock);
+
+                const pillBtn = document.createElement('button');
+                pillBtn.id = 'pill-btn-' + linkId;
+                pillBtn.className = "overflow-hidden transition-all duration-500 ease-bouncy flex items-center justify-center shrink-0 rounded-full bg-md-secondaryContainer/40 text-md-onSecondaryContainer hover:bg-md-primaryContainer/50 hover:text-md-primary hover:shadow-m3-1 w-0 h-12 opacity-0 scale-50 mx-0 pointer-events-none touch-manipulation";
+                pillBtn.innerHTML = `<div class="w-6 h-6 shrink-0 flex items-center justify-center"><img src="${link.icon}" alt="${link.name}" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/50x50/transparent/var(--md-on-surface)?text=${link.name.charAt(0)}'"></div>`;
+                
+                pillBtn.onclick = () => {
+                    linkBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    linkBlock.classList.add('ring-4', 'ring-md-primary/50', 'scale-[1.02]');
+                    setTimeout(() => linkBlock.classList.remove('ring-4', 'ring-md-primary/50', 'scale-[1.02]'), 800);
+                };
+                pillContainer.appendChild(pillBtn);
             });
+        }
+
+        function renderBottomPill() {
+            const pill = document.getElementById('bottom-pill');
+            let hiddenCount = 0;
+            
+            window.renderedLinks.forEach(item => {
+                const pillBtn = document.getElementById('pill-btn-' + item.id);
+                if (!pillBtn) return;
+
+                if (!item.isVisible) {
+                    hiddenCount++;
+                    pillBtn.classList.remove('w-0', 'opacity-0', 'scale-50', 'mx-0', 'pointer-events-none');
+                    pillBtn.classList.add('w-12', 'opacity-100', 'scale-100', 'mx-1', 'cursor-pointer');
+                } else {
+                    pillBtn.classList.remove('w-12', 'opacity-100', 'scale-100', 'mx-1', 'cursor-pointer');
+                    pillBtn.classList.add('w-0', 'opacity-0', 'scale-50', 'mx-0', 'pointer-events-none');
+                }
+            });
+            
+            if (hiddenCount > 0) {
+                pill.classList.remove('translate-y-24', 'opacity-0', 'scale-95', 'pointer-events-none');
+                pill.classList.add('scale-100');
+            } else {
+                pill.classList.add('translate-y-24', 'opacity-0', 'scale-95', 'pointer-events-none');
+                pill.classList.remove('scale-100');
+            }
         }
 
         function createRipple(event) {
             const button = event.currentTarget;
+            if (!button) return;
+            
             const circle = document.createElement("span");
             const diameter = Math.max(button.clientWidth, button.clientHeight);
             const radius = diameter / 2;
             const rect = button.getBoundingClientRect();
-            let clientX = event.clientX || (rect.left + radius);
-            let clientY = event.clientY || (rect.top + radius);
+            
+            let clientX = event.clientX !== undefined ? event.clientX : (rect.left + radius);
+            let clientY = event.clientY !== undefined ? event.clientY : (rect.top + radius);
 
             circle.style.width = circle.style.height = `${diameter}px`;
             circle.style.left = `${clientX - rect.left - radius}px`;
@@ -809,42 +981,6 @@
             
             button.appendChild(circle);
             setTimeout(() => circle.remove(), 600);
-        }
-
-        let toastTimeout;
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-message').textContent = msg;
-            toast.style.opacity = '1';
-            toast.style.transform = 'translate(-50%, 0)';
-            
-            clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transform = 'translate(-50%, 20px)';
-            }, 3000);
-        }
-
-        function exportConfig() {
-            const configString = JSON.stringify(CONFIG, null, 4);
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(configString).then(() => showToast('Config copied!'))
-                    .catch(() => fallbackCopyTextToClipboard(configString));
-            } else {
-                fallbackCopyTextToClipboard(configString);
-            }
-        }
-
-        function fallbackCopyTextToClipboard(text) {
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.position = "fixed"; 
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            try { document.execCommand('copy'); showToast('Config copied!'); } 
-            catch (err) { showToast('Failed to copy.'); }
-            document.body.removeChild(textArea);
         }
 
         document.addEventListener('DOMContentLoaded', initApp);
