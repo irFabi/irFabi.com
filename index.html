@@ -13,7 +13,6 @@
 
     <script>
         tailwind.config = {
-            // OPTIMIZATION: Disables heavy hover effects on touch screens to prevent "sticky hovers" and lag
             future: { hoverOnlyWhenSupported: true },
             darkMode: 'class',
             theme: {
@@ -194,7 +193,11 @@
             --md-surface-variant: #3f484a; --md-on-surface-variant: #bfc8ca;
         }
 
-        body { -webkit-tap-highlight-color: transparent; }
+        body { 
+            -webkit-tap-highlight-color: transparent; 
+            /* Disables the rigid browser stop and lets our custom physics take over */
+            overscroll-behavior-y: none; 
+        }
 
         .ripple-surface { position: relative; overflow: hidden; transform: translateZ(0); }
         .ripple {
@@ -246,7 +249,6 @@
         }
         .fab-collapsed:active { cursor: grabbing !important; }
 
-        /* Optimized Hardware-Accelerated Expand/Collapse Classes */
         .expand-wrapper {
             display: grid;
             grid-template-rows: 0fr;
@@ -281,7 +283,7 @@
 
 <body class="text-md-onSurface bg-md-bodyBg min-h-screen flex flex-col justify-center items-center p-4 sm:p-8 relative selection:bg-md-primaryContainer selection:text-md-onPrimaryContainer transition-colors duration-300 overflow-x-hidden">
 
-    <main class="max-w-[440px] w-full mx-auto flex flex-col gap-8 relative z-10 p-6 sm:p-10 bg-md-surface shadow-m3-3 border border-md-outline/5 rounded-[3rem] transition-colors duration-300 ease-bouncy my-auto">
+    <main class="max-w-[440px] w-full mx-auto flex flex-col gap-8 relative z-10 p-6 sm:p-10 bg-md-surface shadow-m3-3 border border-md-outline/5 rounded-[3rem] transition-colors duration-300 ease-bouncy my-auto transform-gpu">
         <!-- Header -->
         <header id="profile-header" class="flex flex-col items-center text-center fade-in-up" style="animation-delay: 0s;"></header>
 
@@ -452,10 +454,99 @@
             renderLinks();
             checkTwitchLiveStatus(); 
             setupDraggableFAB();
+            setupOverscrollStretch();
             
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 if(!document.documentElement.classList.contains('dark')) toggleDarkMode(true);
             }
+        }
+
+        // Custom physics engine for stretching the main container at scroll limits
+        function setupOverscrollStretch() {
+            const mainEl = document.querySelector('main');
+            let startY = 0;
+            let isStretching = false;
+            let wheelAccumulator = 0;
+            let wheelTimeout;
+
+            // Touch tracking for mobile elasticity
+            document.addEventListener('touchstart', (e) => {
+                startY = e.touches[0].clientY;
+                mainEl.style.transition = 'none';
+            }, { passive: true });
+
+            document.addEventListener('touchmove', (e) => {
+                const y = e.touches[0].clientY;
+                const deltaY = y - startY;
+                const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                // Using maxScroll - 2 allows a tiny buffer for URL bar resizes on mobile
+                const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+
+                if (scrollTop <= 0 && deltaY > 0) {
+                    isStretching = true;
+                    const stretch = 1 + (deltaY * 0.0006); 
+                    const move = deltaY * 0.15;
+                    mainEl.style.transformOrigin = 'top center';
+                    mainEl.style.transform = `translateY(${move}px) scaleY(${stretch})`;
+                } else if (scrollTop >= (maxScroll - 2) && deltaY < 0) {
+                    isStretching = true;
+                    const stretch = 1 + (Math.abs(deltaY) * 0.0006);
+                    const move = deltaY * 0.15; 
+                    mainEl.style.transformOrigin = 'bottom center';
+                    mainEl.style.transform = `translateY(${move}px) scaleY(${stretch})`;
+                } else if (isStretching) {
+                    mainEl.style.transform = '';
+                    isStretching = false;
+                }
+            }, { passive: true });
+
+            const endStretch = () => {
+                if (isStretching) {
+                    mainEl.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    mainEl.style.transform = '';
+                    isStretching = false;
+                    setTimeout(() => { if(!isStretching) mainEl.style.transition = ''; }, 400);
+                }
+            };
+
+            document.addEventListener('touchend', endStretch, { passive: true });
+            document.addEventListener('touchcancel', endStretch, { passive: true });
+
+            // Wheel tracking for Desktop Mouse / Trackpad elasticity
+            document.addEventListener('wheel', (e) => {
+                const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+
+                if ((scrollTop <= 0 && e.deltaY < 0) || (scrollTop >= (maxScroll - 2) && e.deltaY > 0)) {
+                    wheelAccumulator -= e.deltaY; 
+                    
+                    if (wheelAccumulator > 250) wheelAccumulator = 250;
+                    if (wheelAccumulator < -250) wheelAccumulator = -250;
+
+                    isStretching = true;
+                    mainEl.style.transition = 'none';
+                    
+                    if (scrollTop <= 0 && wheelAccumulator > 0) {
+                        const stretch = 1 + (wheelAccumulator * 0.0006);
+                        const move = wheelAccumulator * 0.15;
+                        mainEl.style.transformOrigin = 'top center';
+                        mainEl.style.transform = `translateY(${move}px) scaleY(${stretch})`;
+                    } else if (scrollTop >= (maxScroll - 2) && wheelAccumulator < 0) {
+                        const stretch = 1 + (Math.abs(wheelAccumulator) * 0.0006);
+                        const move = wheelAccumulator * 0.15; 
+                        mainEl.style.transformOrigin = 'bottom center';
+                        mainEl.style.transform = `translateY(${move}px) scaleY(${stretch})`;
+                    }
+
+                    clearTimeout(wheelTimeout);
+                    wheelTimeout = setTimeout(() => {
+                        wheelAccumulator = 0;
+                        endStretch();
+                    }, 60); 
+                } else {
+                    wheelAccumulator = 0;
+                }
+            }, { passive: true });
         }
 
         function toggleDarkMode(forceDark = null) {
@@ -755,7 +846,6 @@
                 const linkId = 'link-' + index;
                 
                 const linkBlock = document.createElement('div');
-                // Added transform-gpu to force rendering on mobile GPU
                 linkBlock.className = `fade-in-up flex flex-col w-full bg-md-surfaceContainerHigh border border-md-outline/5 rounded-[28px] shadow-m3-1 transition-all duration-300 ease-bouncy hover:shadow-m3-2 overflow-hidden transform-gpu`;
                 linkBlock.style.animationDelay = `${delay}s`;
                 linkBlock.dataset.id = linkId;
@@ -790,7 +880,6 @@
 
                 if (link.isExpandable) {
                     const header = document.createElement('div');
-                    // touch-manipulation and select-none to ensure instant native-like tapping
                     header.className = "group ripple-surface flex items-center p-3 w-full cursor-pointer hover:bg-md-surfaceContainerHighest transition-colors duration-300 ease-bouncy relative touch-manipulation select-none";
                     header.innerHTML = innerContent;
                     
@@ -848,7 +937,6 @@
                         </div>
                     `;
 
-                    // Single handler flag to prevent double-firing on mobile
                     let isHandlingTap = false;
 
                     const handleToggle = (e) => {
@@ -892,7 +980,6 @@
                     a.className = "group ripple-surface flex items-center p-3 w-full hover:bg-md-surfaceContainerHighest transition-colors duration-300 ease-bouncy no-underline touch-manipulation select-none";
                     a.innerHTML = innerContent;
                     
-                    // Optimized mobile ripple event binding
                     let isTouch = false;
                     a.addEventListener('touchstart', (e) => {
                         isTouch = true;
@@ -901,7 +988,7 @@
                     
                     a.addEventListener('mousedown', (e) => {
                         if (!isTouch) createRipple(e);
-                        isTouch = false; // reset flag
+                        isTouch = false; 
                     });
                     
                     linkBlock.appendChild(a);
