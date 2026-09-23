@@ -78,43 +78,46 @@
         .slide-in-backward { animation: slideInLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         .slide-out-backward { animation: slideOutRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; pointer-events: none; }
 
-        /* Ambient Blob Animations */
+        /* Ambient Blob Animations - Optimized with will-change */
         @keyframes blob {
             0% { transform: translate(0px, 0px) scale(1); }
-            33% { transform: translate(40px, -60px) scale(1.1); }
-            66% { transform: translate(-30px, 30px) scale(0.9); }
+            33% { transform: translate(30px, -40px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
             100% { transform: translate(0px, 0px) scale(1); }
         }
-        .animate-blob { animation: blob 12s infinite alternate cubic-bezier(0.4, 0, 0.2, 1); }
+        .animate-blob { 
+            animation: blob 12s infinite alternate cubic-bezier(0.4, 0, 0.2, 1); 
+            will-change: transform; 
+        }
         .animation-delay-2000 { animation-delay: 2s; }
         .animation-delay-4000 { animation-delay: 4s; }
 
-        /* Extreme Glassmorphism Dynamic Classes */
+        /* Optimized Glassmorphism Dynamic Classes */
         html[data-glass="true"] .glass-card {
-            background-color: color-mix(in srgb, var(--md-surface) 45%, transparent) !important;
-            backdrop-filter: blur(32px) saturate(200%);
-            -webkit-backdrop-filter: blur(32px) saturate(200%);
+            background-color: color-mix(in srgb, var(--md-surface) 50%, transparent) !important;
+            backdrop-filter: blur(16px) saturate(150%);
+            -webkit-backdrop-filter: blur(16px) saturate(150%);
             border: 1px solid color-mix(in srgb, var(--md-on-surface) 10%, transparent) !important;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
         }
         html[data-glass="true"].dark .glass-card {
-            background-color: color-mix(in srgb, var(--md-surface-container) 35%, transparent) !important;
-            border: 1px solid color-mix(in srgb, #ffffff 12%, transparent) !important;
+            background-color: color-mix(in srgb, var(--md-surface-container) 40%, transparent) !important;
+            border: 1px solid color-mix(in srgb, #ffffff 10%, transparent) !important;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
         }
 
         html[data-glass="true"] .glass-button {
-            background-color: color-mix(in srgb, var(--md-surface-container-high) 45%, transparent) !important;
-            backdrop-filter: blur(24px) saturate(200%);
-            -webkit-backdrop-filter: blur(24px) saturate(200%);
+            background-color: color-mix(in srgb, var(--md-surface-container-high) 50%, transparent) !important;
+            backdrop-filter: blur(12px) saturate(150%);
+            -webkit-backdrop-filter: blur(12px) saturate(150%);
             border: 1px solid color-mix(in srgb, var(--md-on-surface) 8%, transparent) !important;
         }
         html[data-glass="true"].dark .glass-button {
-            background-color: color-mix(in srgb, var(--md-surface-container-highest) 30%, transparent) !important;
+            background-color: color-mix(in srgb, var(--md-surface-container-highest) 35%, transparent) !important;
             border: 1px solid color-mix(in srgb, #ffffff 8%, transparent) !important;
         }
 
-        /* Shadow Opacity Control for Light/Dark depth */
+        /* Shadow Opacity Control */
         :root {
             --shadow-op-1: 0.3;
             --shadow-op-2: 0.15;
@@ -124,7 +127,7 @@
             --shadow-op-2: 0.5;
         }
 
-        /* Lavender Theme */
+        /* Themes... */
         :root, [data-theme="lavender"] {
             --md-primary: #6750a4; --md-on-primary: #ffffff;
             --md-primary-container: #eaddff; --md-on-primary-container: #21005d;
@@ -146,7 +149,6 @@
             --md-outline: #938f99; --md-body-bg: #141218;
         }
 
-        /* Blue Theme */
         [data-theme="blue"] {
             --md-primary: #0061a4; --md-on-primary: #ffffff;
             --md-primary-container: #d1e4ff; --md-on-primary-container: #001d36;
@@ -166,7 +168,6 @@
             --md-surface-container-highest: #33353a; --md-outline: #8d9199; --md-body-bg: #1a1c1e;
         }
 
-        /* Green Theme */
         [data-theme="green"] {
             --md-primary: #386a20; --md-primary-container: #b7f397; --md-on-primary-container: #042100;
             --md-secondary-container: #d6e8ce; --md-on-secondary-container: #111f0f;
@@ -182,7 +183,6 @@
             --md-surface-variant: #43483e; --md-on-surface-variant: #c3c8bb;
         }
 
-        /* Rose Theme */
         [data-theme="rose"] {
             --md-primary: #b3261e; --md-primary-container: #f9dedc; --md-on-primary-container: #410e0b;
             --md-secondary-container: #ffdad6; --md-on-secondary-container: #410002;
@@ -198,7 +198,6 @@
             --md-surface-variant: #534341; --md-on-surface-variant: #d8c2bf;
         }
 
-        /* Mint Theme */
         [data-theme="mint"] {
             --md-primary: #006b5b; --md-primary-container: #79f8d9; --md-on-primary-container: #00201a;
             --md-secondary-container: #cce8e0; --md-on-secondary-container: #05201a;
@@ -214,7 +213,6 @@
             --md-surface-variant: #3f4945; --md-on-surface-variant: #bfc9c4;
         }
 
-        /* Peach Theme */
         [data-theme="peach"] {
             --md-primary: #984816; --md-primary-container: #ffdbca; --md-on-primary-container: #341100;
             --md-secondary-container: #ffdbcb; --md-on-secondary-container: #2b160a;
@@ -230,7 +228,6 @@
             --md-surface-variant: #52443c; --md-on-surface-variant: #d7c2b9;
         }
 
-        /* Amber Theme */
         [data-theme="amber"] {
             --md-primary: #785900; --md-primary-container: #ffdf9e; --md-on-primary-container: #261a00;
             --md-secondary-container: #eaddb6; --md-on-secondary-container: #231b04;
@@ -246,7 +243,6 @@
             --md-surface-variant: #4a4739; --md-on-surface-variant: #cdc6b8;
         }
 
-        /* Cyan Theme */
         [data-theme="cyan"] {
             --md-primary: #006874; --md-primary-container: #97f0ff; --md-on-primary-container: #001f24;
             --md-secondary-container: #cbe6eb; --md-on-secondary-container: #051f23;
@@ -302,6 +298,7 @@
                         box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
                         left 0.4s ease, right 0.4s ease, top 0.4s ease, bottom 0.4s ease;
             position: fixed;
+            will-change: transform;
         }
         .fab-expanded {
             width: 320px !important;
@@ -351,15 +348,15 @@
 
 <body class="text-md-onSurface bg-md-bodyBg min-h-screen flex flex-col justify-center items-center p-4 sm:p-8 relative selection:bg-md-primaryContainer selection:text-md-onPrimaryContainer transition-colors duration-300 overflow-x-hidden">
 
-    <!-- Ambient Background Mesh - High Opacity to push through the glass -->
+    <!-- Ambient Background Mesh - ULTRA OPTIMIZED: Replaced CSS blur with native radial-gradients -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div class="absolute -top-[10%] -left-[10%] w-[60vw] h-[60vw] rounded-full bg-md-primaryContainer opacity-60 dark:opacity-40 blur-[100px] animate-blob mix-blend-multiply dark:mix-blend-screen transition-colors duration-500"></div>
-        <div class="absolute top-[20%] -right-[15%] w-[50vw] h-[50vw] rounded-full bg-md-primary opacity-40 dark:opacity-30 blur-[100px] animate-blob animation-delay-2000 mix-blend-multiply dark:mix-blend-screen transition-colors duration-500"></div>
-        <div class="absolute -bottom-[20%] left-[10%] w-[70vw] h-[70vw] rounded-full bg-md-secondaryContainer opacity-60 dark:opacity-40 blur-[90px] animate-blob animation-delay-4000 mix-blend-multiply dark:mix-blend-screen transition-colors duration-500"></div>
+        <div class="absolute -top-[10%] -left-[10%] w-[80vw] h-[80vw] opacity-60 dark:opacity-40 animate-blob mix-blend-multiply dark:mix-blend-screen transition-colors duration-500" style="background: radial-gradient(circle, var(--md-primary-container) 0%, transparent 60%); will-change: transform;"></div>
+        <div class="absolute top-[20%] -right-[15%] w-[70vw] h-[70vw] opacity-40 dark:opacity-30 animate-blob animation-delay-2000 mix-blend-multiply dark:mix-blend-screen transition-colors duration-500" style="background: radial-gradient(circle, var(--md-primary) 0%, transparent 60%); will-change: transform;"></div>
+        <div class="absolute -bottom-[20%] left-[10%] w-[90vw] h-[90vw] opacity-60 dark:opacity-40 animate-blob animation-delay-4000 mix-blend-multiply dark:mix-blend-screen transition-colors duration-500" style="background: radial-gradient(circle, var(--md-secondary-container) 0%, transparent 60%); will-change: transform;"></div>
     </div>
 
     <!-- Main Card container -->
-    <main class="glass-card max-w-[440px] w-full mx-auto flex flex-col gap-8 relative z-10 p-6 sm:p-10 bg-md-surface dark:bg-md-surfaceContainer shadow-m3-3 rounded-[3rem] transition-colors duration-300 ease-bouncy my-auto transform-gpu">
+    <main class="glass-card max-w-[440px] w-full mx-auto flex flex-col gap-8 relative z-10 p-6 sm:p-10 bg-md-surface dark:bg-md-surfaceContainer shadow-m3-3 rounded-[3rem] transition-colors duration-300 ease-bouncy my-auto transform-gpu will-change-transform">
         <!-- Header -->
         <header id="profile-header" class="flex flex-col items-center text-center" style="animation-delay: 0s;"></header>
 
@@ -546,14 +543,27 @@
         let isAboutPageOpen = false;
         let pageTransitionTimeout;
 
+        // Expanded Profile Shape Array (19 Shapes)
         const m3Shapes = [
-            '2rem',                  
-            '50%',                   
-            '3rem 0.5rem 3rem 0.5rem', 
-            '0.5rem 3rem 0.5rem 3rem', 
-            '1rem',                  
-            '50% 50% 1rem 1rem',     
-            '1rem 1rem 50% 50%'      
+            '2rem',                               // 0: Standard Squircle
+            '50%',                                // 1: Perfect Circle
+            '3rem 0.5rem 3rem 0.5rem',            // 2: Leaf 1
+            '0.5rem 3rem 0.5rem 3rem',            // 3: Leaf 2
+            '1rem',                               // 4: Soft Box
+            '50% 50% 1rem 1rem',                  // 5: Arch Up
+            '1rem 1rem 50% 50%',                  // 6: Arch Down
+            '50% 1rem 1rem 50%',                  // 7: D-Shape Left
+            '1rem 50% 50% 1rem',                  // 8: D-Shape Right
+            '0.5rem 50% 50% 50%',                 // 9: Teardrop TL
+            '50% 0.5rem 50% 50%',                 // 10: Teardrop TR
+            '50% 50% 0.5rem 50%',                 // 11: Teardrop BR
+            '50% 50% 50% 0.5rem',                 // 12: Teardrop BL
+            '30% 70% 70% 30% / 30% 30% 70% 70%',  // 13: Organic Blob 1
+            '60% 40% 30% 70% / 60% 30% 70% 40%',  // 14: Organic Blob 2
+            '40% 60% 70% 30% / 40% 50% 60% 50%',  // 15: Organic Blob 3
+            '25% 75% 25% 75% / 75% 25% 75% 25%',  // 16: Slanted Oval Right
+            '75% 25% 75% 25% / 25% 75% 25% 75%',  // 17: Slanted Oval Left
+            '0.5rem'                              // 18: Sharp Box
         ];
         let currentShapeIndex = 0;
 
@@ -574,6 +584,7 @@
 
         function morphProfileShape(event) {
             if (event) createRipple(event); 
+            hapticTap('medium');
             
             const shapeEl = document.getElementById('profile-shape');
             if (!shapeEl) return;
@@ -834,7 +845,6 @@
             }, { passive: true });
         }
 
-        // --- NEW: Glass Mode Toggle Function ---
         function toggleGlassMode() {
             hapticTap('light');
             const html = document.documentElement;
