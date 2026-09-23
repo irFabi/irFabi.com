@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="lavender">
+<html lang="en" data-theme="lavender" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -55,6 +55,40 @@
     </script>
 
     <style>
+        /* Shared Axis Animations */
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideOutLeft {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(-40px); }
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideOutRight {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(40px); }
+        }
+        
+        .slide-in-forward { animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .slide-out-forward { animation: slideOutLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; pointer-events: none; }
+        .slide-in-backward { animation: slideInLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .slide-out-backward { animation: slideOutRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; pointer-events: none; }
+
+        /* Ambient Blob Animations */
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(40px, -60px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob { animation: blob 12s infinite alternate cubic-bezier(0.4, 0, 0.2, 1); }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
+
         /* Shadow Opacity Control for Light/Dark depth */
         :root {
             --shadow-op-1: 0.3;
@@ -292,18 +326,26 @@
 
 <body class="text-md-onSurface bg-md-bodyBg min-h-screen flex flex-col justify-center items-center p-4 sm:p-8 relative selection:bg-md-primaryContainer selection:text-md-onPrimaryContainer transition-colors duration-300 overflow-x-hidden">
 
-    <main class="max-w-[440px] w-full mx-auto flex flex-col gap-8 relative z-10 p-6 sm:p-10 bg-md-surface shadow-m3-3 border border-md-outline/5 dark:border-transparent rounded-[3rem] transition-colors duration-300 ease-bouncy my-auto transform-gpu">
+    <!-- Ambient Background Mesh (Fixed Opacities for Tailwind CSS Variable compatibility) -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute -top-[10%] -left-[10%] w-[60vw] h-[60vw] rounded-full bg-md-primaryContainer opacity-30 blur-[80px] animate-blob mix-blend-multiply dark:mix-blend-screen transition-colors duration-500"></div>
+        <div class="absolute top-[20%] -right-[15%] w-[50vw] h-[50vw] rounded-full bg-md-primary opacity-20 blur-[100px] animate-blob animation-delay-2000 mix-blend-multiply dark:mix-blend-screen transition-colors duration-500"></div>
+        <div class="absolute -bottom-[20%] left-[10%] w-[70vw] h-[70vw] rounded-full bg-md-secondaryContainer opacity-30 blur-[90px] animate-blob animation-delay-4000 mix-blend-multiply dark:mix-blend-screen transition-colors duration-500"></div>
+    </div>
+
+    <main class="max-w-[440px] w-full mx-auto flex flex-col gap-8 relative z-10 p-6 sm:p-10 bg-md-surface dark:bg-md-surfaceContainer shadow-m3-3 border border-black/5 dark:border-transparent rounded-[3rem] transition-colors duration-300 ease-bouncy my-auto transform-gpu">
         <!-- Header -->
         <header id="profile-header" class="flex flex-col items-center text-center" style="animation-delay: 0s;"></header>
 
-        <!-- Main Content Switcher Container -->
-        <div id="page-content" class="w-full relative transition-all duration-300">
+        <!-- Main Content Switcher Container with dynamic JS height wrapper -->
+        <div id="page-content" class="w-full relative block">
+            
             <!-- Links Container -->
             <section id="links-container" class="flex flex-col gap-4 w-full relative z-20 pb-4"></section>
             
             <!-- About Me Page Container -->
             <section id="about-container" class="hidden flex-col gap-4 w-full relative z-20 pb-4">
-                <div class="bg-md-surfaceContainerHigh border border-md-outline/5 dark:border-transparent rounded-[28px] p-6 shadow-m3-1 flex flex-col gap-4">
+                <div class="bg-md-surfaceContainerHigh border border-black/5 dark:border-transparent rounded-[28px] p-6 shadow-m3-1 flex flex-col gap-4">
                     <button onclick="toggleAboutPage()" class="flex items-center gap-2 text-md-primary font-bold text-sm w-max hover:opacity-80 transition-opacity touch-manipulation">
                         <i class="ph-bold ph-arrow-left text-lg"></i> Zurück zu den Links
                     </button>
@@ -315,11 +357,11 @@
                     </div>
 
                     <!-- Expandable Deeper Section -->
-                    <div class="w-full bg-md-surfaceContainerLow border border-md-outline/10 dark:border-transparent rounded-2xl overflow-hidden mt-2">
+                    <div class="w-full bg-black/5 dark:bg-white/5 border border-md-outline/10 dark:border-transparent rounded-2xl overflow-hidden mt-2">
                         <div id="deeper-header" class="group ripple-surface flex items-center justify-between p-4 cursor-pointer hover:bg-md-surfaceVariant/40 transition-colors select-none touch-manipulation">
                             <span class="font-bold text-sm text-md-primary">Der tiefere Kram (Geheimnisse & Details)</span>
                             
-                            <!-- Deeper arrow updated to have the exact same hover outline -->
+                            <!-- Arrow with uniform style -->
                             <div class="w-7 h-7 flex items-center justify-center rounded-full bg-md-surfaceVariant/50 text-md-onSurfaceVariant group-hover:bg-md-primaryContainer group-hover:text-md-primary ring-2 ring-transparent group-hover:ring-md-primary/50 transition-all duration-300">
                                 <i id="deeper-icon" class="ph-bold ph-caret-down text-base transition-transform duration-300"></i>
                             </div>
@@ -340,14 +382,14 @@
     </main>
 
     <!-- Draggable FAB Customization Menu -->
-    <div id="fab-container" class="fixed top-6 right-6 z-50 flex items-center justify-center bg-md-surfaceContainerHigh text-md-onSurface shadow-m3-4 border border-md-outline/10 dark:border-transparent fab-collapsed overflow-hidden touch-manipulation">
+    <div id="fab-container" class="fixed top-6 right-6 z-50 flex items-center justify-center bg-md-surfaceContainerHigh text-md-onSurface shadow-m3-4 border border-black/10 dark:border-transparent fab-collapsed overflow-hidden touch-manipulation">
         
         <div id="fab-icon-view" class="absolute inset-0 flex items-center justify-center opacity-100 transition-opacity duration-200 pointer-events-none">
             <i class="ph-bold ph-palette text-2xl text-md-primary"></i>
         </div>
 
         <div id="fab-panel-view" class="absolute inset-0 p-5 opacity-0 transition-opacity duration-200 pointer-events-none flex flex-col gap-4">
-            <div class="flex justify-between items-center border-b border-md-outline/20 dark:border-transparent pb-3">
+            <div class="flex justify-between items-center border-b border-black/10 dark:border-white/10 pb-3">
                 <h3 class="font-bold text-md-onSurface">Customization</h3>
                 <button id="close-fab-btn" class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-md-surfaceVariant transition-colors duration-200 ease-bouncy text-md-onSurfaceVariant">
                     <i class="ph-bold ph-x text-lg"></i>
@@ -356,13 +398,14 @@
 
             <div class="flex items-center justify-between mt-1">
                 <span class="text-sm font-medium text-md-onSurfaceVariant">Appearance</span>
-                <button id="dark-mode-toggle" onclick="toggleDarkMode()" class="px-4 py-2 rounded-full flex items-center gap-2 bg-md-surface text-md-onSurface border border-md-outline/20 dark:border-transparent shadow-sm hover:bg-md-surfaceVariant transition-all duration-300 ease-bouncy text-sm font-medium active:scale-95">
-                    <i id="theme-icon" class="ph-bold ph-moon"></i>
-                    <span id="theme-text">Dark Mode</span>
+                <!-- Updated default to show Light Mode button since we start in Dark Mode -->
+                <button id="dark-mode-toggle" onclick="toggleDarkMode()" class="px-4 py-2 rounded-full flex items-center gap-2 bg-md-surface text-md-onSurface border border-black/20 dark:border-transparent shadow-sm hover:bg-md-surfaceVariant transition-all duration-300 ease-bouncy text-sm font-medium active:scale-95">
+                    <i id="theme-icon" class="ph-bold ph-sun"></i>
+                    <span id="theme-text">Light Mode</span>
                 </button>
             </div>
             
-            <div class="w-full h-px bg-md-outline/10 my-1"></div>
+            <div class="w-full h-px bg-black/10 dark:bg-white/10 my-1"></div>
 
             <div>
                 <span class="text-sm font-medium text-md-onSurfaceVariant mb-3 block">Color Theme</span>
@@ -377,7 +420,7 @@
                     <button onclick="setTheme('amber')" class="theme-btn w-8 h-8 rounded-full bg-[#785900] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy" data-target="amber"></button>
                     <button onclick="setTheme('cyan')" class="theme-btn w-8 h-8 rounded-full bg-[#006874] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy" data-target="cyan"></button>
 
-                    <div class="relative w-8 h-8 rounded-full ring-offset-2 ring-offset-md-surfaceContainerHigh hover:scale-125 transition-all duration-300 ease-bouncy shadow-inner flex items-center justify-center overflow-hidden border-2 border-md-outline/30 dark:border-transparent bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500">
+                    <div class="relative w-8 h-8 rounded-full ring-offset-2 ring-offset-md-surfaceContainerHigh hover:scale-125 transition-all duration-300 ease-bouncy shadow-inner flex items-center justify-center overflow-hidden border-2 border-black/30 dark:border-transparent bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500">
                         <input type="color" id="custom-color-picker" onchange="generateCustomTheme(this.value)" oninput="generateCustomTheme(this.value)">
                         <i class="ph-bold ph-plus absolute text-white pointer-events-none drop-shadow-md"></i>
                     </div>
@@ -387,7 +430,7 @@
     </div>
 
     <!-- Bottom Pill Navigation for Hidden Links -->
-    <div id="bottom-pill" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-md-surfaceContainerHigh px-2 py-2 flex rounded-full shadow-m3-4 border border-md-outline/10 dark:border-transparent transition-all duration-500 ease-bouncy translate-y-24 opacity-0 scale-95 pointer-events-none z-40 overflow-x-auto max-w-[90vw]">
+    <div id="bottom-pill" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-md-surfaceContainerHigh px-2 py-2 flex rounded-full shadow-m3-4 border border-black/10 dark:border-transparent transition-all duration-500 ease-bouncy translate-y-24 opacity-0 scale-95 pointer-events-none z-40 overflow-x-auto max-w-[90vw]">
     </div>
 
     <!-- Toast Notification -->
@@ -465,6 +508,7 @@
         window.renderedLinks = [];
         let isInitialRender = true;
         let isAboutPageOpen = false;
+        let pageTransitionTimeout;
 
         const m3Shapes = [
             '2rem',                  
@@ -492,25 +536,68 @@
             }, 150);
         }
 
+        // PERFECT HEIGHT TRANSITION FIX
         function toggleAboutPage() {
-            isAboutPageOpen = !isAboutPageOpen;
             const linksContainer = document.getElementById('links-container');
             const aboutContainer = document.getElementById('about-container');
             const bottomPill = document.getElementById('bottom-pill');
+            const pageContent = document.getElementById('page-content');
+
+            if (pageTransitionTimeout) {
+                clearTimeout(pageTransitionTimeout);
+                linksContainer.classList.remove('absolute', 'top-0', 'left-0', 'w-full');
+                aboutContainer.classList.remove('absolute', 'top-0', 'left-0', 'w-full');
+            }
+
+            // Record initial height and lock it
+            const startHeight = pageContent.offsetHeight;
+            pageContent.style.height = startHeight + 'px';
+            pageContent.style.overflow = 'hidden';
+
+            isAboutPageOpen = !isAboutPageOpen;
+            
+            const outgoing = isAboutPageOpen ? linksContainer : aboutContainer;
+            const incoming = isAboutPageOpen ? aboutContainer : linksContainer;
+
+            // Reset animation classes
+            outgoing.classList.remove('slide-in-forward', 'slide-in-backward');
+            incoming.classList.remove('slide-out-forward', 'slide-out-backward');
+
+            // Take outgoing element out of flow
+            outgoing.classList.add('absolute', 'top-0', 'left-0', 'w-full');
+            
+            // Put incoming element into flow
+            incoming.classList.remove('hidden', 'absolute', 'top-0', 'left-0', 'w-full');
+            incoming.classList.add('flex');
 
             if (isAboutPageOpen) {
-                linksContainer.classList.add('hidden');
-                linksContainer.classList.remove('flex');
-                aboutContainer.classList.remove('hidden');
-                aboutContainer.classList.add('flex', 'fade-in-up');
+                outgoing.classList.add('slide-out-forward');
+                incoming.classList.add('slide-in-forward');
                 bottomPill.classList.add('translate-y-24', 'opacity-0', 'scale-95', 'pointer-events-none');
             } else {
-                aboutContainer.classList.add('hidden');
-                aboutContainer.classList.remove('flex', 'fade-in-up');
-                linksContainer.classList.remove('hidden');
-                linksContainer.classList.add('flex');
+                outgoing.classList.add('slide-out-backward');
+                incoming.classList.add('slide-in-backward');
                 renderBottomPill();
             }
+
+            // Get target height for the transition
+            const targetHeight = incoming.offsetHeight;
+            
+            // Force browser reflow to acknowledge start state
+            void pageContent.offsetHeight;
+            
+            // Start smooth height transition
+            pageContent.style.transition = 'height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            pageContent.style.height = targetHeight + 'px';
+
+            pageTransitionTimeout = setTimeout(() => {
+                outgoing.classList.add('hidden');
+                outgoing.classList.remove('flex', 'absolute', 'top-0', 'left-0', 'w-full', 'slide-out-forward', 'slide-out-backward');
+                pageContent.style.height = 'auto';
+                pageContent.style.overflow = 'visible';
+                pageContent.style.transition = '';
+                pageTransitionTimeout = null;
+            }, 400);
         }
 
         function setupDeeperSection() {
@@ -614,10 +701,6 @@
             
             setupDraggableFAB();
             setupOverscrollStretch();
-            
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                if(!document.documentElement.classList.contains('dark')) toggleDarkMode(true);
-            }
             
             setTimeout(() => { isInitialRender = false; }, 150);
         }
@@ -800,7 +883,7 @@
                     --md-surface-container-high: hsl(${h}, Math.max(0, ${s}-10)%, 16%);
                     --md-surface-container-highest: hsl(${h}, Math.max(0, ${s}-10)%, 20%);
                     --md-outline: hsl(${h}, Math.max(0, ${s}-10)%, 60%);
-                    --md-body-bg: hsl(${h}, Math.max(0, ${s}-15)%, 9%);
+                    --md-body-bg: #141218;
                 }`;
             }
             
@@ -811,7 +894,7 @@
                 btn.classList.add('ring-transparent'); btn.classList.remove('ring-2', 'ring-md-primary');
             });
             const customPickerContainer = document.getElementById('custom-color-picker').parentElement;
-            customPickerContainer.classList.remove('border-2', 'border-md-outline/30');
+            customPickerContainer.classList.remove('border-2', 'border-md-outline/30', 'dark:border-transparent');
             customPickerContainer.classList.add('ring-2', 'ring-md-primary');
         }
 
