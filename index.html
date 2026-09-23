@@ -78,7 +78,7 @@
         .slide-in-backward { animation: slideInLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         .slide-out-backward { animation: slideOutRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; pointer-events: none; }
 
-        /* Ambient Blob Animations - OPTIMIZED */
+        /* Ambient Blob Animations - Optimized */
         @keyframes blob {
             0% { transform: translate(0px, 0px) scale(1); }
             33% { transform: translate(30px, -40px) scale(1.05); }
@@ -92,56 +92,33 @@
         .animation-delay-2000 { animation-delay: 2s; }
         .animation-delay-4000 { animation-delay: 4s; }
 
-        /* --- THE ULTIMATE GLASSMORPHISM --- */
+        /* --- PERFORMANCE-OPTIMIZED FROSTED GLASS --- */
         
-        /* 1. Main Card (Blur & Glare) */
+        /* Main Card Glass (Optimized blur for mobile) */
         html[data-glass="true"] .glass-card {
-            background: linear-gradient(135deg, color-mix(in srgb, var(--md-surface) 60%, transparent), color-mix(in srgb, var(--md-surface) 20%, transparent)) !important;
-            backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
-            border: 1px solid color-mix(in srgb, var(--md-on-surface) 10%, transparent) !important;
-            border-top: 1px solid color-mix(in srgb, var(--md-on-surface) 25%, transparent) !important;
-            border-left: 1px solid color-mix(in srgb, var(--md-on-surface) 25%, transparent) !important;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0px rgba(255, 255, 255, 0.5) !important;
-            transform: translateZ(0); /* Hardware Acceleration */
+            background-color: color-mix(in srgb, var(--md-surface) 65%, transparent) !important;
+            backdrop-filter: blur(20px) saturate(160%);
+            -webkit-backdrop-filter: blur(20px) saturate(160%);
+            border: 1px solid color-mix(in srgb, var(--md-on-surface) 12%, transparent) !important;
+            transform: translateZ(0);
         }
         html[data-glass="true"].dark .glass-card {
-            background: linear-gradient(135deg, color-mix(in srgb, var(--md-surface-container) 45%, transparent), color-mix(in srgb, var(--md-surface-container) 15%, transparent)) !important;
-            border: 1px solid rgba(255, 255, 255, 0.06) !important;
-            border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
-            border-left: 1px solid rgba(255, 255, 255, 0.15) !important;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0px rgba(255, 255, 255, 0.1) !important;
+            background-color: color-mix(in srgb, var(--md-surface-container) 55%, transparent) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
         }
 
-        /* 2. Inner Buttons (NO BLUR - Performance Fix) */
-        html[data-glass="true"] .glass-button {
-            background: linear-gradient(135deg, color-mix(in srgb, var(--md-surface-container-high) 50%, transparent), color-mix(in srgb, var(--md-surface-container-high) 10%, transparent)) !important;
-            border: 1px solid color-mix(in srgb, var(--md-on-surface) 5%, transparent) !important;
-            border-top: 1px solid color-mix(in srgb, var(--md-on-surface) 15%, transparent) !important;
-            box-shadow: inset 0 1px 0 rgba(255,255,255, 0.4) !important;
-        }
-        html[data-glass="true"].dark .glass-button {
-            background: linear-gradient(135deg, color-mix(in srgb, var(--md-surface-container-highest) 35%, transparent), color-mix(in srgb, var(--md-surface-container-highest) 5%, transparent)) !important;
-            border: 1px solid rgba(255, 255, 255, 0.03) !important;
-            border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-            box-shadow: inset 0 1px 0 rgba(255,255,255, 0.05) !important;
-        }
-
-        /* 3. Floating Elements (FAB & Pill - Needs its own blur) */
+        /* Floating Menu & Pill Glass */
         html[data-glass="true"] .glass-floating {
-            background: linear-gradient(135deg, color-mix(in srgb, var(--md-surface-container-high) 70%, transparent), color-mix(in srgb, var(--md-surface-container-high) 30%, transparent)) !important;
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background-color: color-mix(in srgb, var(--md-surface-container-high) 70%, transparent) !important;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid color-mix(in srgb, var(--md-on-surface) 15%, transparent) !important;
-            border-top: 1px solid color-mix(in srgb, var(--md-on-surface) 30%, transparent) !important;
             transform: translateZ(0);
         }
         html[data-glass="true"].dark .glass-floating {
-            background: linear-gradient(135deg, color-mix(in srgb, var(--md-surface-container-highest) 50%, transparent), color-mix(in srgb, var(--md-surface-container-highest) 20%, transparent)) !important;
-            border: 1px solid rgba(255, 255, 255, 0.08) !important;
-            border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+            background-color: color-mix(in srgb, var(--md-surface-container-highest) 60%, transparent) !important;
+            border: 1px solid rgba(255, 255, 255, 0.12) !important;
         }
-
 
         /* Shadow Opacity Control for Light/Dark depth */
         :root {
@@ -331,6 +308,7 @@
                         box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
                         left 0.4s ease, right 0.4s ease, top 0.4s ease, bottom 0.4s ease;
             position: fixed;
+            will-change: transform;
         }
         .fab-expanded {
             width: 320px !important;
@@ -380,14 +358,14 @@
 
 <body class="text-md-onSurface bg-md-bodyBg min-h-screen flex flex-col justify-center items-center p-4 sm:p-8 relative selection:bg-md-primaryContainer selection:text-md-onPrimaryContainer transition-colors duration-300 overflow-x-hidden">
 
-    <!-- Ambient Background Mesh - ULTRA OPTIMIZED (No mix-blend-mode) -->
+    <!-- Ambient Background Mesh (Optimized Radial Gradients) -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div class="absolute -top-[10%] -left-[10%] w-[80vw] h-[80vw] opacity-70 dark:opacity-50 animate-blob transition-colors duration-500" style="background: radial-gradient(circle, var(--md-primary-container) 0%, transparent 60%); will-change: transform;"></div>
-        <div class="absolute top-[20%] -right-[15%] w-[70vw] h-[70vw] opacity-50 dark:opacity-40 animate-blob animation-delay-2000 transition-colors duration-500" style="background: radial-gradient(circle, var(--md-primary) 0%, transparent 60%); will-change: transform;"></div>
-        <div class="absolute -bottom-[20%] left-[10%] w-[90vw] h-[90vw] opacity-70 dark:opacity-50 animate-blob animation-delay-4000 transition-colors duration-500" style="background: radial-gradient(circle, var(--md-secondary-container) 0%, transparent 60%); will-change: transform;"></div>
+        <div class="absolute -top-[10%] -left-[10%] w-[80vw] h-[80vw] opacity-60 dark:opacity-40 animate-blob transition-colors duration-500" style="background: radial-gradient(circle, var(--md-primary-container) 0%, transparent 60%); will-change: transform;"></div>
+        <div class="absolute top-[20%] -right-[15%] w-[70vw] h-[70vw] opacity-50 dark:opacity-30 animate-blob animation-delay-2000 transition-colors duration-500" style="background: radial-gradient(circle, var(--md-primary) 0%, transparent 60%); will-change: transform;"></div>
+        <div class="absolute -bottom-[20%] left-[10%] w-[90vw] h-[90vw] opacity-60 dark:opacity-40 animate-blob animation-delay-4000 transition-colors duration-500" style="background: radial-gradient(circle, var(--md-secondary-container) 0%, transparent 60%); will-change: transform;"></div>
     </div>
 
-    <!-- Main Card container -->
+    <!-- Main Frosted Glass Card Container -->
     <main class="glass-card max-w-[440px] w-full mx-auto flex flex-col gap-8 relative z-10 p-6 sm:p-10 bg-md-surface dark:bg-md-surfaceContainer shadow-m3-3 rounded-[3rem] transition-colors duration-300 ease-bouncy my-auto transform-gpu">
         <!-- Header -->
         <header id="profile-header" class="flex flex-col items-center text-center" style="animation-delay: 0s;"></header>
@@ -414,7 +392,7 @@
                 </div>
 
                 <!-- Expandable Deeper Section -->
-                <div class="glass-button bg-md-surfaceContainerHigh dark:bg-md-surface w-full rounded-2xl overflow-hidden mt-4">
+                <div class="bg-md-surfaceContainerHigh dark:bg-md-surface w-full border border-black/5 dark:border-transparent rounded-2xl overflow-hidden mt-4">
                     <div id="deeper-header" class="group ripple-surface flex items-center justify-between p-4 cursor-pointer hover:bg-md-surfaceVariant/40 transition-colors select-none touch-manipulation">
                         <span class="font-bold text-sm text-md-primary">Der tiefere Kram (Geheimnisse & Details)</span>
                         
@@ -438,7 +416,7 @@
     </main>
 
     <!-- Draggable FAB Customization Menu -->
-    <div id="fab-container" class="glass-floating bg-md-surfaceContainerHigh fixed top-6 right-6 z-50 flex items-center justify-center text-md-onSurface shadow-m3-4 fab-collapsed overflow-hidden touch-manipulation">
+    <div id="fab-container" class="glass-floating fixed top-6 right-6 z-50 flex items-center justify-center bg-md-surfaceContainerHigh text-md-onSurface shadow-m3-4 fab-collapsed overflow-hidden touch-manipulation">
         
         <div id="fab-icon-view" class="absolute inset-0 flex items-center justify-center opacity-100 transition-opacity duration-200 pointer-events-none">
             <i class="ph-bold ph-palette text-2xl text-md-primary"></i>
@@ -495,7 +473,7 @@
     </div>
 
     <!-- Bottom Pill Navigation for Hidden Links -->
-    <div id="bottom-pill" class="glass-floating bg-md-surfaceContainerHigh fixed bottom-6 left-1/2 -translate-x-1/2 px-2 py-2 flex rounded-full shadow-m3-4 transition-all duration-500 ease-bouncy translate-y-24 opacity-0 scale-95 pointer-events-none z-40 overflow-x-auto max-w-[90vw]">
+    <div id="bottom-pill" class="glass-floating fixed bottom-6 left-1/2 -translate-x-1/2 px-2 py-2 flex rounded-full shadow-m3-4 transition-all duration-500 ease-bouncy translate-y-24 opacity-0 scale-95 pointer-events-none z-40 overflow-x-auto max-w-[90vw]">
     </div>
 
     <!-- Toast Notification -->
@@ -544,20 +522,20 @@
                 },
                 {
                     name: "Instagram",
-                    subtitle: "@ir_fabi",
-                    url: "https://instagram.com/ir_fabi",
+                    subtitle: "@ir_Fabi",
+                    url: "https://instagram.com/ir_Fabi",
                     icon: "./instagram.png"
                 },
                 {
                     name: "X / Twitter",
-                    subtitle: "@ir_fabi_",
-                    url: "https://twitter.com/ir_fabi_",
+                    subtitle: "@ir_Fabi_",
+                    url: "https://twitter.com/ir_Fabi_",
                     icon: "./twitter.png"
                 },
                 {
                     name: "TikTok",
-                    subtitle: "@ir_fabi",
-                    url: "https://tiktok.com/@ir_fabi",
+                    subtitle: "@ir_Fabi",
+                    url: "https://tiktok.com/@ir_Fabi",
                     icon: "./tiktok.png"
                 },
                 {
@@ -1001,7 +979,7 @@
                 btn.classList.add('ring-transparent'); btn.classList.remove('ring-2', 'ring-md-primary');
             });
             const customPickerContainer = document.getElementById('custom-color-picker').parentElement;
-            customPickerContainer.classList.remove('border-2', 'border-md-outline/30', 'dark:border-transparent');
+            customPickerContainer.classList.remove('border-2', 'border-md-outline/30');
             customPickerContainer.classList.add('ring-2', 'ring-md-primary');
         }
 
@@ -1062,7 +1040,7 @@
                 const linkId = 'link-' + index;
                 
                 const linkBlock = document.createElement('div');
-                linkBlock.className = `glass-button flex flex-col w-full rounded-[22px] shadow-m3-1 transition-all duration-300 ease-bouncy hover:shadow-m3-2 overflow-hidden transform-gpu`;
+                linkBlock.className = `flex flex-col w-full bg-md-surfaceContainerHigh border border-black/5 dark:border-transparent rounded-[22px] shadow-m3-1 transition-all duration-300 ease-bouncy hover:shadow-m3-2 overflow-hidden transform-gpu`;
                 
                 if (isInitialRender) {
                     linkBlock.classList.add('fade-in-up');
