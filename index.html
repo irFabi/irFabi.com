@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ir_fabi | Links</title>
+    <title>ir_Fabi | Links</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,10 +44,10 @@
                         'bouncy': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
                     },
                     boxShadow: {
-                        'm3-1': '0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15)',
-                        'm3-2': '0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 2px 6px 2px rgba(0, 0, 0, 0.15)',
-                        'm3-3': '0px 4px 8px 3px rgba(0, 0, 0, 0.15), 0px 1px 3px 0px rgba(0, 0, 0, 0.3)',
-                        'm3-4': '0px 6px 10px 4px rgba(0, 0, 0, 0.15), 0px 2px 3px 0px rgba(0, 0, 0, 0.3)',
+                        'm3-1': '0px 1px 2px 0px rgba(0, 0, 0, var(--shadow-op-1)), 0px 1px 3px 1px rgba(0, 0, 0, var(--shadow-op-2))',
+                        'm3-2': '0px 1px 2px 0px rgba(0, 0, 0, var(--shadow-op-1)), 0px 2px 6px 2px rgba(0, 0, 0, var(--shadow-op-2))',
+                        'm3-3': '0px 4px 8px 3px rgba(0, 0, 0, var(--shadow-op-2)), 0px 1px 3px 0px rgba(0, 0, 0, var(--shadow-op-1))',
+                        'm3-4': '0px 6px 10px 4px rgba(0, 0, 0, var(--shadow-op-2)), 0px 2px 3px 0px rgba(0, 0, 0, var(--shadow-op-1))',
                     }
                 }
             }
@@ -55,6 +55,16 @@
     </script>
 
     <style>
+        /* Shadow Opacity Control for Light/Dark depth */
+        :root {
+            --shadow-op-1: 0.3;
+            --shadow-op-2: 0.15;
+        }
+        .dark {
+            --shadow-op-1: 0.8;
+            --shadow-op-2: 0.5;
+        }
+
         /* Lavender Theme */
         :root, [data-theme="lavender"] {
             --md-primary: #6750a4; --md-on-primary: #ffffff;
@@ -282,32 +292,71 @@
 
 <body class="text-md-onSurface bg-md-bodyBg min-h-screen flex flex-col justify-center items-center p-4 sm:p-8 relative selection:bg-md-primaryContainer selection:text-md-onPrimaryContainer transition-colors duration-300 overflow-x-hidden">
 
-    <main class="max-w-[440px] w-full mx-auto flex flex-col gap-8 relative z-10 p-6 sm:p-10 bg-md-surface shadow-m3-3 border border-md-outline/5 rounded-[3rem] transition-colors duration-300 ease-bouncy my-auto transform-gpu">
+    <main class="max-w-[440px] w-full mx-auto flex flex-col gap-8 relative z-10 p-6 sm:p-10 bg-md-surface shadow-m3-3 border border-md-outline/5 dark:border-transparent rounded-[3rem] transition-colors duration-300 ease-bouncy my-auto transform-gpu">
         <!-- Header -->
         <header id="profile-header" class="flex flex-col items-center text-center" style="animation-delay: 0s;"></header>
 
-        <!-- Links Container -->
-        <section id="links-container" class="flex flex-col gap-4 w-full relative z-20 pb-4"></section>
+        <!-- Main Content Switcher Container -->
+        <div id="page-content" class="w-full relative transition-all duration-300">
+            <!-- Links Container -->
+            <section id="links-container" class="flex flex-col gap-4 w-full relative z-20 pb-4"></section>
+            
+            <!-- About Me Page Container -->
+            <section id="about-container" class="hidden flex-col gap-4 w-full relative z-20 pb-4">
+                <div class="bg-md-surfaceContainerHigh border border-md-outline/5 dark:border-transparent rounded-[28px] p-6 shadow-m3-1 flex flex-col gap-4">
+                    <button onclick="toggleAboutPage()" class="flex items-center gap-2 text-md-primary font-bold text-sm w-max hover:opacity-80 transition-opacity touch-manipulation">
+                        <i class="ph-bold ph-arrow-left text-lg"></i> Zurück zu den Links
+                    </button>
+                    <h2 class="text-2xl font-bold tracking-tight text-md-onSurface">Über mich</h2>
+                    <div class="text-md-onSurfaceVariant text-sm leading-relaxed flex flex-col gap-3">
+                        <p>
+                            Hier kannst du deinen vollständigen "About Me"-Text reinschreiben! Erzähl deiner Community, wer du bist, was du machst, welche Spiele du liebst oder was auch immer du teilen möchtest.
+                        </p>
+                    </div>
+
+                    <!-- Expandable Deeper Section -->
+                    <div class="w-full bg-md-surfaceContainerLow border border-md-outline/10 dark:border-transparent rounded-2xl overflow-hidden mt-2">
+                        <div id="deeper-header" class="group ripple-surface flex items-center justify-between p-4 cursor-pointer hover:bg-md-surfaceVariant/40 transition-colors select-none touch-manipulation">
+                            <span class="font-bold text-sm text-md-primary">Der tiefere Kram (Geheimnisse & Details)</span>
+                            
+                            <!-- Deeper arrow updated to have the exact same hover outline -->
+                            <div class="w-7 h-7 flex items-center justify-center rounded-full bg-md-surfaceVariant/50 text-md-onSurfaceVariant group-hover:bg-md-primaryContainer group-hover:text-md-primary ring-2 ring-transparent group-hover:ring-md-primary/50 transition-all duration-300">
+                                <i id="deeper-icon" class="ph-bold ph-caret-down text-base transition-transform duration-300"></i>
+                            </div>
+
+                        </div>
+                        <div id="deeper-wrapper" class="expand-wrapper">
+                            <div class="overflow-hidden">
+                                <div class="expand-inner p-4 pt-0 text-sm text-md-onSurfaceVariant leading-relaxed flex flex-col gap-2">
+                                    <p>Hier kommt der tiefere Kram rein! Zum Beispiel Hintergrundinfos zu deinen Projekten, Easter Eggs, Setup-Details oder tiefgründigere Gedanken, die man nicht sofort auf den ersten Blick sieht.</p>
+                                    <p>Viel Spaß beim Ausfüllen und Anpassen! 🚀✨</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
     <!-- Draggable FAB Customization Menu -->
-    <div id="fab-container" class="fixed top-6 right-6 z-50 flex items-center justify-center bg-md-surfaceContainerHigh text-md-onSurface shadow-m3-4 border border-md-outline/10 fab-collapsed overflow-hidden touch-manipulation">
+    <div id="fab-container" class="fixed top-6 right-6 z-50 flex items-center justify-center bg-md-surfaceContainerHigh text-md-onSurface shadow-m3-4 border border-md-outline/10 dark:border-transparent fab-collapsed overflow-hidden touch-manipulation">
         
         <div id="fab-icon-view" class="absolute inset-0 flex items-center justify-center opacity-100 transition-opacity duration-200 pointer-events-none">
             <i class="ph-bold ph-palette text-2xl text-md-primary"></i>
         </div>
 
         <div id="fab-panel-view" class="absolute inset-0 p-5 opacity-0 transition-opacity duration-200 pointer-events-none flex flex-col gap-4">
-            <div class="flex justify-between items-center border-b border-md-outline/20 pb-3">
+            <div class="flex justify-between items-center border-b border-md-outline/20 dark:border-transparent pb-3">
                 <h3 class="font-bold text-md-onSurface">Customization</h3>
-                <button id="close-fab-btn" class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-md-surfaceVariant transition-colors duration-200 ease-bouncy text-md-onSurfaceVariant touch-manipulation">
+                <button id="close-fab-btn" class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-md-surfaceVariant transition-colors duration-200 ease-bouncy text-md-onSurfaceVariant">
                     <i class="ph-bold ph-x text-lg"></i>
                 </button>
             </div>
 
             <div class="flex items-center justify-between mt-1">
                 <span class="text-sm font-medium text-md-onSurfaceVariant">Appearance</span>
-                <button id="dark-mode-toggle" onclick="toggleDarkMode()" class="px-4 py-2 rounded-full flex items-center gap-2 bg-md-surface text-md-onSurface border border-md-outline/20 shadow-sm hover:bg-md-surfaceVariant transition-all duration-300 ease-bouncy text-sm font-medium active:scale-95 touch-manipulation">
+                <button id="dark-mode-toggle" onclick="toggleDarkMode()" class="px-4 py-2 rounded-full flex items-center gap-2 bg-md-surface text-md-onSurface border border-md-outline/20 dark:border-transparent shadow-sm hover:bg-md-surfaceVariant transition-all duration-300 ease-bouncy text-sm font-medium active:scale-95">
                     <i id="theme-icon" class="ph-bold ph-moon"></i>
                     <span id="theme-text">Dark Mode</span>
                 </button>
@@ -318,17 +367,17 @@
             <div>
                 <span class="text-sm font-medium text-md-onSurfaceVariant mb-3 block">Color Theme</span>
                 <div class="grid grid-cols-5 gap-3">
-                    <button onclick="setTheme('lavender')" class="theme-btn w-8 h-8 rounded-full bg-[#6750a4] ring-2 ring-offset-2 ring-offset-md-surfaceContainerHigh ring-md-primary hover:scale-125 transition-all duration-300 ease-bouncy touch-manipulation" data-target="lavender"></button>
-                    <button onclick="setTheme('blue')" class="theme-btn w-8 h-8 rounded-full bg-[#0061a4] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy touch-manipulation" data-target="blue"></button>
-                    <button onclick="setTheme('green')" class="theme-btn w-8 h-8 rounded-full bg-[#386a20] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy touch-manipulation" data-target="green"></button>
-                    <button onclick="setTheme('rose')" class="theme-btn w-8 h-8 rounded-full bg-[#b3261e] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy touch-manipulation" data-target="rose"></button>
-                    <button onclick="setTheme('peach')" class="theme-btn w-8 h-8 rounded-full bg-[#984816] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy touch-manipulation" data-target="peach"></button>
+                    <button onclick="setTheme('lavender')" class="theme-btn w-8 h-8 rounded-full bg-[#6750a4] ring-2 ring-offset-2 ring-offset-md-surfaceContainerHigh ring-md-primary hover:scale-125 transition-all duration-300 ease-bouncy" data-target="lavender"></button>
+                    <button onclick="setTheme('blue')" class="theme-btn w-8 h-8 rounded-full bg-[#0061a4] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy" data-target="blue"></button>
+                    <button onclick="setTheme('green')" class="theme-btn w-8 h-8 rounded-full bg-[#386a20] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy" data-target="green"></button>
+                    <button onclick="setTheme('rose')" class="theme-btn w-8 h-8 rounded-full bg-[#b3261e] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy" data-target="rose"></button>
+                    <button onclick="setTheme('peach')" class="theme-btn w-8 h-8 rounded-full bg-[#984816] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy" data-target="peach"></button>
                     
-                    <button onclick="setTheme('mint')" class="theme-btn w-8 h-8 rounded-full bg-[#006b5b] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy touch-manipulation" data-target="mint"></button>
-                    <button onclick="setTheme('amber')" class="theme-btn w-8 h-8 rounded-full bg-[#785900] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy touch-manipulation" data-target="amber"></button>
-                    <button onclick="setTheme('cyan')" class="theme-btn w-8 h-8 rounded-full bg-[#006874] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy touch-manipulation" data-target="cyan"></button>
+                    <button onclick="setTheme('mint')" class="theme-btn w-8 h-8 rounded-full bg-[#006b5b] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy" data-target="mint"></button>
+                    <button onclick="setTheme('amber')" class="theme-btn w-8 h-8 rounded-full bg-[#785900] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy" data-target="amber"></button>
+                    <button onclick="setTheme('cyan')" class="theme-btn w-8 h-8 rounded-full bg-[#006874] ring-offset-2 ring-offset-md-surfaceContainerHigh ring-transparent hover:scale-125 transition-all duration-300 ease-bouncy" data-target="cyan"></button>
 
-                    <div class="relative w-8 h-8 rounded-full ring-offset-2 ring-offset-md-surfaceContainerHigh hover:scale-125 transition-all duration-300 ease-bouncy shadow-inner flex items-center justify-center overflow-hidden border-2 border-md-outline/30 bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500 touch-manipulation">
+                    <div class="relative w-8 h-8 rounded-full ring-offset-2 ring-offset-md-surfaceContainerHigh hover:scale-125 transition-all duration-300 ease-bouncy shadow-inner flex items-center justify-center overflow-hidden border-2 border-md-outline/30 dark:border-transparent bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500">
                         <input type="color" id="custom-color-picker" onchange="generateCustomTheme(this.value)" oninput="generateCustomTheme(this.value)">
                         <i class="ph-bold ph-plus absolute text-white pointer-events-none drop-shadow-md"></i>
                     </div>
@@ -338,7 +387,7 @@
     </div>
 
     <!-- Bottom Pill Navigation for Hidden Links -->
-    <div id="bottom-pill" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-md-surfaceContainerHigh px-2 py-2 flex rounded-full shadow-m3-4 border border-md-outline/10 transition-all duration-500 ease-bouncy translate-y-24 opacity-0 scale-95 pointer-events-none z-40 overflow-x-auto max-w-[90vw]">
+    <div id="bottom-pill" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-md-surfaceContainerHigh px-2 py-2 flex rounded-full shadow-m3-4 border border-md-outline/10 dark:border-transparent transition-all duration-500 ease-bouncy translate-y-24 opacity-0 scale-95 pointer-events-none z-40 overflow-x-auto max-w-[90vw]">
     </div>
 
     <!-- Toast Notification -->
@@ -351,22 +400,22 @@
         const CONFIG = {
             profile: {
                 name: "ir_Fabi",
-                handle: "@ir_fabi",
+                handle: "about me",
                 bio: "Hier ist ein Link zu jeglicher Form von geistigem durchfall den ich so ins Internet schieße 🦄",
                 avatarUrl: "./avatar.jpg"
             },
             links: [
                 {
                     name: "Stream Schedule",
-                    subtitle: "Subtile foreshadowing",
+                    subtitle: "What I'm playing next",
                     url: "#",
                     icon: "./calendar.png",
                     isExpandable: true,
                     isSchedule: true,
                     scheduleData: [
-                        { day: "[DAY]", game: "[GAME]", time: "[TIME]" },
-                        { day: "[DAY]", game: "[GAME]", time: "[TIME]" },
-                        { day: "[DAY]", game: "[GAME]", time: "[TIME]" }
+                        { day: "Monday", game: "Zelda: Tears of the Kingdom", time: "18:00 CEST" },
+                        { day: "Wednesday", game: "Splatoon 3", time: "19:00 CEST" },
+                        { day: "Friday", game: "Paper Mario", time: "20:00 CEST" }
                     ]
                 },
                 {
@@ -405,8 +454,8 @@
                 },
                 {
                     name: "Discord",
-                    subtitle: "komm auf den Server UwU",
-                    url: "https://discord.gg/e6xWd7e8f4",
+                    subtitle: "Join the server",
+                    url: "https://discord.gg/",
                     icon: "./discord.png"
                 }
             ]
@@ -415,16 +464,16 @@
         let linkObserver;
         window.renderedLinks = [];
         let isInitialRender = true;
+        let isAboutPageOpen = false;
 
-        // Material 3 Shape Array for the Easter Egg
         const m3Shapes = [
-            '2rem',                  // 0: Default Squircle
-            '50%',                   // 1: Full Circle
-            '3rem 0.5rem 3rem 0.5rem', // 2: Leaf Top-Right / Bottom-Left
-            '0.5rem 3rem 0.5rem 3rem', // 3: Leaf Top-Left / Bottom-Right
-            '1rem',                  // 4: Standard Rounded Square
-            '50% 50% 1rem 1rem',     // 5: Dome Top
-            '1rem 1rem 50% 50%'      // 6: Bowl Bottom
+            '2rem',                  
+            '50%',                   
+            '3rem 0.5rem 3rem 0.5rem', 
+            '0.5rem 3rem 0.5rem 3rem', 
+            '1rem',                  
+            '50% 50% 1rem 1rem',     
+            '1rem 1rem 50% 50%'      
         ];
         let currentShapeIndex = 0;
 
@@ -441,6 +490,50 @@
             setTimeout(() => {
                 shapeEl.style.transform = '';
             }, 150);
+        }
+
+        function toggleAboutPage() {
+            isAboutPageOpen = !isAboutPageOpen;
+            const linksContainer = document.getElementById('links-container');
+            const aboutContainer = document.getElementById('about-container');
+            const bottomPill = document.getElementById('bottom-pill');
+
+            if (isAboutPageOpen) {
+                linksContainer.classList.add('hidden');
+                linksContainer.classList.remove('flex');
+                aboutContainer.classList.remove('hidden');
+                aboutContainer.classList.add('flex', 'fade-in-up');
+                bottomPill.classList.add('translate-y-24', 'opacity-0', 'scale-95', 'pointer-events-none');
+            } else {
+                aboutContainer.classList.add('hidden');
+                aboutContainer.classList.remove('flex', 'fade-in-up');
+                linksContainer.classList.remove('hidden');
+                linksContainer.classList.add('flex');
+                renderBottomPill();
+            }
+        }
+
+        function setupDeeperSection() {
+            const header = document.getElementById('deeper-header');
+            const wrapper = document.getElementById('deeper-wrapper');
+            const icon = document.getElementById('deeper-icon');
+
+            if (header && wrapper) {
+                header.onclick = (e) => {
+                    const isExpanded = wrapper.classList.contains('expanded');
+                    if (isExpanded) {
+                        wrapper.classList.remove('expanded');
+                        wrapper.classList.add('collapsing');
+                        if (icon) icon.style.transform = "rotate(0deg)";
+                        setTimeout(() => wrapper.classList.remove('collapsing'), 300);
+                    } else {
+                        wrapper.classList.remove('collapsing');
+                        wrapper.classList.add('expanded');
+                        if (icon) icon.style.transform = "rotate(180deg)";
+                    }
+                    createRipple(e);
+                };
+            }
         }
 
         async function fetchLatestYouTubeVideo() {
@@ -514,6 +607,7 @@
         function initApp() {
             renderHeader();
             renderLinks();
+            setupDeeperSection();
             
             checkTwitchLiveStatus(); 
             fetchLatestYouTubeVideo();
@@ -860,19 +954,19 @@
         function renderHeader() {
             const headerContainer = document.getElementById('profile-header');
             headerContainer.innerHTML = `
-                <div class="relative group cursor-pointer mb-5 mx-auto flex justify-center items-center touch-manipulation">
-                    <div id="profile-shape" onclick="morphProfileShape(event)" class="ripple-surface w-28 h-28 rounded-[2rem] bg-md-primaryContainer text-md-onPrimaryContainer flex items-center justify-center overflow-hidden shadow-m3-2 transition-all duration-500 ease-bouncy group-hover:shadow-m3-3 group-hover:scale-110 relative z-10 border-2 border-transparent group-hover:border-md-primary/30 mx-auto" style="transition-property: border-radius, transform, box-shadow, background-color, border-color;">
+                <div class="relative group cursor-pointer mb-4 mx-auto flex justify-center items-center touch-manipulation">
+                    <div id="profile-shape" onclick="morphProfileShape(event)" class="ripple-surface w-24 h-24 rounded-[2rem] bg-md-primaryContainer text-md-onPrimaryContainer flex items-center justify-center overflow-hidden shadow-m3-2 transition-all duration-500 ease-bouncy group-hover:shadow-m3-3 group-hover:scale-105 relative z-10 border-2 border-transparent group-hover:border-md-primary/30 mx-auto" style="transition-property: border-radius, transform, box-shadow, background-color, border-color;">
                         <img src="${CONFIG.profile.avatarUrl}" alt="${CONFIG.profile.name}" class="w-full h-full object-cover transition-opacity duration-200 pointer-events-none" onerror="this.style.display='none'">
-                        <i class="ph-fill ph-user text-5xl absolute -z-10 pointer-events-none"></i>
+                        <i class="ph-fill ph-user text-4xl absolute -z-10 pointer-events-none"></i>
                     </div>
                 </div>
-                <h1 class="text-3xl font-bold tracking-tight text-md-onSurface mb-1 text-center">${CONFIG.profile.name}</h1>
+                <h1 class="text-2xl font-bold tracking-tight text-md-onSurface mb-0.5 text-center">${CONFIG.profile.name}</h1>
                 <div class="flex justify-center w-full">
-                    <p class="text-md-onSurfaceVariant font-medium flex items-center justify-center gap-1.5 text-sm bg-md-surfaceContainerHighest px-3 py-1 rounded-lg mt-1 transition-colors hover:bg-md-primaryContainer hover:text-md-onPrimaryContainer cursor-default border border-md-outline/10 w-max mx-auto">
-                        <i class="ph-fill ph-link"></i> ${CONFIG.profile.handle}
+                    <p onclick="toggleAboutPage()" class="text-md-primary font-medium text-xs cursor-pointer hover:underline transition-all touch-manipulation">
+                        ${CONFIG.profile.handle}
                     </p>
                 </div>
-                <p class="text-md-onSurfaceVariant text-sm mt-4 max-w-[280px] mx-auto text-center">
+                <p class="text-md-onSurfaceVariant text-xs mt-3 max-w-[260px] mx-auto text-center leading-relaxed opacity-90">
                     ${CONFIG.profile.bio}
                 </p>
             `;
@@ -914,7 +1008,7 @@
                 const linkId = 'link-' + index;
                 
                 const linkBlock = document.createElement('div');
-                linkBlock.className = `flex flex-col w-full bg-md-surfaceContainerHigh border border-md-outline/5 rounded-[28px] shadow-m3-1 transition-all duration-300 ease-bouncy hover:shadow-m3-2 overflow-hidden transform-gpu`;
+                linkBlock.className = `flex flex-col w-full bg-md-surfaceContainerHigh border border-md-outline/5 dark:border-transparent rounded-[22px] shadow-m3-1 transition-all duration-300 ease-bouncy hover:shadow-m3-2 overflow-hidden transform-gpu`;
                 
                 if (isInitialRender) {
                     linkBlock.classList.add('fade-in-up');
@@ -923,28 +1017,28 @@
                 linkBlock.dataset.id = linkId;
                 
                 const innerContent = `
-                    <div class="w-[56px] h-[56px] shrink-0 flex items-center justify-center bg-md-secondaryContainer/40 text-md-onSecondaryContainer rounded-[28px] shadow-sm transition-all duration-300 ease-bouncy group-hover:w-[112px] group-hover:rounded-[16px] group-hover:shadow-m3-1 group-hover:bg-md-primaryContainer/50 group-hover:text-md-primary z-10 overflow-hidden relative" style="transition-property: width, border-radius, box-shadow, background-color, color;">
-                        <div class="w-8 h-8 transition-transform duration-300 ease-bouncy group-hover:scale-110 absolute flex items-center justify-center drop-shadow-sm">
+                    <div class="w-[48px] h-[48px] shrink-0 flex items-center justify-center bg-md-secondaryContainer/40 text-md-onSecondaryContainer rounded-[22px] shadow-sm transition-all duration-300 ease-bouncy group-hover:w-[96px] group-hover:rounded-[14px] group-hover:shadow-m3-1 group-hover:bg-md-primaryContainer/50 group-hover:text-md-primary z-10 overflow-hidden relative" style="transition-property: width, border-radius, box-shadow, background-color, color;">
+                        <div class="w-6 h-6 transition-transform duration-300 ease-bouncy group-hover:scale-110 absolute flex items-center justify-center drop-shadow-sm">
                             <img src="${link.icon}" alt="${link.name} logo" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/100x100/transparent/var(--md-on-surface)?text=${link.name.charAt(0)}'">
                         </div>
                     </div>
                     
-                    <div class="ml-4 flex flex-col justify-center flex-grow z-10 overflow-hidden">
+                    <div class="ml-3.5 flex flex-col justify-center flex-grow z-10 overflow-hidden">
                         <div class="flex items-center gap-2">
-                            <span class="font-bold text-[1.05rem] leading-snug tracking-wide group-hover:text-md-primary transition-colors duration-300 ease-bouncy truncate">${link.name}</span>
-                            ${link.isLive ? `<span class="flex items-center gap-1.5 text-[10px] font-bold bg-red-500/10 text-red-500 px-2 py-0.5 rounded-full border border-red-500/20"><span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>LIVE</span>` : ''}
+                            <span class="font-bold text-[0.95rem] leading-snug tracking-wide group-hover:text-md-primary transition-colors duration-300 ease-bouncy truncate">${link.name}</span>
+                            ${link.isLive ? `<span class="flex items-center gap-1 text-[9px] font-bold bg-red-500/10 text-red-500 px-1.5 py-0.2 rounded-full border border-red-500/20"><span class="w-1 h-1 rounded-full bg-red-500 animate-pulse"></span>LIVE</span>` : ''}
                         </div>
-                        ${link.subtitle ? `<span class="text-sm opacity-75 mt-0.5 leading-tight truncate text-md-onSurfaceVariant">${link.subtitle}</span>` : ''}
+                        ${link.subtitle ? `<span class="text-xs opacity-75 mt-0.5 leading-tight truncate text-md-onSurfaceVariant">${link.subtitle}</span>` : ''}
                     </div>
                     
                     <div class="ml-auto pl-2 pr-2 flex items-center justify-center z-10">
                         ${link.isExpandable ? 
-                            `<div class="w-8 h-8 flex items-center justify-center rounded-full bg-md-surfaceVariant/50 text-md-onSurfaceVariant group-hover:bg-md-primaryContainer group-hover:text-md-onPrimaryContainer transition-colors duration-300">
-                                <i class="ph-bold ph-caret-down text-lg transition-transform duration-300 expand-icon"></i>
+                            `<div class="w-7 h-7 flex items-center justify-center rounded-full bg-md-surfaceVariant/50 text-md-onSurfaceVariant group-hover:bg-md-primaryContainer group-hover:text-md-primary ring-2 ring-transparent group-hover:ring-md-primary/50 transition-all duration-300">
+                                <i class="ph-bold ph-caret-down text-base transition-transform duration-300 expand-icon"></i>
                              </div>` 
                             : 
-                            `<div class="opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-bouncy text-md-primary">
-                                <i class="ph-bold ph-caret-right text-xl"></i>
+                            `<div class="w-7 h-7 flex items-center justify-center rounded-full bg-md-surfaceVariant/50 text-md-onSurfaceVariant group-hover:bg-md-primaryContainer group-hover:text-md-primary ring-2 ring-transparent group-hover:ring-md-primary/50 transition-all duration-300">
+                                <i class="ph-bold ph-caret-right text-base"></i>
                              </div>`
                         }
                     </div>
@@ -952,7 +1046,7 @@
 
                 if (link.isExpandable) {
                     const header = document.createElement('div');
-                    header.className = "group ripple-surface flex items-center p-3 w-full cursor-pointer hover:bg-md-surfaceContainerHighest transition-colors duration-300 ease-bouncy relative touch-manipulation select-none";
+                    header.className = "group ripple-surface flex items-center p-2.5 w-full cursor-pointer hover:bg-md-surfaceContainerHighest transition-colors duration-300 ease-bouncy relative touch-manipulation select-none";
                     header.innerHTML = innerContent;
                     
                     const expandedContainer = document.createElement('div');
@@ -962,48 +1056,48 @@
                     
                     if (link.videoId) {
                         expandedInnerHtml = `
-                            <div class="w-full aspect-video rounded-2xl overflow-hidden bg-black/5 relative shadow-inner">
+                            <div class="w-full aspect-video rounded-xl overflow-hidden bg-black/5 relative shadow-inner">
                                 <iframe class="absolute top-0 left-0 w-full h-full border-0" src="https://www.youtube.com/embed/${link.videoId}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                             </div>
-                            <a href="${link.url}" target="_blank" class="w-full py-3 bg-md-primary text-md-onPrimary rounded-xl flex items-center justify-center gap-2 font-medium hover:opacity-90 transition-opacity active:scale-[0.98] ripple-surface touch-manipulation">
-                                <i class="ph-bold ph-arrow-square-out text-lg"></i> Open Channel
+                            <a href="${link.url}" target="_blank" onclick="if(isAboutPageOpen) toggleAboutPage();" class="w-full py-2.5 bg-md-primary text-md-onPrimary rounded-xl flex items-center justify-center gap-2 text-xs font-medium hover:opacity-90 transition-opacity active:scale-[0.98] ripple-surface touch-manipulation">
+                                <i class="ph-bold ph-arrow-square-out text-base"></i> Open Channel
                             </a>
                         `;
                     } else if (link.isSchedule) {
                         const scheduleItemsHtml = link.scheduleData.map(item => `
-                            <div class="flex justify-between items-center bg-md-surfaceVariant/30 p-3 rounded-xl border border-md-outline/5 transition-colors hover:bg-md-surfaceVariant/60">
+                            <div class="flex justify-between items-center bg-md-surfaceVariant/30 p-2.5 rounded-xl border border-md-outline/5 dark:border-transparent transition-colors hover:bg-md-surfaceVariant/60">
                                 <div class="flex flex-col">
-                                    <span class="font-bold text-md-primary text-sm">${item.day}</span>
-                                    <span class="text-md-onSurface font-medium">${item.game}</span>
+                                    <span class="font-bold text-md-primary text-xs">${item.day}</span>
+                                    <span class="text-md-onSurface font-medium text-xs">${item.game}</span>
                                 </div>
-                                <span class="text-xs font-bold text-md-onSurfaceVariant bg-md-surfaceContainerHighest px-2 py-1 rounded-md">${item.time}</span>
+                                <span class="text-[10px] font-bold text-md-onSurfaceVariant bg-md-surfaceContainerHighest px-1.5 py-0.5 rounded-md">${item.time}</span>
                             </div>
                         `).join('');
                         
                         expandedInnerHtml = `
-                            <div class="flex flex-col gap-2 bg-md-surfaceContainerLow p-2 rounded-2xl">
+                            <div class="flex flex-col gap-1.5 bg-md-surfaceContainerLow p-1.5 rounded-xl">
                                 ${scheduleItemsHtml}
                             </div>
                         `;
                     } else if (link.name === "Twitch" && link.isLive) {
                         expandedInnerHtml = `
-                            <div class="bg-md-primaryContainer/30 p-4 rounded-2xl border border-md-primary/20 flex flex-col gap-1 mb-2">
-                                <span class="text-[10px] font-bold text-md-primary uppercase tracking-widest flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span> NOW STREAMING</span>
-                                <span class="text-md-onSurface font-bold text-lg leading-tight mt-1">${link.streamTitle || 'Live on Twitch!'}</span>
-                                <div class="flex items-center gap-1.5 mt-2">
-                                    <i class="ph-fill ph-game-controller text-md-primary"></i>
-                                    <span class="text-md-onSurfaceVariant text-sm font-medium">${link.streamGame || 'Just Chatting'}</span>
+                            <div class="bg-md-primaryContainer/30 p-3 rounded-xl border border-md-primary/20 dark:border-transparent flex flex-col gap-1 mb-1.5">
+                                <span class="text-[9px] font-bold text-md-primary uppercase tracking-widest flex items-center gap-1"><span class="w-1 h-1 bg-red-500 rounded-full animate-pulse"></span> NOW STREAMING</span>
+                                <span class="text-md-onSurface font-bold text-sm leading-tight mt-0.5">${link.streamTitle || 'Live on Twitch!'}</span>
+                                <div class="flex items-center gap-1 mt-1">
+                                    <i class="ph-fill ph-game-controller text-md-primary text-sm"></i>
+                                    <span class="text-md-onSurfaceVariant text-xs font-medium">${link.streamGame || 'Just Chatting'}</span>
                                 </div>
                             </div>
-                            <a href="${link.url}" target="_blank" class="w-full py-3 bg-md-primary text-md-onPrimary rounded-xl flex items-center justify-center gap-2 font-medium hover:opacity-90 transition-opacity active:scale-[0.98] ripple-surface touch-manipulation">
-                                <i class="ph-bold ph-video-camera text-lg"></i> Watch Live Now
+                            <a href="${link.url}" target="_blank" onclick="if(isAboutPageOpen) toggleAboutPage();" class="w-full py-2.5 bg-md-primary text-md-onPrimary rounded-xl flex items-center justify-center gap-2 text-xs font-medium hover:opacity-90 transition-opacity active:scale-[0.98] ripple-surface touch-manipulation">
+                                <i class="ph-bold ph-video-camera text-base"></i> Watch Live Now
                             </a>
                         `;
                     }
 
                     expandedContainer.innerHTML = `
                         <div class="overflow-hidden">
-                            <div class="expand-inner p-3 pt-0 w-full flex flex-col gap-3">
+                            <div class="expand-inner p-2.5 pt-0 w-full flex flex-col gap-2.5">
                                 ${expandedInnerHtml}
                             </div>
                         </div>
@@ -1015,6 +1109,8 @@
                         if (isHandlingTap) return;
                         isHandlingTap = true;
                         setTimeout(() => { isHandlingTap = false; }, 300);
+
+                        if (isAboutPageOpen) toggleAboutPage();
 
                         const isExpanded = expandedContainer.classList.contains('expanded');
                         const icon = header.querySelector('.expand-icon');
@@ -1049,9 +1145,13 @@
                     const a = document.createElement('a');
                     a.href = link.url;
                     a.target = "_blank"; 
-                    a.className = "group ripple-surface flex items-center p-3 w-full hover:bg-md-surfaceContainerHighest transition-colors duration-300 ease-bouncy no-underline touch-manipulation select-none";
+                    a.className = "group ripple-surface flex items-center p-2.5 w-full hover:bg-md-surfaceContainerHighest transition-colors duration-300 ease-bouncy no-underline touch-manipulation select-none";
                     a.innerHTML = innerContent;
                     
+                    a.addEventListener('click', () => {
+                        if (isAboutPageOpen) toggleAboutPage();
+                    });
+
                     let isTouch = false;
                     a.addEventListener('touchstart', (e) => {
                         isTouch = true;
@@ -1078,10 +1178,11 @@
 
                 const pillBtn = document.createElement('button');
                 pillBtn.id = 'pill-btn-' + linkId;
-                pillBtn.className = "overflow-hidden transition-all duration-500 ease-bouncy flex items-center justify-center shrink-0 rounded-full bg-md-secondaryContainer/40 text-md-onSecondaryContainer hover:bg-md-primaryContainer/50 hover:text-md-primary hover:shadow-m3-1 w-0 h-12 opacity-0 scale-50 mx-0 pointer-events-none touch-manipulation";
-                pillBtn.innerHTML = `<div class="w-6 h-6 shrink-0 flex items-center justify-center"><img src="${link.icon}" alt="${link.name}" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/50x50/transparent/var(--md-on-surface)?text=${link.name.charAt(0)}'"></div>`;
+                pillBtn.className = "overflow-hidden transition-all duration-500 ease-bouncy flex items-center justify-center shrink-0 rounded-full bg-md-secondaryContainer/40 text-md-onSecondaryContainer hover:bg-md-primaryContainer/50 hover:text-md-primary hover:shadow-m3-1 w-0 h-10 opacity-0 scale-50 mx-0 pointer-events-none touch-manipulation";
+                pillBtn.innerHTML = `<div class="w-5 h-5 shrink-0 flex items-center justify-center"><img src="${link.icon}" alt="${link.name}" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/50x50/transparent/var(--md-on-surface)?text=${link.name.charAt(0)}'"></div>`;
                 
                 pillBtn.onclick = () => {
+                    if (isAboutPageOpen) toggleAboutPage();
                     linkBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     linkBlock.classList.add('ring-4', 'ring-md-primary/50', 'scale-[1.02]');
                     setTimeout(() => linkBlock.classList.remove('ring-4', 'ring-md-primary/50', 'scale-[1.02]'), 800);
@@ -1101,14 +1202,14 @@
                 if (!item.isVisible) {
                     hiddenCount++;
                     pillBtn.classList.remove('w-0', 'opacity-0', 'scale-50', 'mx-0', 'pointer-events-none');
-                    pillBtn.classList.add('w-12', 'opacity-100', 'scale-100', 'mx-1', 'cursor-pointer');
+                    pillBtn.classList.add('w-10', 'opacity-100', 'scale-100', 'mx-1', 'cursor-pointer');
                 } else {
-                    pillBtn.classList.remove('w-12', 'opacity-100', 'scale-100', 'mx-1', 'cursor-pointer');
+                    pillBtn.classList.remove('w-10', 'opacity-100', 'scale-100', 'mx-1', 'cursor-pointer');
                     pillBtn.classList.add('w-0', 'opacity-0', 'scale-50', 'mx-0', 'pointer-events-none');
                 }
             });
             
-            if (hiddenCount > 0) {
+            if (hiddenCount > 0 && !isAboutPageOpen) {
                 pill.classList.remove('translate-y-24', 'opacity-0', 'scale-95', 'pointer-events-none');
                 pill.classList.add('scale-100');
             } else {
