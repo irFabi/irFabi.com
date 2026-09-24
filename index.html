@@ -197,7 +197,6 @@
             --md-surface-variant: #43483e; --md-on-surface-variant: #c3c8bb;
         }
 
-        /* Rose Theme */
         [data-theme="rose"] {
             --md-primary: #b3261e; --md-primary-container: #f9dedc; --md-on-primary-container: #410e0b;
             --md-secondary-container: #ffdad6; --md-on-secondary-container: #410002;
@@ -213,7 +212,6 @@
             --md-surface-variant: #534341; --md-on-surface-variant: #d8c2bf;
         }
 
-        /* Mint Theme */
         [data-theme="mint"] {
             --md-primary: #006b5b; --md-primary-container: #79f8d9; --md-on-primary-container: #00201a;
             --md-secondary-container: #cce8e0; --md-on-secondary-container: #05201a;
@@ -229,7 +227,6 @@
             --md-surface-variant: #3f4945; --md-on-surface-variant: #bfc9c4;
         }
 
-        /* Peach Theme */
         [data-theme="peach"] {
             --md-primary: #984816; --md-primary-container: #ffdbca; --md-on-primary-container: #341100;
             --md-secondary-container: #ffdbcb; --md-on-secondary-container: #2b160a;
@@ -245,7 +242,6 @@
             --md-surface-variant: #52443c; --md-on-surface-variant: #d7c2b9;
         }
 
-        /* Amber Theme */
         [data-theme="amber"] {
             --md-primary: #785900; --md-primary-container: #ffdf9e; --md-on-primary-container: #261a00;
             --md-secondary-container: #eaddb6; --md-on-secondary-container: #231b04;
@@ -333,32 +329,27 @@
         }
         .fab-collapsed:active { cursor: grabbing !important; }
 
+        /* --- FIXED PERFORMANCE EXPAND ANIMATION --- */
         .expand-wrapper {
-            display: grid;
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
-            will-change: grid-template-rows;
+            height: 0; 
+            overflow: hidden;
+            transition: height 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: height;
+            transform: translateZ(0);
         }
-        .expand-wrapper.expanded {
-            grid-template-rows: 1fr;
-        }
-        .expand-wrapper.collapsing {
-            transition: grid-template-rows 300ms cubic-bezier(0.4, 0, 0.2, 1); 
-        }
-
+        
         .expand-inner {
             opacity: 0;
-            transform: translateY(-16px) scale(0.95);
+            transform: translateY(-8px) scale(0.98);
             transform-origin: top;
-            transition: transform 450ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 350ms ease-out;
+            transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 300ms ease-out;
             will-change: transform, opacity;
+            padding-bottom: 10px; 
         }
+        
         .expand-wrapper.expanded .expand-inner {
             opacity: 1;
             transform: translateY(0) scale(1);
-        }
-        .expand-wrapper.collapsing .expand-inner {
-            transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms ease-in;
         }
     </style>
     
@@ -367,7 +358,7 @@
 
 <body class="text-md-onSurface bg-md-bodyBg min-h-screen flex flex-col justify-center items-center p-4 sm:p-8 relative selection:bg-md-primaryContainer selection:text-md-onPrimaryContainer transition-colors duration-300 overflow-x-hidden">
 
-    <!-- Ambient Background Mesh (Optimized Gradients) -->
+    <!-- Ambient Background Mesh -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div class="absolute -top-[10%] -left-[10%] w-[80vw] h-[80vw] opacity-70 dark:opacity-50 animate-blob transition-colors duration-500" style="background: radial-gradient(circle, var(--md-primary-container) 0%, transparent 60%); will-change: transform;"></div>
         <div class="absolute top-[20%] -right-[15%] w-[70vw] h-[70vw] opacity-50 dark:opacity-40 animate-blob animation-delay-2000 transition-colors duration-500" style="background: radial-gradient(circle, var(--md-primary) 0%, transparent 60%); will-change: transform;"></div>
@@ -411,11 +402,10 @@
 
                     </div>
                     <div id="deeper-wrapper" class="expand-wrapper">
-                        <div class="overflow-hidden">
-                            <div class="expand-inner p-4 pt-0 text-sm text-md-onSurfaceVariant leading-relaxed flex flex-col gap-2">
-                                <p>Hier kommt der tiefere Kram rein! Zum Beispiel Hintergrundinfos zu deinen Projekten, Easter Eggs, Setup-Details oder tiefgründigere Gedanken, die man nicht sofort auf den ersten Blick sieht.</p>
-                                <p>Viel Spaß beim Ausfüllen und Anpassen! 🚀✨</p>
-                            </div>
+                        <!-- JS controlled height container -->
+                        <div class="expand-inner px-4 pt-0 text-sm text-md-onSurfaceVariant leading-relaxed flex flex-col gap-2">
+                            <p>Hier kommt der tiefere Kram rein! Zum Beispiel Hintergrundinfos zu deinen Projekten, Easter Eggs, Setup-Details oder tiefgründigere Gedanken, die man nicht sofort auf den ersten Blick sieht.</p>
+                            <p>Viel Spaß beim Ausfüllen und Anpassen! 🚀✨</p>
                         </div>
                     </div>
                 </div>
@@ -557,7 +547,6 @@
         let isAboutPageOpen = false;
         let pageTransitionTimeout;
 
-        // Expanded Profile Shape Array (19 Shapes)
         const m3Shapes = [
             '2rem',                               // 0: Standard Squircle
             '50%',                                // 1: Perfect Circle
@@ -599,15 +588,14 @@
             if (event) createRipple(event); 
             hapticTap('medium');
             
-            const shapeEl = document.getElementById('profile-shape');
-            if (!shapeEl) return;
-            
-            // Zufällige Form generieren, die nicht der aktuellen entspricht
             let newIndex;
             do {
                 newIndex = Math.floor(Math.random() * m3Shapes.length);
             } while (newIndex === currentShapeIndex);
             currentShapeIndex = newIndex;
+            
+            const shapeEl = document.getElementById('profile-shape');
+            if (!shapeEl) return;
             
             shapeEl.style.borderRadius = m3Shapes[currentShapeIndex];
             
@@ -673,6 +661,7 @@
             }, 400);
         }
 
+        // --- FIXED PERFORMANCE EXPAND TOGGLE ---
         function setupDeeperSection() {
             const header = document.getElementById('deeper-header');
             const wrapper = document.getElementById('deeper-wrapper');
@@ -682,15 +671,24 @@
                 header.onclick = (e) => {
                     hapticTap('medium');
                     const isExpanded = wrapper.classList.contains('expanded');
+                    const inner = wrapper.querySelector('.expand-inner');
+                    
                     if (isExpanded) {
+                        wrapper.style.height = wrapper.scrollHeight + 'px';
+                        void wrapper.offsetHeight; 
+                        wrapper.style.height = '0px';
                         wrapper.classList.remove('expanded');
-                        wrapper.classList.add('collapsing');
+                        
                         if (icon) icon.style.transform = "rotate(0deg)";
-                        setTimeout(() => wrapper.classList.remove('collapsing'), 300);
                     } else {
-                        wrapper.classList.remove('collapsing');
                         wrapper.classList.add('expanded');
+                        wrapper.style.height = inner.scrollHeight + 'px';
+                        
                         if (icon) icon.style.transform = "rotate(180deg)";
+                        
+                        setTimeout(() => {
+                            if (wrapper.classList.contains('expanded')) wrapper.style.height = 'auto';
+                        }, 400);
                     }
                     createRipple(e);
                 };
@@ -941,6 +939,8 @@
                     --md-surface: hsl(${h}, Math.max(0, ${s}-40)%, 99%);
                     --md-on-surface: hsl(${h}, Math.max(0, ${s}-10)%, 10%);
                     --md-surface-variant: hsl(${h}, Math.max(0, ${s}-30)%, 90%);
+                    --md-on-surface-variant: hsl(${h}, Math.max(0, ${s}-20)%, 30%);
+                    --md-surface-container-low: hsl(${h}, Math.max(0, ${s}-40)%, 97%);
                     --md-surface-container-high: hsl(${h}, Math.max(0, ${s}-30)%, 92%);
                     --md-surface-container-highest: hsl(${h}, Math.max(0, ${s}-30)%, 88%);
                     --md-outline: hsl(${h}, Math.max(0, ${s}-40)%, 50%);
@@ -958,6 +958,8 @@
                     --md-surface: hsl(${h}, Math.max(0, ${s}-15)%, 12%);
                     --md-on-surface: hsl(${h}, Math.max(0, ${s}-10)%, 95%);
                     --md-surface-variant: hsl(${h}, Math.max(0, ${s}-10)%, 35%);
+                    --md-on-surface-variant: hsl(${h}, Math.max(0, ${s}-20)%, 80%);
+                    --md-surface-container-low: hsl(${h}, Math.max(0, ${s}-10)%, 10%);
                     --md-surface-container-high: hsl(${h}, Math.max(0, ${s}-10)%, 16%);
                     --md-surface-container-highest: hsl(${h}, Math.max(0, ${s}-10)%, 20%);
                     --md-outline: hsl(${h}, Math.max(0, ${s}-10)%, 60%);
@@ -1002,6 +1004,8 @@
             }
         }
 
+        // --- SCHEDULER (CALENDAR) RENDER FIX ---
+        // Completely decoupled from missing theme colors. Uses robust alpha channels.
         function renderLinks() {
             const container = document.getElementById('links-container');
             const pillContainer = document.getElementById('bottom-pill');
@@ -1071,7 +1075,7 @@
 
                 if (link.isExpandable) {
                     const header = document.createElement('div');
-                    header.className = "group ripple-surface flex items-center p-2.5 w-full cursor-pointer hover:bg-md-surfaceContainerHighest transition-colors duration-300 ease-bouncy relative touch-manipulation select-none";
+                    header.className = "group ripple-surface flex items-center p-2.5 w-full cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-300 ease-bouncy relative touch-manipulation select-none";
                     header.innerHTML = innerContent;
                     
                     const expandedContainer = document.createElement('div');
@@ -1089,29 +1093,31 @@
                             </a>
                         `;
                     } else if (link.isSchedule) {
+                        // FIXED: Replaced fragile theme colors with robust alpha-transparencies
                         const scheduleItemsHtml = link.scheduleData.map(item => `
-                            <div class="flex justify-between items-center bg-black/5 dark:bg-white/5 p-2.5 rounded-xl border border-md-outline/5 dark:border-transparent transition-colors hover:bg-md-surfaceVariant/60">
+                            <div class="flex justify-between items-center bg-black/5 dark:bg-white/5 p-2.5 rounded-xl border border-black/5 dark:border-white/5 transition-colors hover:bg-black/10 dark:hover:bg-white/10">
                                 <div class="flex flex-col">
-                                    <span class="font-bold text-md-primary text-xs">${item.day}</span>
-                                    <span class="text-md-onSurface font-medium text-xs">${item.game}</span>
+                                    <span class="font-bold text-md-primary text-xs drop-shadow-sm">${item.day}</span>
+                                    <span class="text-md-onSurface font-medium text-xs drop-shadow-sm">${item.game}</span>
                                 </div>
-                                <span class="text-[10px] font-bold text-md-onSurfaceVariant bg-md-surfaceContainerHighest px-1.5 py-0.5 rounded-md">${item.time}</span>
+                                <span class="text-[10px] font-bold text-md-onSurface bg-black/10 dark:bg-white/10 px-1.5 py-0.5 rounded-md drop-shadow-sm">${item.time}</span>
                             </div>
                         `).join('');
                         
                         expandedInnerHtml = `
-                            <div class="flex flex-col gap-1.5 bg-md-surfaceContainerLow p-1.5 rounded-xl">
+                            <div class="flex flex-col gap-1.5 bg-black/5 dark:bg-white/5 p-1.5 rounded-xl">
                                 ${scheduleItemsHtml}
                             </div>
                         `;
                     } else if (link.name === "Twitch" && link.isLive) {
+                        // FIXED: Replaced fragile theme colors with robust alpha-transparencies
                         expandedInnerHtml = `
-                            <div class="bg-md-primaryContainer/30 p-3 rounded-xl border border-md-primary/20 dark:border-transparent flex flex-col gap-1 mb-1.5">
+                            <div class="bg-black/5 dark:bg-white/5 p-3 rounded-xl border border-black/10 dark:border-white/10 flex flex-col gap-1 mb-1.5">
                                 <span class="text-[9px] font-bold text-md-primary uppercase tracking-widest flex items-center gap-1"><span class="w-1 h-1 bg-red-500 rounded-full animate-pulse"></span> NOW STREAMING</span>
-                                <span class="text-md-onSurface font-bold text-sm leading-tight mt-0.5">${link.streamTitle || 'Live on Twitch!'}</span>
+                                <span class="text-md-onSurface font-bold text-sm leading-tight mt-0.5 drop-shadow-sm">${link.streamTitle || 'Live on Twitch!'}</span>
                                 <div class="flex items-center gap-1 mt-1">
                                     <i class="ph-fill ph-game-controller text-md-primary text-sm"></i>
-                                    <span class="text-md-onSurfaceVariant text-xs font-medium">${link.streamGame || 'Just Chatting'}</span>
+                                    <span class="text-md-onSurface font-medium opacity-80 text-xs drop-shadow-sm">${link.streamGame || 'Just Chatting'}</span>
                                 </div>
                             </div>
                             <a href="${link.url}" target="_blank" onclick="if(isAboutPageOpen) toggleAboutPage();" class="w-full py-2.5 bg-md-primary text-md-onPrimary rounded-xl flex items-center justify-center gap-2 text-xs font-medium hover:opacity-90 transition-opacity active:scale-[0.98] ripple-surface touch-manipulation">
@@ -1121,10 +1127,8 @@
                     }
 
                     expandedContainer.innerHTML = `
-                        <div class="overflow-hidden">
-                            <div class="expand-inner p-2.5 pt-0 w-full flex flex-col gap-2.5">
-                                ${expandedInnerHtml}
-                            </div>
+                        <div class="expand-inner px-2.5 pb-2.5 w-full flex flex-col gap-2.5">
+                            ${expandedInnerHtml}
                         </div>
                     `;
 
@@ -1133,7 +1137,7 @@
                     const handleToggle = (e) => {
                         if (isHandlingTap) return;
                         isHandlingTap = true;
-                        setTimeout(() => { isHandlingTap = false; }, 300);
+                        setTimeout(() => { isHandlingTap = false; }, 350);
 
                         hapticTap('light');
 
@@ -1141,25 +1145,32 @@
 
                         const isExpanded = expandedContainer.classList.contains('expanded');
                         const icon = header.querySelector('.expand-icon');
+                        const innerContent = expandedContainer.querySelector('.expand-inner');
                         
                         if (isExpanded) {
+                            expandedContainer.style.height = expandedContainer.scrollHeight + 'px';
+                            void expandedContainer.offsetHeight; 
+                            expandedContainer.style.height = '0px';
                             expandedContainer.classList.remove('expanded');
-                            expandedContainer.classList.add('collapsing');
+                            
                             if (icon) {
                                 icon.style.transition = "transform 300ms cubic-bezier(0.4, 0, 0.2, 1)";
                                 icon.style.transform = "rotate(0deg)";
                             }
-                            
-                            setTimeout(() => {
-                                expandedContainer.classList.remove('collapsing');
-                            }, 300);
                         } else {
-                            expandedContainer.classList.remove('collapsing');
                             expandedContainer.classList.add('expanded');
+                            expandedContainer.style.height = innerContent.scrollHeight + 'px';
+                            
                             if (icon) {
-                                icon.style.transition = "transform 450ms cubic-bezier(0.34, 1.56, 0.64, 1)";
+                                icon.style.transition = "transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1)";
                                 icon.style.transform = "rotate(180deg)";
                             }
+                            
+                            setTimeout(() => {
+                                if (expandedContainer.classList.contains('expanded')) {
+                                    expandedContainer.style.height = 'auto';
+                                }
+                            }, 400);
                         }
                         createRipple(e);
                     };
@@ -1172,7 +1183,7 @@
                     const a = document.createElement('a');
                     a.href = link.url;
                     a.target = "_blank"; 
-                    a.className = "group ripple-surface flex items-center p-2.5 w-full hover:bg-md-surfaceContainerHighest transition-colors duration-300 ease-bouncy no-underline touch-manipulation select-none";
+                    a.className = "group ripple-surface flex items-center p-2.5 w-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-300 ease-bouncy no-underline touch-manipulation select-none";
                     a.innerHTML = innerContent;
                     
                     a.addEventListener('click', () => {
@@ -1203,20 +1214,10 @@
                 });
                 linkObserver.observe(linkBlock);
 
-                // --- NEW ZERO-GAP PILL BUTTON LOGIC ---
-                // We use raw JS inline styles so hidden items take exactly 0 pixels in the container
                 const pillBtn = document.createElement('button');
                 pillBtn.id = 'pill-btn-' + linkId;
-                pillBtn.className = "relative overflow-hidden transition-all duration-500 ease-bouncy flex items-center justify-center shrink-0 rounded-full bg-md-secondaryContainer/40 text-md-onSecondaryContainer hover:bg-md-primaryContainer/50 hover:text-md-primary hover:shadow-m3-1 touch-manipulation";
-                
+                pillBtn.className = "overflow-hidden min-w-0 p-0 transition-all duration-500 ease-bouncy flex items-center justify-center shrink-0 rounded-full bg-md-secondaryContainer/40 text-md-onSecondaryContainer hover:bg-md-primaryContainer/50 hover:text-md-primary hover:shadow-m3-1 w-0 h-10 opacity-0 scale-50 mx-0 pointer-events-none touch-manipulation";
                 pillBtn.innerHTML = `<div class="w-5 h-5 shrink-0 flex items-center justify-center"><img src="${link.icon}" alt="${link.name}" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/50x50/transparent/var(--md-on-surface)?text=${link.name.charAt(0)}'"></div>`;
-                
-                // Initialize as completely hidden (0px width)
-                pillBtn.style.width = '0px';
-                pillBtn.style.margin = '0px';
-                pillBtn.style.opacity = '0';
-                pillBtn.style.transform = 'scale(0)';
-                pillBtn.style.pointerEvents = 'none';
                 
                 pillBtn.onclick = () => {
                     if (isAboutPageOpen) toggleAboutPage();
