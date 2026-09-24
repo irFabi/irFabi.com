@@ -4,14 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ir_Fabi | Links</title>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Using Changa One for Headings, Roboto for Body Text -->
     <link href="https://fonts.googleapis.com/css2?family=Changa+One&family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-
     <script>
         tailwind.config = {
             future: { hoverOnlyWhenSupported: true },
@@ -19,8 +16,8 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Roboto', 'sans-serif'], // Clean body text
-                        display: ['"Changa One"', 'sans-serif'], // Stylized headers
+                        sans: ['Roboto', 'sans-serif'],
+                        display: ['"Changa One"', 'sans-serif'],
                     },
                     colors: {
                         md: {
@@ -49,20 +46,7 @@
             }
         }
     </script>
-
     <style>
-        /* Shared Axis Animations */
-        @keyframes slideInRight { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
-        @keyframes slideOutLeft { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(-40px); } }
-        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
-        @keyframes slideOutRight { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(40px); } }
-        
-        .slide-in-forward { animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-        .slide-out-forward { animation: slideOutLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; pointer-events: none; }
-        .slide-in-backward { animation: slideInLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-        .slide-out-backward { animation: slideOutRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; pointer-events: none; }
-
-        /* Ambient Blob Animations - Optimized */
         @keyframes blob {
             0% { transform: translate(0px, 0px) scale(1); }
             33% { transform: translate(30px, -40px) scale(1.05); }
@@ -73,7 +57,6 @@
         .animation-delay-2000 { animation-delay: 2s; }
         .animation-delay-4000 { animation-delay: 4s; }
 
-        /* DEEP FROSTED GLASSMORPHISM */
         html[data-glass="true"] .glass-card {
             background-color: color-mix(in srgb, var(--md-surface) 45%, transparent) !important;
             backdrop-filter: blur(32px) saturate(200%); -webkit-backdrop-filter: blur(32px) saturate(200%);
@@ -109,11 +92,9 @@
             border: 1px solid rgba(255, 255, 255, 0.12) !important;
         }
 
-        /* Shadow Opacity Control */
         :root { --shadow-op-1: 0.3; --shadow-op-2: 0.15; }
         .dark { --shadow-op-1: 0.8; --shadow-op-2: 0.5; }
 
-        /* Themes */
         :root, [data-theme="lavender"] {
             --md-primary: #6750a4; --md-on-primary: #ffffff;
             --md-primary-container: #eaddff; --md-on-primary-container: #21005d;
@@ -229,7 +210,6 @@
             --md-surface-variant: #4a4739; --md-on-surface-variant: #cdc6b8;
         }
 
-        /* Cyan Theme */
         [data-theme="cyan"] {
             --md-primary: #006874; --md-primary-container: #97f0ff; --md-on-primary-container: #001f24;
             --md-secondary-container: #cbe6eb; --md-on-secondary-container: #051f23;
@@ -280,31 +260,22 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
-    
     <style id="custom-theme-style"></style>
 </head>
-
 <body class="text-md-onSurface bg-md-bodyBg min-h-screen flex flex-col justify-center items-center p-4 sm:p-8 relative selection:bg-md-primaryContainer selection:text-md-onPrimaryContainer transition-colors duration-300 overflow-x-hidden">
 
-    <!-- Ambient Background Mesh -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div class="absolute -top-[10%] -left-[10%] w-[80vw] h-[80vw] opacity-70 dark:opacity-50 animate-blob transition-colors duration-500" style="background: radial-gradient(circle, var(--md-primary-container) 0%, transparent 60%); will-change: transform;"></div>
         <div class="absolute top-[20%] -right-[15%] w-[70vw] h-[70vw] opacity-50 dark:opacity-40 animate-blob animation-delay-2000 transition-colors duration-500" style="background: radial-gradient(circle, var(--md-primary) 0%, transparent 60%); will-change: transform;"></div>
         <div class="absolute -bottom-[20%] left-[10%] w-[90vw] h-[90vw] opacity-70 dark:opacity-50 animate-blob animation-delay-4000 transition-colors duration-500" style="background: radial-gradient(circle, var(--md-secondary-container) 0%, transparent 60%); will-change: transform;"></div>
     </div>
 
-    <!-- Main Card container -->
     <main class="glass-card max-w-[440px] w-full mx-auto flex flex-col gap-8 relative z-10 p-6 sm:p-10 rounded-[3rem] transition-colors duration-300 ease-bouncy my-auto transform-gpu">
-        <!-- Header -->
         <header id="profile-header" class="flex flex-col items-center text-center" style="animation-delay: 0s;"></header>
 
-        <!-- Main Content Switcher Container -->
         <div id="page-content" class="w-full relative block">
-            
-            <!-- Links Container -->
             <section id="links-container" class="flex flex-col gap-4 w-full relative z-20 pb-4"></section>
             
-            <!-- About Me Page Container -->
             <section id="about-container" class="hidden flex-col gap-4 w-full relative z-20 pb-4">
                 <button onclick="toggleAboutPage()" class="flex items-center gap-2 text-md-primary font-bold text-sm w-max hover:opacity-80 transition-opacity touch-manipulation mb-2">
                     <i class="ph-bold ph-arrow-left text-lg"></i> Zurück
@@ -314,7 +285,6 @@
         </div>
     </main>
 
-    <!-- Draggable FAB Customization Menu -->
     <div id="fab-container" class="glass-floating fixed top-6 right-6 z-50 flex items-center justify-center text-md-onSurface shadow-lg fab-collapsed overflow-hidden touch-manipulation">
         <div id="fab-icon-view" class="absolute inset-0 flex items-center justify-center opacity-100 transition-opacity duration-200 pointer-events-none">
             <i class="ph-bold ph-palette text-2xl text-md-primary"></i>
@@ -363,16 +333,9 @@
         </div>
     </div>
 
-    <!-- Centered Bottom Navigation -->
     <div class="fixed bottom-6 left-0 w-full flex justify-center pointer-events-none z-40 px-4">
         <div id="bottom-pill" class="glass-floating flex items-center justify-center p-1.5 rounded-full shadow-lg transition-all duration-500 ease-bouncy transform translate-y-24 opacity-0 scale-95 pointer-events-auto">
         </div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 bg-md-onSurface text-md-surface px-5 py-3 rounded-xl shadow-lg font-medium opacity-0 pointer-events-none transition-all duration-300 ease-bouncy -translate-y-8 z-50 flex items-center gap-3">
-        <i class="ph-fill ph-check-circle text-md-primaryContainer text-xl"></i>
-        <span id="toast-message">Copied!</span>
     </div>
 
     <script>
@@ -383,33 +346,13 @@
                 bio: "Hier ist ein Link zu jeglicher Form von geistigem Durchfall, den ich so ins Internet schieße 🦄",
                 avatarUrl: "./avatar.jpg"
             },
-            
             about: {
                 title: "Über mich",
-                // IMPROVED TEXT FORMATTING & STRUCTURE
                 description: [
                     "Hey, ich bin <strong>Fabi</strong> (aka <em>ir_Fabi</em>).",
                     "Ich mache jetzt seit rund <strong>6 Jahren</strong> Content im Internet (ungefähr seit 2020). Mit Höhen und Tiefen, aktiven Phasen und diesen typischen <em>'Ich suche mir einen neuen Sinn im Leben und habe gerade keinen Bock auf YouTube'</em>-Phasen – ein Haufen davon, um genau zu sein.",
                     "Während meiner Zeit auf <strong>YouTube</strong> und <strong>Twitch</strong> habe ich glaube ich nichts öfter geändert als mein Streaming-Layout. Ich weiß nicht wieso, aber es macht mir wahnsinnig Spaß, immer wieder kleine Veränderungen daran vorzunehmen und zu schauen, was mir alles so einfällt.",
                     "Außerdem ist <strong>alles daran selbst gestaltet</strong>. Jedes Mal. Das ist für mich auch ein kleines Zeichen gegen die Nutzung von AI und Ähnlichem. Alles ist selbst mit dem umgesetzt, was ich in <strong>Adobe Photoshop</strong> und <strong>After Effects</strong> weiß und kann. Also nichts Vorgefertigtes gekauft oder so. <br><span class='text-sm opacity-70 mt-2 block'>(Ich habe damals 2020-21 einfach Huebis Design geklont und, you know, habe noch Schulden zu begleichen oder so).</span>"
-                ],
-                showcaseTitle: "Meine Highlights",
-                showcase: [
-                    {
-                        type: "youtube",
-                        id: "dQw4w9WgXcQ", 
-                        title: "Best of Streams 2025"
-                    },
-                    {
-                        type: "image",
-                        src: "https://placehold.co/800x450/4f378b/ffffff?text=Overlay+Design", 
-                        title: "Custom Stream Overlays"
-                    },
-                    {
-                        type: "video", 
-                        src: "https://www.w3schools.com/html/mov_bbb.mp4",
-                        title: "Animation Reel"
-                    }
                 ],
                 deeper: {
                     title: "Deep shit (also no joke, bisschen dark stuff)",
@@ -419,7 +362,6 @@
                     ]
                 }
             },
-
             links: [
                 {
                     name: "Stream Schedule",
@@ -653,7 +595,6 @@
                         <i class="ph-fill ph-user text-4xl absolute -z-10 pointer-events-none"></i>
                     </div>
                 </div>
-                <!-- Added font-display for Changa One -->
                 <h1 class="text-3xl font-display font-normal tracking-wide text-md-onSurface mb-0.5 text-center">${CONFIG.profile.name}</h1>
                 <div class="flex justify-center w-full">
                     <p onclick="toggleAboutPage()" class="text-md-primary font-bold tracking-wide uppercase text-[11px] cursor-pointer hover:underline transition-all touch-manipulation">
@@ -677,48 +618,12 @@
             const data = CONFIG.about;
             if(!data) return;
 
-            // Updated title to use display font
             let html = `<h2 class="text-3xl font-display font-normal tracking-wide text-md-onSurface">${data.title}</h2>`;
             
             if (data.description && data.description.length > 0) {
-                // Better spacing and slightly subdued text color for body paragraphs
                 html += `<div class="text-md-onSurfaceVariant text-base leading-relaxed flex flex-col gap-5 mt-1">`;
                 data.description.forEach(p => { html += `<p>${p}</p>`; });
                 html += `</div>`;
-            }
-
-            if (data.showcase && data.showcase.length > 0) {
-                html += `
-                <div class="mt-8">
-                    <h3 class="text-xl font-display font-normal tracking-wide text-md-primary mb-4">${data.showcaseTitle}</h3>
-                    <div class="flex overflow-x-auto gap-4 pb-4 no-scrollbar snap-x snap-mandatory -mx-6 px-6 sm:-mx-10 sm:px-10">
-                `;
-                
-                data.showcase.forEach((item, index) => {
-                    html += `<div class="relative shrink-0 w-[85%] sm:w-[280px] aspect-video rounded-2xl overflow-hidden glass-button snap-center shadow-sm group">`;
-                    
-                    if (item.type === 'youtube') {
-                        html += `
-                            <div id="yt-container-${index}" class="w-full h-full relative cursor-pointer" onclick="loadYouTubeVideo('yt-container-${index}', '${item.id}')">
-                                <img src="https://img.youtube.com/vi/${item.id}/hqdefault.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" alt="${item.title}">
-                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                                    <i class="ph-fill ph-play-circle text-5xl text-white drop-shadow-md group-hover:scale-110 transition-transform"></i>
-                                </div>
-                            </div>
-                        `;
-                    } else if (item.type === 'video') {
-                        html += `<video src="${item.src}" class="w-full h-full object-cover" controls preload="metadata" playsinline></video>`;
-                    } else if (item.type === 'image') {
-                        html += `<img src="${item.src}" alt="${item.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">`;
-                    }
-
-                    html += `
-                        <div class="absolute bottom-0 left-0 w-full p-3 pt-8 bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
-                            <p class="text-white text-sm font-medium truncate drop-shadow-sm">${item.title}</p>
-                        </div>
-                    </div>`;
-                });
-                html += `</div></div>`;
             }
 
             if (data.deeper) {
@@ -742,11 +647,6 @@
             }
 
             container.innerHTML = html;
-        }
-
-        function loadYouTubeVideo(containerId, videoId) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = `<iframe class="w-full h-full absolute inset-0 border-0 bg-black" src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
         }
 
         function toggleAboutPage() {
@@ -884,16 +784,13 @@
                             <img src="${link.icon}" alt="${link.name} logo" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/100x100/transparent/var(--md-on-surface)?text=${link.name.charAt(0)}'">
                         </div>
                     </div>
-                    
                     <div class="ml-3.5 flex flex-col justify-center flex-grow z-10 overflow-hidden">
                         <div class="flex items-center gap-2">
-                            <!-- Link name uses Changa One font -->
                             <span class="font-display font-normal text-lg leading-snug tracking-wide group-hover:text-md-primary transition-colors duration-300 ease-bouncy truncate">${link.name}</span>
                             ${link.isLive ? `<span class="flex items-center gap-1 text-[9px] font-bold bg-red-500/10 text-red-500 px-1.5 py-0.2 rounded-full border border-red-500/20"><span class="w-1 h-1 rounded-full bg-red-500 animate-pulse"></span>LIVE</span>` : ''}
                         </div>
                         ${link.subtitle ? `<span class="text-sm opacity-75 mt-0.5 leading-tight truncate text-md-onSurfaceVariant">${link.subtitle}</span>` : ''}
                     </div>
-                    
                     <div class="ml-auto pl-2 pr-2 flex items-center justify-center z-10">
                         ${link.isExpandable ? 
                             `<div class="w-7 h-7 flex items-center justify-center rounded-full bg-md-surfaceVariant/50 text-md-onSurfaceVariant group-hover:bg-md-primaryContainer group-hover:text-md-primary ring-2 ring-transparent group-hover:ring-md-primary/50 transition-all duration-300">
@@ -1400,17 +1297,13 @@
             renderAboutPage(); 
             renderLinks();
             setupDeeperSection();
-            
             checkTwitchLiveStatus(); 
             fetchLatestYouTubeVideo();
-            
             setupDraggableFAB();
             setupOverscrollStretch();
-            
             setTimeout(() => { isInitialRender = false; }, 150);
         }
 
-        // INIT AFTER DOM LOADED
         document.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
