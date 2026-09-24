@@ -55,29 +55,6 @@
     </script>
 
     <style>
-        /* Shared Axis Animations */
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(40px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes slideOutLeft {
-            from { opacity: 1; transform: translateX(0); }
-            to { opacity: 0; transform: translateX(-40px); }
-        }
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-40px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes slideOutRight {
-            from { opacity: 1; transform: translateX(0); }
-            to { opacity: 0; transform: translateX(40px); }
-        }
-        
-        .slide-in-forward { animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-        .slide-out-forward { animation: slideOutLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; pointer-events: none; }
-        .slide-in-backward { animation: slideInLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-        .slide-out-backward { animation: slideOutRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; pointer-events: none; }
-
         /* Ambient Blob Animations - Optimized */
         @keyframes blob {
             0% { transform: translate(0px, 0px) scale(1); }
@@ -141,7 +118,7 @@
             --shadow-op-2: 0.5;
         }
 
-        /* Themes... */
+        /* Themes */
         :root, [data-theme="lavender"] {
             --md-primary: #6750a4; --md-on-primary: #ffffff;
             --md-primary-container: #eaddff; --md-on-primary-container: #21005d;
@@ -257,7 +234,6 @@
             --md-surface-variant: #4a4739; --md-on-surface-variant: #cdc6b8;
         }
 
-        /* Cyan Theme */
         [data-theme="cyan"] {
             --md-primary: #006874; --md-primary-container: #97f0ff; --md-on-primary-container: #001f24;
             --md-secondary-container: #cbe6eb; --md-on-secondary-container: #051f23;
@@ -295,7 +271,10 @@
         }
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
         
-        * { transition: background-color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), fill 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        /* Scoped transition to avoid global selector overhead */
+        body, main, .glass-card, .glass-button, .glass-floating, header, button, a {
+            transition: background-color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
         
         input[type="color"] {
             -webkit-appearance: none; border: none; width: 100%; height: 100%; border-radius: 50%; padding: 0; cursor: pointer; background: transparent;
@@ -329,11 +308,11 @@
         }
         .fab-collapsed:active { cursor: grabbing !important; }
 
-        /* --- FIXED PERFORMANCE EXPAND ANIMATION --- */
+        /* Hardware Accelerated Expand Animation */
         .expand-wrapper {
             height: 0; 
             overflow: hidden;
-            transition: height 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: height 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
             will-change: height;
             transform: translateZ(0);
         }
@@ -342,7 +321,7 @@
             opacity: 0;
             transform: translateY(-8px) scale(0.98);
             transform-origin: top;
-            transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 300ms ease-out;
+            transition: transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 250ms ease-out;
             will-change: transform, opacity;
             padding-bottom: 10px; 
         }
@@ -370,7 +349,7 @@
         <!-- Header -->
         <header id="profile-header" class="flex flex-col items-center text-center" style="animation-delay: 0s;"></header>
 
-        <!-- Main Content Switcher Container -->
+        <!-- Main Content Switcher Container (No height locking) -->
         <div id="page-content" class="w-full relative block">
             
             <!-- Links Container -->
@@ -402,7 +381,6 @@
 
                     </div>
                     <div id="deeper-wrapper" class="expand-wrapper">
-                        <!-- JS controlled height container -->
                         <div class="expand-inner px-4 pt-0 text-sm text-md-onSurfaceVariant leading-relaxed flex flex-col gap-2">
                             <p>Hier kommt der tiefere Kram rein! Zum Beispiel Hintergrundinfos zu deinen Projekten, Easter Eggs, Setup-Details oder tiefgründigere Gedanken, die man nicht sofort auf den ersten Blick sieht.</p>
                             <p>Viel Spaß beim Ausfüllen und Anpassen! 🚀✨</p>
@@ -463,9 +441,8 @@
         </div>
     </div>
 
-    <!-- ABSOLUTELY CENTERED FULL-WIDTH WRAPPER -->
+    <!-- Centered Bottom Navigation -->
     <div class="fixed bottom-6 left-0 w-full flex justify-center pointer-events-none z-40 px-4">
-        <!-- The Pill Container -->
         <div id="bottom-pill" class="glass-floating flex items-center justify-center p-1.5 rounded-full shadow-m3-4 transition-all duration-500 ease-bouncy transform translate-y-24 opacity-0 scale-95 pointer-events-auto">
         </div>
     </div>
@@ -545,28 +522,16 @@
         window.renderedLinks = [];
         let isInitialRender = true;
         let isAboutPageOpen = false;
-        let pageTransitionTimeout;
+        let pageTransitionTimeout = null;
 
         const m3Shapes = [
-            '2rem',                               // 0: Standard Squircle
-            '50%',                                // 1: Perfect Circle
-            '3rem 0.5rem 3rem 0.5rem',            // 2: Leaf 1
-            '0.5rem 3rem 0.5rem 3rem',            // 3: Leaf 2
-            '1rem',                               // 4: Soft Box
-            '50% 50% 1rem 1rem',                  // 5: Arch Up
-            '1rem 1rem 50% 50%',                  // 6: Arch Down
-            '50% 1rem 1rem 50%',                  // 7: D-Shape Left
-            '1rem 50% 50% 1rem',                  // 8: D-Shape Right
-            '0.5rem 50% 50% 50%',                 // 9: Teardrop TL
-            '50% 0.5rem 50% 50%',                 // 10: Teardrop TR
-            '50% 50% 0.5rem 50%',                 // 11: Teardrop BR
-            '50% 50% 50% 0.5rem',                 // 12: Teardrop BL
-            '30% 70% 70% 30% / 30% 30% 70% 70%',  // 13: Organic Blob 1
-            '60% 40% 30% 70% / 60% 30% 70% 40%',  // 14: Organic Blob 2
-            '40% 60% 70% 30% / 40% 50% 60% 50%',  // 15: Organic Blob 3
-            '25% 75% 25% 75% / 75% 25% 75% 25%',  // 16: Slanted Oval Right
-            '75% 25% 75% 25% / 25% 75% 25% 75%',  // 17: Slanted Oval Left
-            '0.5rem'                              // 18: Sharp Box
+            '2rem', '50%', '3rem 0.5rem 3rem 0.5rem', '0.5rem 3rem 0.5rem 3rem',
+            '1rem', '50% 50% 1rem 1rem', '1rem 1rem 50% 50%', '50% 1rem 1rem 50%',
+            '1rem 50% 50% 1rem', '0.5rem 50% 50% 50%', '50% 0.5rem 50% 50%',
+            '50% 50% 0.5rem 50%', '50% 50% 50% 0.5rem',
+            '30% 70% 70% 30% / 30% 30% 70% 70%', '60% 40% 30% 70% / 60% 30% 70% 40%',
+            '40% 60% 70% 30% / 40% 50% 60% 50%', '25% 75% 25% 75% / 75% 25% 75% 25%',
+            '75% 25% 75% 25% / 25% 75% 25% 75%', '0.5rem'
         ];
         let currentShapeIndex = 0;
 
@@ -588,80 +553,84 @@
             if (event) createRipple(event); 
             hapticTap('medium');
             
+            const shapeEl = document.getElementById('profile-shape');
+            if (!shapeEl) return;
+            
             let newIndex;
             do {
                 newIndex = Math.floor(Math.random() * m3Shapes.length);
             } while (newIndex === currentShapeIndex);
             currentShapeIndex = newIndex;
             
-            const shapeEl = document.getElementById('profile-shape');
-            if (!shapeEl) return;
-            
             shapeEl.style.borderRadius = m3Shapes[currentShapeIndex];
-            
             shapeEl.style.transform = 'scale(0.9)';
-            setTimeout(() => {
-                shapeEl.style.transform = '';
-            }, 150);
+            setTimeout(() => { shapeEl.style.transform = ''; }, 150);
         }
 
+        // --- HARDWARE-ACCELERATED ZERO-LAG VIEW SWITCH ---
         function toggleAboutPage() {
             hapticTap('medium');
             const linksContainer = document.getElementById('links-container');
             const aboutContainer = document.getElementById('about-container');
             const bottomPill = document.getElementById('bottom-pill');
-            const pageContent = document.getElementById('page-content');
 
             if (pageTransitionTimeout) {
                 clearTimeout(pageTransitionTimeout);
-                linksContainer.classList.remove('absolute', 'top-0', 'left-0', 'w-full');
-                aboutContainer.classList.remove('absolute', 'top-0', 'left-0', 'w-full');
+                pageTransitionTimeout = null;
             }
-
-            const startHeight = pageContent.offsetHeight;
-            pageContent.style.height = startHeight + 'px';
-            pageContent.style.overflow = 'hidden';
 
             isAboutPageOpen = !isAboutPageOpen;
-            
-            const outgoing = isAboutPageOpen ? linksContainer : aboutContainer;
-            const incoming = isAboutPageOpen ? aboutContainer : linksContainer;
+            const isOpening = isAboutPageOpen;
 
-            outgoing.classList.remove('slide-in-forward', 'slide-in-backward');
-            incoming.classList.remove('slide-out-forward', 'slide-out-backward');
+            const outgoing = isOpening ? linksContainer : aboutContainer;
+            const incoming = isOpening ? aboutContainer : linksContainer;
 
-            outgoing.classList.add('absolute', 'top-0', 'left-0', 'w-full');
-            incoming.classList.remove('hidden', 'absolute', 'top-0', 'left-0', 'w-full');
-            incoming.classList.add('flex');
+            // Fast GPU fade-out & shift (120ms)
+            outgoing.style.willChange = 'opacity, transform';
+            outgoing.style.transition = 'opacity 120ms ease-out, transform 120ms ease-out';
+            outgoing.style.opacity = '0';
+            outgoing.style.transform = isOpening ? 'translateX(-16px)' : 'translateX(16px)';
 
-            if (isAboutPageOpen) {
-                outgoing.classList.add('slide-out-forward');
-                incoming.classList.add('slide-in-forward');
+            if (isOpening) {
                 bottomPill.classList.add('translate-y-24', 'opacity-0', 'scale-95');
                 bottomPill.classList.remove('translate-y-0', 'opacity-100', 'scale-100');
-            } else {
-                outgoing.classList.add('slide-out-backward');
-                incoming.classList.add('slide-in-backward');
-                renderBottomPill();
             }
 
-            const targetHeight = incoming.offsetHeight;
-            void pageContent.offsetHeight;
-            
-            pageContent.style.transition = 'height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            pageContent.style.height = targetHeight + 'px';
-
             pageTransitionTimeout = setTimeout(() => {
+                // Instantly swap while invisible (no height layout thrashing!)
                 outgoing.classList.add('hidden');
-                outgoing.classList.remove('flex', 'absolute', 'top-0', 'left-0', 'w-full', 'slide-out-forward', 'slide-out-backward');
-                pageContent.style.height = 'auto';
-                pageContent.style.overflow = 'visible';
-                pageContent.style.transition = '';
-                pageTransitionTimeout = null;
-            }, 400);
+                outgoing.classList.remove('flex');
+                outgoing.style.willChange = '';
+                outgoing.style.transition = '';
+                outgoing.style.transform = '';
+
+                incoming.classList.remove('hidden');
+                incoming.classList.add('flex');
+                incoming.style.willChange = 'opacity, transform';
+                incoming.style.opacity = '0';
+                incoming.style.transform = isOpening ? 'translateX(16px)' : 'translateX(-16px)';
+
+                if (!isOpening) {
+                    renderBottomPill();
+                }
+
+                // Next frame: smooth GPU fade-in to position
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        incoming.style.transition = 'opacity 220ms cubic-bezier(0.34, 1.56, 0.64, 1), transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1)';
+                        incoming.style.opacity = '1';
+                        incoming.style.transform = 'translateX(0)';
+
+                        pageTransitionTimeout = setTimeout(() => {
+                            incoming.style.willChange = '';
+                            incoming.style.transition = '';
+                            pageTransitionTimeout = null;
+                        }, 230);
+                    });
+                });
+            }, 120);
         }
 
-        // --- FIXED PERFORMANCE EXPAND TOGGLE ---
         function setupDeeperSection() {
             const header = document.getElementById('deeper-header');
             const wrapper = document.getElementById('deeper-wrapper');
@@ -688,7 +657,7 @@
                         
                         setTimeout(() => {
                             if (wrapper.classList.contains('expanded')) wrapper.style.height = 'auto';
-                        }, 400);
+                        }, 360);
                     }
                     createRipple(e);
                 };
@@ -705,7 +674,6 @@
                     
                     if (data.status === 'ok' && data.items.length > 0) {
                         const latestVideo = data.items[0];
-                        
                         let videoId = "";
                         if (latestVideo.guid && latestVideo.guid.includes('yt:video:')) {
                             videoId = latestVideo.guid.split('yt:video:')[1];
@@ -715,11 +683,9 @@
                         
                         if (videoId && ytLink.videoId !== videoId) {
                             ytLink.videoId = videoId;
-                            
                             let cleanTitle = latestVideo.title;
                             if(cleanTitle.length > 30) cleanTitle = cleanTitle.substring(0, 27) + '...';
                             ytLink.subtitle = `New: ${cleanTitle}`;
-                            
                             renderLinks(); 
                         }
                     }
@@ -833,7 +799,6 @@
 
                 if ((scrollTop <= 0 && e.deltaY < 0) || (scrollTop >= (maxScroll - 2) && e.deltaY > 0)) {
                     wheelAccumulator -= e.deltaY; 
-                    
                     if (wheelAccumulator > 150) wheelAccumulator = 150;
                     if (wheelAccumulator < -150) wheelAccumulator = -150;
 
@@ -939,8 +904,6 @@
                     --md-surface: hsl(${h}, Math.max(0, ${s}-40)%, 99%);
                     --md-on-surface: hsl(${h}, Math.max(0, ${s}-10)%, 10%);
                     --md-surface-variant: hsl(${h}, Math.max(0, ${s}-30)%, 90%);
-                    --md-on-surface-variant: hsl(${h}, Math.max(0, ${s}-20)%, 30%);
-                    --md-surface-container-low: hsl(${h}, Math.max(0, ${s}-40)%, 97%);
                     --md-surface-container-high: hsl(${h}, Math.max(0, ${s}-30)%, 92%);
                     --md-surface-container-highest: hsl(${h}, Math.max(0, ${s}-30)%, 88%);
                     --md-outline: hsl(${h}, Math.max(0, ${s}-40)%, 50%);
@@ -958,8 +921,6 @@
                     --md-surface: hsl(${h}, Math.max(0, ${s}-15)%, 12%);
                     --md-on-surface: hsl(${h}, Math.max(0, ${s}-10)%, 95%);
                     --md-surface-variant: hsl(${h}, Math.max(0, ${s}-10)%, 35%);
-                    --md-on-surface-variant: hsl(${h}, Math.max(0, ${s}-20)%, 80%);
-                    --md-surface-container-low: hsl(${h}, Math.max(0, ${s}-10)%, 10%);
                     --md-surface-container-high: hsl(${h}, Math.max(0, ${s}-10)%, 16%);
                     --md-surface-container-highest: hsl(${h}, Math.max(0, ${s}-10)%, 20%);
                     --md-outline: hsl(${h}, Math.max(0, ${s}-10)%, 60%);
@@ -1004,8 +965,6 @@
             }
         }
 
-        // --- SCHEDULER (CALENDAR) RENDER FIX ---
-        // Completely decoupled from missing theme colors. Uses robust alpha channels.
         function renderLinks() {
             const container = document.getElementById('links-container');
             const pillContainer = document.getElementById('bottom-pill');
@@ -1093,7 +1052,6 @@
                             </a>
                         `;
                     } else if (link.isSchedule) {
-                        // FIXED: Replaced fragile theme colors with robust alpha-transparencies
                         const scheduleItemsHtml = link.scheduleData.map(item => `
                             <div class="flex justify-between items-center bg-black/5 dark:bg-white/5 p-2.5 rounded-xl border border-black/5 dark:border-white/5 transition-colors hover:bg-black/10 dark:hover:bg-white/10">
                                 <div class="flex flex-col">
@@ -1110,7 +1068,6 @@
                             </div>
                         `;
                     } else if (link.name === "Twitch" && link.isLive) {
-                        // FIXED: Replaced fragile theme colors with robust alpha-transparencies
                         expandedInnerHtml = `
                             <div class="bg-black/5 dark:bg-white/5 p-3 rounded-xl border border-black/10 dark:border-white/10 flex flex-col gap-1 mb-1.5">
                                 <span class="text-[9px] font-bold text-md-primary uppercase tracking-widest flex items-center gap-1"><span class="w-1 h-1 bg-red-500 rounded-full animate-pulse"></span> NOW STREAMING</span>
@@ -1162,7 +1119,7 @@
                             expandedContainer.style.height = innerContent.scrollHeight + 'px';
                             
                             if (icon) {
-                                icon.style.transition = "transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1)";
+                                icon.style.transition = "transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1)";
                                 icon.style.transform = "rotate(180deg)";
                             }
                             
@@ -1170,7 +1127,7 @@
                                 if (expandedContainer.classList.contains('expanded')) {
                                     expandedContainer.style.height = 'auto';
                                 }
-                            }, 400);
+                            }, 360);
                         }
                         createRipple(e);
                     };
@@ -1239,14 +1196,12 @@
 
                 if (!item.isVisible) {
                     hiddenCount++;
-                    // Show Button (Give it width and margin)
                     pillBtn.style.width = '40px';
                     pillBtn.style.margin = '0 4px';
                     pillBtn.style.opacity = '1';
                     pillBtn.style.transform = 'scale(1)';
                     pillBtn.style.pointerEvents = 'auto';
                 } else {
-                    // Hide Button (Collapse to absolute zero)
                     pillBtn.style.width = '0px';
                     pillBtn.style.margin = '0px';
                     pillBtn.style.opacity = '0';
