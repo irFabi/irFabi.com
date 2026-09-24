@@ -473,8 +473,11 @@
         </div>
     </div>
 
-    <!-- Bottom Pill Navigation for Hidden Links -->
-    <div id="bottom-pill" class="glass-floating fixed bottom-6 left-1/2 -translate-x-1/2 px-1.5 py-1.5 flex items-center justify-center rounded-full shadow-m3-4 transition-all duration-500 ease-bouncy translate-y-24 opacity-0 scale-95 pointer-events-none z-40 overflow-x-auto max-w-[90vw]">
+    <!-- ABSOLUTELY CENTERED FULL-WIDTH WRAPPER -->
+    <div class="fixed bottom-6 left-0 w-full flex justify-center pointer-events-none z-40 px-4">
+        <!-- The Pill Container -->
+        <div id="bottom-pill" class="glass-floating flex items-center justify-center p-1.5 rounded-full shadow-m3-4 transition-all duration-500 ease-bouncy transform translate-y-24 opacity-0 scale-95 pointer-events-auto">
+        </div>
     </div>
 
     <!-- Toast Notification -->
@@ -646,7 +649,8 @@
             if (isAboutPageOpen) {
                 outgoing.classList.add('slide-out-forward');
                 incoming.classList.add('slide-in-forward');
-                bottomPill.classList.add('translate-y-24', 'opacity-0', 'scale-95', 'pointer-events-none');
+                bottomPill.classList.add('translate-y-24', 'opacity-0', 'scale-95');
+                bottomPill.classList.remove('translate-y-0', 'opacity-100', 'scale-100');
             } else {
                 outgoing.classList.add('slide-out-backward');
                 incoming.classList.add('slide-in-backward');
@@ -968,7 +972,7 @@
                 btn.classList.add('ring-transparent'); btn.classList.remove('ring-2', 'ring-md-primary');
             });
             const customPickerContainer = document.getElementById('custom-color-picker').parentElement;
-            customPickerContainer.classList.remove('border-2', 'border-md-outline/30');
+            customPickerContainer.classList.remove('border-2', 'border-md-outline/30', 'dark:border-transparent');
             customPickerContainer.classList.add('ring-2', 'ring-md-primary');
         }
 
@@ -1199,10 +1203,20 @@
                 });
                 linkObserver.observe(linkBlock);
 
+                // --- NEW ZERO-GAP PILL BUTTON LOGIC ---
+                // We use raw JS inline styles so hidden items take exactly 0 pixels in the container
                 const pillBtn = document.createElement('button');
                 pillBtn.id = 'pill-btn-' + linkId;
-                pillBtn.className = "overflow-hidden min-w-0 p-0 transition-all duration-500 ease-bouncy flex items-center justify-center shrink-0 rounded-full bg-md-secondaryContainer/40 text-md-onSecondaryContainer hover:bg-md-primaryContainer/50 hover:text-md-primary hover:shadow-m3-1 w-0 h-10 opacity-0 scale-50 mx-0 pointer-events-none touch-manipulation";
+                pillBtn.className = "relative overflow-hidden transition-all duration-500 ease-bouncy flex items-center justify-center shrink-0 rounded-full bg-md-secondaryContainer/40 text-md-onSecondaryContainer hover:bg-md-primaryContainer/50 hover:text-md-primary hover:shadow-m3-1 touch-manipulation";
+                
                 pillBtn.innerHTML = `<div class="w-5 h-5 shrink-0 flex items-center justify-center"><img src="${link.icon}" alt="${link.name}" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/50x50/transparent/var(--md-on-surface)?text=${link.name.charAt(0)}'"></div>`;
+                
+                // Initialize as completely hidden (0px width)
+                pillBtn.style.width = '0px';
+                pillBtn.style.margin = '0px';
+                pillBtn.style.opacity = '0';
+                pillBtn.style.transform = 'scale(0)';
+                pillBtn.style.pointerEvents = 'none';
                 
                 pillBtn.onclick = () => {
                     if (isAboutPageOpen) toggleAboutPage();
@@ -1224,20 +1238,28 @@
 
                 if (!item.isVisible) {
                     hiddenCount++;
-                    pillBtn.classList.remove('w-0', 'opacity-0', 'scale-50', 'mx-0', 'pointer-events-none');
-                    pillBtn.classList.add('w-10', 'opacity-100', 'scale-100', 'mx-1', 'cursor-pointer');
+                    // Show Button (Give it width and margin)
+                    pillBtn.style.width = '40px';
+                    pillBtn.style.margin = '0 4px';
+                    pillBtn.style.opacity = '1';
+                    pillBtn.style.transform = 'scale(1)';
+                    pillBtn.style.pointerEvents = 'auto';
                 } else {
-                    pillBtn.classList.remove('w-10', 'opacity-100', 'scale-100', 'mx-1', 'cursor-pointer');
-                    pillBtn.classList.add('w-0', 'opacity-0', 'scale-50', 'mx-0', 'pointer-events-none');
+                    // Hide Button (Collapse to absolute zero)
+                    pillBtn.style.width = '0px';
+                    pillBtn.style.margin = '0px';
+                    pillBtn.style.opacity = '0';
+                    pillBtn.style.transform = 'scale(0.5)';
+                    pillBtn.style.pointerEvents = 'none';
                 }
             });
             
             if (hiddenCount > 0 && !isAboutPageOpen) {
-                pill.classList.remove('translate-y-24', 'opacity-0', 'scale-95', 'pointer-events-none');
-                pill.classList.add('scale-100');
+                pill.classList.remove('translate-y-24', 'opacity-0', 'scale-95');
+                pill.classList.add('translate-y-0', 'opacity-100', 'scale-100');
             } else {
-                pill.classList.add('translate-y-24', 'opacity-0', 'scale-95', 'pointer-events-none');
-                pill.classList.remove('scale-100');
+                pill.classList.add('translate-y-24', 'opacity-0', 'scale-95');
+                pill.classList.remove('translate-y-0', 'opacity-100', 'scale-100');
             }
         }
 
