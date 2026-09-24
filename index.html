@@ -7,8 +7,8 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Changed font to Changa One -->
-    <link href="https://fonts.googleapis.com/css2?family=Changa+One&display=swap" rel="stylesheet">
+    <!-- Using Changa One for Headings, Roboto for Body Text -->
+    <link href="https://fonts.googleapis.com/css2?family=Changa+One&family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -19,8 +19,8 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        // Set Changa One as the default sans font
-                        sans: ['"Changa One"', 'sans-serif'],
+                        sans: ['Roboto', 'sans-serif'], // Clean body text
+                        display: ['"Changa One"', 'sans-serif'], // Stylized headers
                     },
                     colors: {
                         md: {
@@ -380,16 +380,18 @@
             profile: {
                 name: "ir_Fabi",
                 handle: "about me",
-                bio: "Hier ist ein Link zu jeglicher Form von geistigem durchfall den ich so ins Internet schieße 🦄",
+                bio: "Hier ist ein Link zu jeglicher Form von geistigem Durchfall, den ich so ins Internet schieße 🦄",
                 avatarUrl: "./avatar.jpg"
             },
             
             about: {
                 title: "Über mich",
+                // IMPROVED TEXT FORMATTING & STRUCTURE
                 description: [
-                    "Hey, ich bin Fabi (aka ir_Fabi).",
-                    "Ich mache jetzt seit rund 6 Jahren content im Internet (ungefähr seit 2020, mit ups and downs, aktiven Phasen und naja, 'ich suche mir einen neuen Sinn im Leben und habe gerade kein Bock auf YT und so shit' Phasen, ein Haufen davon um genau zu sein.",
-                    "Während meiner Zeit auf YouTube und Twitch habe ich glaub ich nichts mehr geändert als mein streaming Layout, idk wieso aber es macht mir holy Spaß immer wieder kleine Veränderungen daran vorzunehmen und zu schauen was mir alles so einfällt, außerdem ist alles daran selbst gestaltet, jedes Mal und ist damit ig auch ein kleines Zeichen gegen die Nutzung von AI und sonstigem, alles selbst mit allem was ich weiß und kann in Adobe Photoshop und After Effects umgesetzt, also auch nichts vorgefertigtes geekauft oder sowas, ich habe damals (2020 - 21) einfach Huebis design geklaut und yk, habe noch Schulden zu begleichen oder sowas."
+                    "Hey, ich bin <strong>Fabi</strong> (aka <em>ir_Fabi</em>).",
+                    "Ich mache jetzt seit rund <strong>6 Jahren</strong> Content im Internet (ungefähr seit 2020). Mit Höhen und Tiefen, aktiven Phasen und diesen typischen <em>'Ich suche mir einen neuen Sinn im Leben und habe gerade keinen Bock auf YouTube'</em>-Phasen – ein Haufen davon, um genau zu sein.",
+                    "Während meiner Zeit auf <strong>YouTube</strong> und <strong>Twitch</strong> habe ich glaube ich nichts öfter geändert als mein Streaming-Layout. Ich weiß nicht wieso, aber es macht mir wahnsinnig Spaß, immer wieder kleine Veränderungen daran vorzunehmen und zu schauen, was mir alles so einfällt.",
+                    "Außerdem ist <strong>alles daran selbst gestaltet</strong>. Jedes Mal. Das ist für mich auch ein kleines Zeichen gegen die Nutzung von AI und Ähnlichem. Alles ist selbst mit dem umgesetzt, was ich in <strong>Adobe Photoshop</strong> und <strong>After Effects</strong> weiß und kann. Also nichts Vorgefertigtes gekauft oder so. <br><span class='text-sm opacity-70 mt-2 block'>(Ich habe damals 2020-21 einfach Huebis Design geklont und, you know, habe noch Schulden zu begleichen oder so).</span>"
                 ],
                 showcaseTitle: "Meine Highlights",
                 showcase: [
@@ -412,8 +414,8 @@
                 deeper: {
                     title: "Der tiefere Kram (Geheimnisse & Setup)",
                     content: [
-                        "Fun Fact: Mein Setup besteht aktuell aus 4 Monitoren! Das hilft extrem beim Coden und Streamen gleichzeitig.",
-                        "Ich nutze hauptsächlich Elgato Equipment (Wave:3, Stream Deck) und liebe es, meine Alerts und Overlays mit HTML/CSS/JS von Grund auf selbst zu schreiben."
+                        "<strong>Fun Fact:</strong> Mein Setup besteht aktuell aus <strong>4 Monitoren</strong>! Das hilft extrem beim Coden und Streamen gleichzeitig.",
+                        "Ich nutze hauptsächlich <strong>Elgato Equipment</strong> (Wave:3, Stream Deck) und liebe es, meine Alerts und Overlays mit HTML/CSS/JS von Grund auf selbst zu schreiben."
                     ]
                 }
             },
@@ -651,13 +653,14 @@
                         <i class="ph-fill ph-user text-4xl absolute -z-10 pointer-events-none"></i>
                     </div>
                 </div>
-                <h1 class="text-2xl font-bold tracking-tight text-md-onSurface mb-0.5 text-center">${CONFIG.profile.name}</h1>
+                <!-- Added font-display for Changa One -->
+                <h1 class="text-3xl font-display font-normal tracking-wide text-md-onSurface mb-0.5 text-center">${CONFIG.profile.name}</h1>
                 <div class="flex justify-center w-full">
-                    <p onclick="toggleAboutPage()" class="text-md-primary font-medium text-xs cursor-pointer hover:underline transition-all touch-manipulation">
+                    <p onclick="toggleAboutPage()" class="text-md-primary font-bold tracking-wide uppercase text-[11px] cursor-pointer hover:underline transition-all touch-manipulation">
                         ${CONFIG.profile.handle}
                     </p>
                 </div>
-                <p class="text-md-onSurfaceVariant text-xs mt-3 max-w-[260px] mx-auto text-center leading-relaxed opacity-90">
+                <p class="text-md-onSurfaceVariant text-sm mt-3 max-w-[280px] mx-auto text-center leading-relaxed opacity-90">
                     ${CONFIG.profile.bio}
                 </p>
             `;
@@ -674,19 +677,20 @@
             const data = CONFIG.about;
             if(!data) return;
 
-            let html = `<h2 class="text-3xl font-bold tracking-tight text-md-onSurface">${data.title}</h2>`;
+            // Updated title to use display font
+            let html = `<h2 class="text-3xl font-display font-normal tracking-wide text-md-onSurface">${data.title}</h2>`;
             
             if (data.description && data.description.length > 0) {
-                // INCREASED SPACING, FONT SIZE, AND LINE HEIGHT HERE
-                html += `<div class="text-md-onSurfaceVariant text-base leading-loose flex flex-col gap-6 tracking-wide mt-2">`;
+                // Better spacing and slightly subdued text color for body paragraphs
+                html += `<div class="text-md-onSurfaceVariant text-base leading-relaxed flex flex-col gap-5 mt-1">`;
                 data.description.forEach(p => { html += `<p>${p}</p>`; });
                 html += `</div>`;
             }
 
             if (data.showcase && data.showcase.length > 0) {
                 html += `
-                <div class="mt-6">
-                    <h3 class="text-base font-bold text-md-primary mb-4">${data.showcaseTitle}</h3>
+                <div class="mt-8">
+                    <h3 class="text-xl font-display font-normal tracking-wide text-md-primary mb-4">${data.showcaseTitle}</h3>
                     <div class="flex overflow-x-auto gap-4 pb-4 no-scrollbar snap-x snap-mandatory -mx-6 px-6 sm:-mx-10 sm:px-10">
                 `;
                 
@@ -722,16 +726,15 @@
                 data.deeper.content.forEach(p => { deeperText += `<p>${p}</p>`; });
 
                 html += `
-                <div class="glass-button w-full rounded-2xl overflow-hidden mt-4">
+                <div class="glass-button w-full rounded-2xl overflow-hidden mt-6 mb-2">
                     <div id="deeper-header" class="group ripple-surface flex items-center justify-between p-4 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors select-none touch-manipulation">
-                        <span class="font-bold text-base text-md-primary">${data.deeper.title}</span>
+                        <span class="text-lg font-display font-normal tracking-wide text-md-primary">${data.deeper.title}</span>
                         <div class="w-8 h-8 flex items-center justify-center rounded-full bg-md-surfaceVariant/50 text-md-onSurfaceVariant group-hover:bg-md-primaryContainer group-hover:text-md-primary ring-2 ring-transparent group-hover:ring-md-primary/50 transition-all duration-300">
                             <i id="deeper-icon" class="ph-bold ph-caret-down text-lg transition-transform duration-300"></i>
                         </div>
                     </div>
                     <div id="deeper-wrapper" class="expand-wrapper">
-                        <!-- ALSO INCREASED SPACING HERE -->
-                        <div class="expand-inner px-4 pt-0 text-base text-md-onSurfaceVariant leading-loose flex flex-col gap-4">
+                        <div class="expand-inner px-4 pt-1 pb-4 text-base text-md-onSurfaceVariant leading-relaxed flex flex-col gap-4">
                             ${deeperText}
                         </div>
                     </div>
@@ -884,7 +887,8 @@
                     
                     <div class="ml-3.5 flex flex-col justify-center flex-grow z-10 overflow-hidden">
                         <div class="flex items-center gap-2">
-                            <span class="font-bold text-[1.05rem] leading-snug tracking-wide group-hover:text-md-primary transition-colors duration-300 ease-bouncy truncate">${link.name}</span>
+                            <!-- Link name uses Changa One font -->
+                            <span class="font-display font-normal text-lg leading-snug tracking-wide group-hover:text-md-primary transition-colors duration-300 ease-bouncy truncate">${link.name}</span>
                             ${link.isLive ? `<span class="flex items-center gap-1 text-[9px] font-bold bg-red-500/10 text-red-500 px-1.5 py-0.2 rounded-full border border-red-500/20"><span class="w-1 h-1 rounded-full bg-red-500 animate-pulse"></span>LIVE</span>` : ''}
                         </div>
                         ${link.subtitle ? `<span class="text-sm opacity-75 mt-0.5 leading-tight truncate text-md-onSurfaceVariant">${link.subtitle}</span>` : ''}
