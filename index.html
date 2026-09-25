@@ -355,7 +355,7 @@
             about: {
                 title: "Über mich",
                 description: [
-                    "Hey, ich bin <strong>Fabi</strong> (aka <em>ir_Fabi</em>).",
+                    "Hey, ich bin <strong>Fabi</strong> (aka <a href='https://youtube.com/@ir_Fabi' target='_blank' class='text-md-primary font-bold hover:underline'>ir_Fabi</a>).",
                     "Ich mache jetzt seit rund <strong>6 Jahren</strong> Content im Internet (ungefähr seit 2020). Mit Höhen und Tiefen, aktiven Phasen und diesen typischen <em>'Ich suche mir einen neuen Sinn im Leben und habe gerade keinen Bock auf YouTube'</em>-Phasen – ein Haufen davon, um genau zu sein.",
                     "Während meiner Zeit auf <strong>YouTube</strong> und <strong>Twitch</strong> habe ich glaube ich nichts öfter geändert als mein Streaming-Layout. Ich weiß nicht wieso, aber es macht mir wahnsinnig Spaß, immer wieder kleine Veränderungen daran vorzunehmen und zu schauen, was mir alles so einfällt.",
                     "Außerdem ist <strong>alles daran selbst gestaltet</strong>. Jedes Mal. Das ist für mich auch ein kleines Zeichen gegen die Nutzung von AI und Ähnlichem. Alles ist selbst mit dem umgesetzt, was ich in <strong>Adobe Photoshop</strong> und <strong>After Effects</strong> weiß und kann. Also nichts Vorgefertigtes gekauft oder so. <br><span class='text-sm opacity-70 mt-2 block'>(Ich habe damals 2020-21 einfach Huebis Design geklont und, you know, habe noch Schulden zu begleichen oder so).</span>"
@@ -417,8 +417,8 @@
                     icon: "./tiktok.png"
                 },
                 {
-                    name: "DISCORD",
-                    subtitle: "FABIS KELLER",
+                    name: "FABIS KELLER",
+                    subtitle: "Join the server",
                     url: "https://discord.gg/wmv3uJexSD",
                     icon: "./discord.png"
                 }
@@ -594,6 +594,8 @@
 
         function renderHeader() {
             const headerContainer = document.getElementById('profile-header');
+            const ytLink = CONFIG.links.find(l => l.name === "YouTube")?.url || "https://youtube.com/@ir_Fabi";
+
             headerContainer.innerHTML = `
                 <div class="relative group cursor-pointer mb-4 mx-auto flex justify-center items-center touch-manipulation">
                     <div id="profile-shape" onclick="morphProfileShape(event)" class="ripple-surface w-24 h-24 rounded-[2rem] bg-md-primaryContainer text-md-onPrimaryContainer flex items-center justify-center overflow-hidden shadow-m3-2 transition-all duration-500 ease-bouncy group-hover:shadow-m3-3 group-hover:scale-105 relative z-10 border-2 border-transparent group-hover:border-md-primary/30 mx-auto" style="transition-property: border-radius, transform, box-shadow, background-color, border-color;">
@@ -601,7 +603,9 @@
                         <i class="ph-fill ph-user text-4xl absolute -z-10 pointer-events-none"></i>
                     </div>
                 </div>
-                <h1 class="text-3xl font-display font-normal tracking-wide text-md-onSurface mb-0.5 text-center">${CONFIG.profile.name}</h1>
+                <a href="${ytLink}" target="_blank" class="hover:text-md-primary transition-colors touch-manipulation">
+                    <h1 class="text-3xl font-display font-normal tracking-wide text-md-onSurface mb-0.5 text-center hover:text-md-primary transition-colors">${CONFIG.profile.name}</h1>
+                </a>
                 <div class="flex justify-center w-full">
                     <p onclick="toggleAboutPage()" class="text-md-primary font-bold tracking-wide uppercase text-[11px] cursor-pointer hover:underline transition-all touch-manipulation">
                         ${CONFIG.profile.handle}
