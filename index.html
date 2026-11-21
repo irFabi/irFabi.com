@@ -766,7 +766,6 @@
                     shareTheme: 'Design teilen',
                     themeCopied: 'Design-Link kopiert!',
                     copiedToast: 'Link kopiert!',
-                    copiedItem: (val) => `Kopiert: ${val}`,
                     sharedToast: 'Geteilt!',
                     qrTitle: 'QR-Code teilen',
                     qrCopy: 'Link kopieren',
@@ -792,16 +791,6 @@
                             "Während meiner Zeit auf <strong>YouTube</strong> und <strong>Twitch</strong> habe ich glaube ich nichts öfter geändert als mein Streaming-Layout. Ich weiß nicht wieso, aber es macht mir wahnsinnig Spaß, immer wieder kleine Veränderungen daran vorzunehmen und zu schauen, was mir alles so einfällt.",
                             "Außerdem ist <strong>alles daran selbst gestaltet</strong>. Jedes Mal. Das ist für mich auch ein kleines Zeichen gegen die Nutzung von AI und Ähnlichem. Alles ist selbst mit dem umgesetzt, was ich in <strong>Adobe Photoshop</strong> und <strong>After Effects</strong> weiß und kann. Also nichts Vorgefertigtes gekauft oder so. <br><span class='text-sm opacity-70 mt-2 block'>(Ich habe damals 2020-21 einfach Huebis Design geklont und, you know, habe noch Schulden zu begleichen oder so).</span>"
                         ],
-                        setup: {
-                            title: 'Setup & Projekte',
-                            items: [
-                                { label: 'Kamera', value: 'Sony Alpha 6400 + Sigma 16mm f/1.4' },
-                                { label: 'Mikrofon', value: 'Elgato Wave:3' },
-                                { label: 'Licht & Steuerung', value: '2x Elgato Key Light, Elgato Stream Deck' },
-                                { label: 'Schnitt & Grafik', value: 'Premiere Pro, After Effects, Photoshop, OBS Studio' },
-                                { label: 'Gruppe', value: 'Internet Rambos' }
-                            ]
-                        },
                         deeper: {
                             title: 'Deep shit (also no joke, bisschen dark stuff)',
                             content: ['W.I.P.']
@@ -830,7 +819,6 @@
                     shareTheme: 'Share Theme',
                     themeCopied: 'Theme URL copied!',
                     copiedToast: 'Link copied!',
-                    copiedItem: (val) => `Copied: ${val}`,
                     sharedToast: 'Shared!',
                     qrTitle: 'Share QR Code',
                     qrCopy: 'Copy Link',
@@ -856,16 +844,6 @@
                             "During my time on <strong>YouTube</strong> and <strong>Twitch</strong>, I don't think I've changed anything more often than my streaming layout. I don't know why, but tweaking tiny details over and over and seeing what I can come up with is just ridiculously fun.",
                             "On top of that, <strong>everything is self-made</strong>. Every single time. Everything is built with what I know in <strong>Adobe Photoshop</strong> and <strong>After Effects</strong>—no pre-made templates bought anywhere. <br><span class='text-sm opacity-70 mt-2 block'>(Back in 2020–21 I basically cloned Huebi's design, so, you know, still paying off my debts).</span>"
                         ],
-                        setup: {
-                            title: 'Setup & Projects',
-                            items: [
-                                { label: 'Camera', value: 'Sony Alpha 6400 + Sigma 16mm f/1.4' },
-                                { label: 'Microphone', value: 'Elgato Wave:3' },
-                                { label: 'Lighting & Control', value: '2x Elgato Key Light, Elgato Stream Deck' },
-                                { label: 'Editing & Design', value: 'Premiere Pro, After Effects, Photoshop, OBS Studio' },
-                                { label: 'Group', value: 'Internet Rambos' }
-                            ]
-                        },
                         deeper: {
                             title: 'Deep shit (no joke, a bit of dark stuff)',
                             content: ['W.I.P.']
@@ -1685,38 +1663,12 @@
                 if (!container) return;
                 const data = I18N[currentLang].about;
 
-                const setupRows = data.setup.items.map(function (item) {
-                    const safeAttr = item.value.replace(/"/g, '&quot;');
-                    return `
-                        <button type="button" data-copy-value="${safeAttr}" class="setup-copy-btn press-btn w-full text-left flex flex-col sm:flex-row sm:justify-between sm:items-center gap-0.5 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 px-3.5 py-2.5 rounded-xl border border-black/5 dark:border-white/5 transition-colors cursor-pointer touch-manipulation">
-                            <span class="text-xs font-bold uppercase tracking-wider text-md-primary">${item.label}</span>
-                            <span class="text-sm text-md-onSurface font-medium flex items-center gap-1.5">
-                                <span>${item.value}</span>
-                                <i class="ph-bold ph-copy text-xs opacity-50 shrink-0"></i>
-                            </span>
-                        </button>
-                    `;
-                }).join('');
-
                 container.innerHTML = `
                     <h2 class="text-3xl font-display font-normal tracking-wide text-md-onSurface">${data.title}</h2>
                     <div class="text-md-onSurfaceVariant text-base leading-relaxed flex flex-col gap-4 mt-1">
                         ${data.description.map(function (p) { return `<p>${p}</p>`; }).join('')}
                     </div>
-                    <div class="glass-button glass-sheen w-full rounded-2xl overflow-hidden mt-2">
-                        <div class="accordion-header group ripple-surface flex items-center justify-between p-4 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 select-none">
-                            <span class="text-lg font-display font-normal tracking-wide text-md-primary flex items-center gap-2">
-                                <i class="ph-bold ph-desktop-tower"></i> ${data.setup.title}
-                            </span>
-                            <div class="w-8 h-8 flex items-center justify-center rounded-full bg-md-surfaceVariant/50 text-md-onSurfaceVariant group-hover:bg-md-primaryContainer group-hover:text-md-primary transition-all">
-                                <i class="accordion-icon ph-bold ph-caret-down text-lg transition-transform duration-300"></i>
-                            </div>
-                        </div>
-                        <div class="expand-wrapper">
-                            <div class="expand-inner px-4 pt-1 pb-4 flex flex-col gap-2">${setupRows}</div>
-                        </div>
-                    </div>
-                    <div class="glass-button glass-sheen w-full rounded-2xl overflow-hidden mb-2">
+                    <div class="glass-button glass-sheen w-full rounded-2xl overflow-hidden mt-2 mb-2">
                         <div class="accordion-header group ripple-surface flex items-center justify-between p-4 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 select-none">
                             <span class="text-lg font-display font-normal tracking-wide text-md-primary">${data.deeper.title}</span>
                             <div class="w-8 h-8 flex items-center justify-center rounded-full bg-md-surfaceVariant/50 text-md-onSurfaceVariant group-hover:bg-md-primaryContainer group-hover:text-md-primary transition-all">
@@ -1757,16 +1709,6 @@
                                 if (wrapper.classList.contains('expanded')) wrapper.style.height = 'auto';
                             }, 360);
                         }
-                    });
-                });
-
-                document.querySelectorAll('#about-dynamic-content .setup-copy-btn').forEach(function (btn) {
-                    btn.addEventListener('click', function () {
-                        const val = btn.dataset.copyValue;
-                        if (!val) return;
-                        copyTextSafe(val);
-                        hapticTap('light');
-                        showToast(I18N[currentLang].copiedItem(val), 'ph-copy');
                     });
                 });
             }
