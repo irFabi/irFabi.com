@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="theme-color" id="meta-theme-color" content="#141218">
     <title>ir_Fabi | Links</title>
 
@@ -1028,8 +1029,8 @@
                         id: 'spotlight',
                         name: 'Spotlight',
                         subtitle: 'Aktuelles Highlight & Video',
-                        url: 'https://www.youtube.com/watch?v=TkKmwf9TWnY',
-                        videoId: '_TkKmwf9TWnY',
+                        url: 'https://www.youtube.com/watch?v=TkKmwf9TWnY&list=PLX_6ZeSZ02bk',
+                        videoId: 'TkKmwf9TWnY',
                         videoTitle: '',
                         brandColor: '#f59e0b',
                         isExpandable: true,
@@ -1319,7 +1320,7 @@
                     playsinline: '1',
                     start: String(sec)
                 });
-                iframe.src = `https://www.youtube-nocookie.com/embed/${link.videoId}?${embedParams.toString()}`;
+                iframe.src = `https://www.youtube.com/embed/${link.videoId}?${embedParams.toString()}`;
 
                 isCinemaOpen = true;
                 backdrop.classList.remove('hidden');
@@ -1361,7 +1362,6 @@
                 const mountEl = expWrap.querySelector('.yt-player-mount');
                 const thumbEl = expWrap.querySelector('.video-thumb-img');
                 const tapLayer = expWrap.querySelector('.video-tap-layer');
-                const statusBadge = expWrap.querySelector('.video-status-badge');
                 const statusDot = expWrap.querySelector('.video-status-dot');
                 const statusText = expWrap.querySelector('.video-status-text');
                 const unmutePill = expWrap.querySelector('.video-unmute-pill');
@@ -1481,7 +1481,7 @@
 
                     mountEl.innerHTML = `<iframe
                         class="w-full h-full border-0"
-                        src="https://www.youtube-nocookie.com/embed/${link.videoId}?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1"
+                        src="https://www.youtube.com/embed/${link.videoId}?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1"
                         title="${link.videoTitle || 'YouTube Video'}"
                         allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
                         allowfullscreen
@@ -1633,14 +1633,15 @@
                             playsinline: 1,
                             iv_load_policy: 3,
                             disablekb: 1,
-                            fs: 0
+                            fs: 0,
+                            enablejsapi: 1
                         };
                         if (window.location.origin && window.location.origin !== 'null' && window.location.protocol.startsWith('http')) {
                             playerVars.origin = window.location.origin;
                         }
 
                         player = new YT.Player(mountId, {
-                            host: 'https://www.youtube-nocookie.com',
+                            host: 'https://www.youtube.com',
                             videoId: link.videoId,
                             playerVars: playerVars,
                             events: {
@@ -1648,6 +1649,8 @@
                                     if (isDestroyed) return;
                                     isReady = true;
                                     try {
+                                        const iframeEl = ev.target.getIframe && ev.target.getIframe();
+                                        if (iframeEl) iframeEl.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
                                         ev.target.mute();
                                         ev.target.playVideo();
                                     } catch (e) {}
@@ -2406,6 +2409,7 @@
                                     <!-- Crisp Thumbnail (Crossfades out once video actually starts playing) -->
                                     <img
                                         src="${thumbUrl}"
+                                        onload="if(this.naturalWidth<=120){this.src='${fallbackThumbUrl}';}"
                                         onerror="this.onerror=null;this.src='${fallbackThumbUrl}';"
                                         alt="${headline}"
                                         class="video-thumb-img absolute inset-0 w-full h-full object-cover transition-opacity duration-500 pointer-events-none z-[2]"
@@ -2802,10 +2806,11 @@
 8. SPOTLIGHT METADATA, TWITCH LIVE CHECK & STATIC CONTROLS
                ========================================================= */
             async function fetchSpotlightMetadata() {
-                const spotlight = CONFIG.links.find(function (l) { return l.isSpotlight && l.url; });
+                const spotlight = CONFIG.links.find(function (l) { return l.isSpotlight && l.videoId; });
                 if (!spotlight) return;
                 try {
-                    const res = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(spotlight.url)}&format=json`);
+                    const cleanUrl = `https://www.youtube.com/watch?v=${spotlight.videoId}`;
+                    const res = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(cleanUrl)}`);
                     if (!res.ok) return;
                     const data = await res.json();
                     if (data && data.title) {
