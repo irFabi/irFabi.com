@@ -57,7 +57,7 @@
 
     <style>
         /* =========================================================
-           1. MATERIAL 3 COLOR THEMES (9 Presets + Custom)
+1. MATERIAL 3 COLOR THEMES (9 Presets + Custom)
            ========================================================= */
         :root, [data-theme="lavender"] {
             --md-primary: #6750a4; --md-on-primary: #ffffff;
@@ -250,7 +250,7 @@
         }
 
         /* =========================================================
-           2. BASE, VIEW TRANSITIONS & AMBIENT BACKGROUNDS
+2. BASE, VIEW TRANSITIONS & AMBIENT BACKGROUNDS
            ========================================================= */
         ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
         ::view-transition-old(root) { z-index: 1; }
@@ -317,7 +317,7 @@
         }
 
         /* =========================================================
-           3. SURFACE MODES: SOLID | FROSTED (Milchglas) | LIQUID
+3. SURFACE MODES: SOLID | FROSTED (Milchglas) | LIQUID
            ========================================================= */
         /* SOLID */
         html[data-surface="solid"] .glass-card {
@@ -456,7 +456,7 @@
         }
 
         /* =========================================================
-           4. MICRO-ANIMATIONS (Aura, Wobbly Name, Ripple, Accordions)
+4. MICRO-ANIMATIONS (Aura, Wobbly Name, Ripple, Accordions)
            ========================================================= */
         @keyframes auraPulse { 0%, 100% { transform: scale(1); opacity: 0.42; } 50% { transform: scale(1.14); opacity: 0.68; } }
         @keyframes liveAuraPulse { 0%, 100% { transform: scale(1); opacity: 0.55; } 50% { transform: scale(1.22); opacity: 0.9; } }
@@ -517,7 +517,83 @@
         .expand-wrapper.expanded .expand-inner { opacity: 1; transform: translateY(0) scale(1); }
 
         /* =========================================================
-           5. DRAGGABLE SINGLE-VIEW CUSTOMIZATION FAB
+5. ENHANCED SPOTLIGHT VIDEO PLAYER STYLES
+           ========================================================= */
+        .video-stage iframe {
+            width: 100% !important;
+            height: 100% !important;
+            border: 0;
+        }
+        .video-hud {
+            transition: opacity 260ms ease, transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .video-stage.hud-hidden .video-hud {
+            opacity: 0;
+            transform: translateY(8px);
+            pointer-events: none;
+        }
+        .video-stage.hud-hidden .video-top-hud {
+            opacity: 0;
+            transform: translateY(-6px);
+            pointer-events: none;
+        }
+        .video-top-hud {
+            transition: opacity 240ms ease, transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .video-scrubber {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+            height: 18px;
+        }
+        .video-scrubber:focus { outline: none; }
+        .video-scrubber::-webkit-slider-runnable-track {
+            height: 4px;
+            border-radius: 9999px;
+            background: transparent;
+        }
+        .video-scrubber::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 2px solid var(--md-primary);
+            margin-top: -4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.45);
+            transform: scale(0.85);
+            transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .video-scrubber:hover::-webkit-slider-thumb,
+        .video-scrubber:active::-webkit-slider-thumb {
+            transform: scale(1.2);
+        }
+        .video-scrubber::-moz-range-track {
+            height: 4px;
+            border-radius: 9999px;
+            background: transparent;
+        }
+        .video-scrubber::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 2px solid var(--md-primary);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.45);
+        }
+        @keyframes centerPop {
+            0% { transform: scale(0.72); opacity: 0.95; }
+            60% { transform: scale(1.08); opacity: 0.9; }
+            100% { transform: scale(1.25); opacity: 0; }
+        }
+        .center-feedback-pop {
+            animation: centerPop 460ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        /* =========================================================
+6. DRAGGABLE SINGLE-VIEW CUSTOMIZATION FAB
            ========================================================= */
         #fab-container {
             touch-action: none;
@@ -730,12 +806,53 @@
         </div>
     </div>
 
+    <!-- Cinema / Theater Mode Video Lightbox Modal -->
+    <div id="cinema-modal-backdrop" class="fixed inset-0 z-[80] hidden items-center justify-center p-3 sm:p-6 bg-black/70 backdrop-blur-md opacity-0 transition-opacity duration-250">
+        <div id="cinema-modal-card" class="glass-floating w-full max-w-[820px] rounded-[2rem] p-4 sm:p-5 flex flex-col gap-3.5 shadow-m3-3 transform scale-95 transition-transform duration-250 ease-bouncy relative overflow-hidden">
+            <div id="cinema-ambient-glow" class="absolute -inset-8 opacity-35 blur-3xl pointer-events-none bg-cover bg-center -z-10"></div>
+            <div class="flex items-center justify-between gap-3">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <span class="w-7 h-7 rounded-full bg-red-500/15 text-red-500 flex items-center justify-center shrink-0">
+                        <i class="ph-fill ph-youtube-logo text-base"></i>
+                    </span>
+                    <h3 id="cinema-modal-title" class="font-bold text-sm sm:text-base text-md-onSurface truncate">Spotlight</h3>
+                </div>
+                <button id="cinema-close-btn" type="button" class="press-btn w-8 h-8 rounded-full flex items-center justify-center bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 text-md-onSurface shrink-0" aria-label="Close Cinema">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+            <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black border border-white/15 shadow-m3-2">
+                <iframe
+                    id="cinema-iframe"
+                    class="w-full h-full border-0"
+                    title="Cinema Video Player"
+                    allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                    allowfullscreen
+                    referrerpolicy="strict-origin-when-cross-origin"
+                ></iframe>
+            </div>
+            <div class="flex flex-wrap items-center justify-between gap-2">
+                <span id="cinema-hint-text" class="text-xs text-md-onSurfaceVariant opacity-80">Theater-Modus • ESC zum Schließen</span>
+                <div class="flex items-center gap-2 ml-auto">
+                    <button id="cinema-copy-btn" type="button" class="press-btn px-3.5 py-2 rounded-xl bg-black/10 dark:bg-white/10 hover:bg-black/15 dark:hover:bg-white/15 text-md-onSurface text-xs font-bold flex items-center gap-1.5">
+                        <i class="ph-bold ph-link text-sm"></i>
+                        <span id="cinema-copy-label">Link</span>
+                    </button>
+                    <a id="cinema-yt-link" href="#" target="_blank" rel="noopener" class="press-btn px-4 py-2 rounded-xl bg-md-primary text-md-onPrimary text-xs font-bold flex items-center gap-1.5 hover:opacity-90 transition-opacity">
+                        <i class="ph-bold ph-youtube-logo text-sm"></i>
+                        <span id="cinema-yt-label">Auf YouTube öffnen</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         (function () {
             'use strict';
 
             /* =========================================================
-               1. CONSTANTS, TRANSLATIONS & CONFIG
+1. CONSTANTS, TRANSLATIONS & CONFIG
                ========================================================= */
             const STORAGE_KEY = 'ir_fabi_links_prefs_v6';
             const ALLOWED_THEMES = ['lavender', 'blue', 'green', 'rose', 'peach', 'mint', 'amber', 'cyan', 'liquid-crystal', 'custom'];
@@ -773,9 +890,20 @@
                     spotlightTitle: 'Spotlight',
                     spotlightSub: 'Aktuelles Highlight & Video',
                     spotlightBadge: 'NEU',
+                    spotlightPreviewBadge: 'VORSCHAU',
+                    spotlightPlayingBadge: 'LÄUFT',
+                    spotlightTapSound: 'Ton an',
+                    spotlightPlay: 'Abspielen',
+                    spotlightPause: 'Pause',
+                    spotlightMute: 'Stummschalten',
+                    spotlightUnmute: 'Ton einschalten',
+                    spotlightCinema: 'Theater-Modus',
+                    spotlightCinemaHint: 'Theater-Modus • ESC zum Schließen',
+                    spotlightCopyLink: 'Link',
+                    spotlightOpenHint: 'Auf YouTube ansehen',
                     spotlightHeadline: 'Neuestes Video auf YouTube',
-                    spotlightDesc: 'Schau dir mein aktuelles Projekt, Challenge-Runs und Streams an.',
-                    spotlightCta: 'Ansehen',
+                    spotlightDesc: 'Direkt hier abspielen, spulen oder im Theater-Modus ansehen.',
+                    spotlightCta: 'Auf YouTube ansehen',
                     scheduleTitle: 'Stream-Plan',
                     scheduleSubtitle: 'Was als Nächstes läuft',
                     nextUp: 'NEXT UP',
@@ -826,9 +954,20 @@
                     spotlightTitle: 'Spotlight',
                     spotlightSub: 'Latest Highlight & Project',
                     spotlightBadge: 'NEW',
+                    spotlightPreviewBadge: 'PREVIEW',
+                    spotlightPlayingBadge: 'PLAYING',
+                    spotlightTapSound: 'Sound On',
+                    spotlightPlay: 'Play',
+                    spotlightPause: 'Pause',
+                    spotlightMute: 'Mute',
+                    spotlightUnmute: 'Unmute',
+                    spotlightCinema: 'Theater Mode',
+                    spotlightCinemaHint: 'Theater Mode • Press ESC to close',
+                    spotlightCopyLink: 'Link',
+                    spotlightOpenHint: 'Watch on YouTube',
                     spotlightHeadline: 'Latest Video on YouTube',
-                    spotlightDesc: 'Check out my latest project, challenge runs, and streams.',
-                    spotlightCta: 'Watch',
+                    spotlightDesc: 'Watch right here, scrub the timeline, or expand into Theater Mode.',
+                    spotlightCta: 'Watch on YouTube',
                     scheduleTitle: 'Stream Schedule',
                     scheduleSubtitle: "What I'm playing next",
                     nextUp: 'NEXT UP',
@@ -889,7 +1028,9 @@
                         id: 'spotlight',
                         name: 'Spotlight',
                         subtitle: 'Aktuelles Highlight & Video',
-                        url: 'https://youtube.com/@ir_Fabi',
+                        url: 'https://www.youtube.com/watch?v=_B8CyxnOP34',
+                        videoId: '_B8CyxnOP34',
+                        videoTitle: '',
                         brandColor: '#f59e0b',
                         isExpandable: true,
                         isSpotlight: true
@@ -968,7 +1109,7 @@
             ];
 
             /* =========================================================
-               2. STATE & SAFE UTILITY HELPERS
+2. STATE & SAFE UTILITY HELPERS
                ========================================================= */
             let currentLang = 'de';
             let currentSurface = 'liquid';
@@ -980,9 +1121,15 @@
             let isAboutPageOpen = false;
             let isFabExpanded = false;
             let isQrOpen = false;
+            let isCinemaOpen = false;
             let pageTransitionTimeout = null;
             let toastTimeout = null;
             let collapseFabFn = null;
+
+            /* Video Player Controller State */
+            let ytApiPromise = null;
+            let activeSpotlightController = null;
+            let cinemaCurrentUrl = '';
 
             function loadPrefs() {
                 try {
@@ -1028,6 +1175,25 @@
                     else if (level === 'heavy') navigator.vibrate([14, 18, 14]);
                     else navigator.vibrate(5);
                 } catch (e) {}
+            }
+
+            function formatTime(seconds) {
+                if (!Number.isFinite(seconds) || seconds < 0) return '0:00';
+                const total = Math.floor(seconds);
+                const hrs = Math.floor(total / 3600);
+                const mins = Math.floor((total % 3600) / 60);
+                const secs = total % 60;
+                if (hrs > 0) {
+                    return `${hrs}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                }
+                return `${mins}:${String(secs).padStart(2, '0')}`;
+            }
+
+            function buildYouTubeUrlWithTime(baseUrl, seconds) {
+                const sec = Math.floor(seconds || 0);
+                if (sec <= 1) return baseUrl;
+                const sep = baseUrl.includes('?') ? '&' : '?';
+                return `${baseUrl}${sep}t=${sec}s`;
             }
 
             function showToast(message, iconClass) {
@@ -1084,7 +1250,465 @@
             }
 
             /* =========================================================
-               3. THEME, SURFACE, BACKGROUND & CHROME TINTING
+3. YOUTUBE IFRAME API LOADER & ENHANCED SPOTLIGHT PLAYER
+               ========================================================= */
+            function loadYouTubeIframeApi() {
+                if (window.YT && window.YT.Player) return Promise.resolve(window.YT);
+                if (ytApiPromise) return ytApiPromise;
+
+                ytApiPromise = new Promise(function (resolve, reject) {
+                    let settled = false;
+                    const timeoutId = setTimeout(function () {
+                        if (!settled) {
+                            settled = true;
+                            reject(new Error('YT API timeout'));
+                        }
+                    }, 4500);
+
+                    const prevReady = window.onYouTubeIframeAPIReady;
+                    window.onYouTubeIframeAPIReady = function () {
+                        if (typeof prevReady === 'function') {
+                            try { prevReady(); } catch (e) {}
+                        }
+                        if (!settled) {
+                            settled = true;
+                            clearTimeout(timeoutId);
+                            resolve(window.YT);
+                        }
+                    };
+
+                    const script = document.createElement('script');
+                    script.src = 'https://www.youtube.com/iframe_api';
+                    script.async = true;
+                    script.onerror = function () {
+                        if (!settled) {
+                            settled = true;
+                            clearTimeout(timeoutId);
+                            reject(new Error('YT API failed'));
+                        }
+                    };
+                    document.head.appendChild(script);
+                });
+
+                return ytApiPromise;
+            }
+
+            function openCinemaModal(link, startSeconds) {
+                const backdrop = document.getElementById('cinema-modal-backdrop');
+                const card = document.getElementById('cinema-modal-card');
+                const iframe = document.getElementById('cinema-iframe');
+                const titleEl = document.getElementById('cinema-modal-title');
+                const ytLink = document.getElementById('cinema-yt-link');
+                const glow = document.getElementById('cinema-ambient-glow');
+                if (!backdrop || !card || !iframe) return;
+
+                hapticTap('medium');
+                const t = I18N[currentLang];
+                const sec = Math.max(0, Math.floor(startSeconds || 0));
+                const fullUrl = buildYouTubeUrlWithTime(link.url, sec);
+                cinemaCurrentUrl = fullUrl;
+
+                if (titleEl) titleEl.textContent = link.videoTitle || t.spotlightHeadline;
+                if (ytLink) ytLink.href = fullUrl;
+                if (glow) glow.style.backgroundImage = `url('https://i.ytimg.com/vi/${link.videoId}/hqdefault.jpg')`;
+
+                const embedParams = new URLSearchParams({
+                    autoplay: '1',
+                    rel: '0',
+                    modestbranding: '1',
+                    playsinline: '1',
+                    start: String(sec)
+                });
+                iframe.src = `https://www.youtube-nocookie.com/embed/${link.videoId}?${embedParams.toString()}`;
+
+                isCinemaOpen = true;
+                backdrop.classList.remove('hidden');
+                backdrop.classList.add('flex');
+                requestAnimationFrame(function () {
+                    backdrop.classList.remove('opacity-0');
+                    card.classList.remove('scale-95');
+                    card.classList.add('scale-100');
+                });
+            }
+
+            function closeCinemaModal() {
+                if (!isCinemaOpen) return;
+                isCinemaOpen = false;
+                const backdrop = document.getElementById('cinema-modal-backdrop');
+                const card = document.getElementById('cinema-modal-card');
+                const iframe = document.getElementById('cinema-iframe');
+                if (!backdrop || !card) return;
+
+                backdrop.classList.add('opacity-0');
+                card.classList.remove('scale-100');
+                card.classList.add('scale-95');
+                setTimeout(function () {
+                    backdrop.classList.add('hidden');
+                    backdrop.classList.remove('flex');
+                    if (iframe) iframe.removeAttribute('src');
+                }, 240);
+            }
+
+            function destroyActiveSpotlightPlayer() {
+                if (activeSpotlightController && typeof activeSpotlightController.destroy === 'function') {
+                    activeSpotlightController.destroy();
+                }
+                activeSpotlightController = null;
+            }
+
+            function createSpotlightPlayerController(expWrap, link) {
+                const stage = expWrap.querySelector('.video-stage');
+                const mountEl = expWrap.querySelector('.yt-player-mount');
+                const thumbEl = expWrap.querySelector('.video-thumb-img');
+                const tapLayer = expWrap.querySelector('.video-tap-layer');
+                const statusBadge = expWrap.querySelector('.video-status-badge');
+                const statusDot = expWrap.querySelector('.video-status-dot');
+                const statusText = expWrap.querySelector('.video-status-text');
+                const unmutePill = expWrap.querySelector('.video-unmute-pill');
+                const centerIconWrap = expWrap.querySelector('.video-center-feedback');
+                const playBtn = expWrap.querySelector('.vp-play-btn');
+                const playIcon = expWrap.querySelector('.vp-play-icon');
+                const muteBtn = expWrap.querySelector('.vp-mute-btn');
+                const muteIcon = expWrap.querySelector('.vp-mute-icon');
+                const cinemaBtn = expWrap.querySelector('.vp-cinema-btn');
+                const ytJumpBtn = expWrap.querySelector('.vp-yt-btn');
+                const ctaBtn = expWrap.querySelector('.spotlight-cta-link');
+                const scrubber = expWrap.querySelector('.video-scrubber');
+                const progressFill = expWrap.querySelector('.vp-progress-fill');
+                const bufferFill = expWrap.querySelector('.vp-buffer-fill');
+                const timeLabel = expWrap.querySelector('.vp-time-label');
+
+                let player = null;
+                let isReady = false;
+                let isPlaying = false;
+                let isMuted = true;
+                let isScrubbing = false;
+                let isDestroyed = false;
+                let progressInterval = null;
+                let hudHideTimer = null;
+                let lastKnownTime = 0;
+                let fallbackActive = false;
+
+                function flashCenterIcon(iconClass) {
+                    if (!centerIconWrap) return;
+                    centerIconWrap.innerHTML = `
+                        <div class="center-feedback-pop w-12 h-12 rounded-full bg-black/65 backdrop-blur-md border border-white/25 text-white flex items-center justify-center shadow-lg">
+                            <i class="ph-fill ${iconClass} text-xl"></i>
+                        </div>
+                    `;
+                }
+
+                function updateStatusUI() {
+                    const t = I18N[currentLang];
+                    if (playIcon) {
+                        playIcon.className = `vp-play-icon ph-fill ${isPlaying ? 'ph-pause' : 'ph-play'} text-sm`;
+                    }
+                    if (playBtn) {
+                        playBtn.title = isPlaying ? t.spotlightPause : t.spotlightPlay;
+                        playBtn.setAttribute('aria-label', isPlaying ? t.spotlightPause : t.spotlightPlay);
+                    }
+                    if (muteIcon) {
+                        muteIcon.className = `vp-mute-icon ph-bold ${isMuted ? 'ph-speaker-slash' : 'ph-speaker-high'} text-sm`;
+                    }
+                    if (muteBtn) {
+                        muteBtn.title = isMuted ? t.spotlightUnmute : t.spotlightMute;
+                        muteBtn.setAttribute('aria-label', isMuted ? t.spotlightUnmute : t.spotlightMute);
+                    }
+                    if (unmutePill) {
+                        const showPill = isReady && isPlaying && isMuted;
+                        unmutePill.classList.toggle('opacity-0', !showPill);
+                        unmutePill.classList.toggle('pointer-events-none', !showPill);
+                        unmutePill.classList.toggle('scale-90', !showPill);
+                    }
+                    if (statusText && statusDot) {
+                        if (isPlaying && !isMuted) {
+                            statusText.textContent = t.spotlightPlayingBadge;
+                            statusDot.className = 'video-status-dot w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse';
+                        } else {
+                            statusText.textContent = t.spotlightPreviewBadge;
+                            statusDot.className = 'video-status-dot w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse';
+                        }
+                    }
+                    if (!isPlaying && stage) {
+                        stage.classList.remove('hud-hidden');
+                    }
+                }
+
+                function bumpHudVisibility() {
+                    if (!stage || fallbackActive) return;
+                    stage.classList.remove('hud-hidden');
+                    clearTimeout(hudHideTimer);
+                    if (isPlaying) {
+                        hudHideTimer = setTimeout(function () {
+                            if (isPlaying && !isScrubbing && stage) {
+                                stage.classList.add('hud-hidden');
+                            }
+                        }, 2400);
+                    }
+                }
+
+                function syncProgress() {
+                    if (!player || !isReady || isScrubbing) return;
+                    try {
+                        const cur = Number(player.getCurrentTime()) || 0;
+                        const dur = Number(player.getDuration()) || 0;
+                        const loaded = Number(player.getVideoLoadedFraction()) || 0;
+                        lastKnownTime = cur;
+
+                        if (dur > 0) {
+                            const pct = Math.min(100, Math.max(0, (cur / dur) * 100));
+                            if (progressFill) progressFill.style.width = `${pct}%`;
+                            if (bufferFill) bufferFill.style.width = `${Math.min(100, loaded * 100)}%`;
+                            if (scrubber) scrubber.value = String(pct);
+                            if (timeLabel) timeLabel.textContent = `${formatTime(cur)} / ${formatTime(dur)}`;
+                        }
+
+                        const jumpUrl = buildYouTubeUrlWithTime(link.url, cur);
+                        if (ytJumpBtn) ytJumpBtn.href = jumpUrl;
+                        if (ctaBtn) ctaBtn.href = jumpUrl;
+                    } catch (e) {}
+                }
+
+                function activateFallbackIframe() {
+                    if (isDestroyed || !mountEl) return;
+                    fallbackActive = true;
+                    if (thumbEl) thumbEl.classList.add('opacity-0', 'pointer-events-none');
+                    if (tapLayer) tapLayer.classList.add('hidden');
+                    const hud = expWrap.querySelector('.video-hud');
+                    const topHud = expWrap.querySelector('.video-top-hud');
+                    if (hud) hud.classList.add('hidden');
+                    if (topHud) topHud.classList.add('hidden');
+
+                    mountEl.innerHTML = `<iframe
+                        class="w-full h-full border-0"
+                        src="https://www.youtube-nocookie.com/embed/${link.videoId}?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1"
+                        title="${link.videoTitle || 'YouTube Video'}"
+                        allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                        allowfullscreen
+                        referrerpolicy="strict-origin-when-cross-origin"
+                    ></iframe>`;
+                }
+
+                function togglePlay() {
+                    if (!player || !isReady) return;
+                    hapticTap('light');
+                    bumpHudVisibility();
+                    try {
+                        if (isPlaying) {
+                            player.pauseVideo();
+                            flashCenterIcon('ph-pause');
+                        } else {
+                            player.playVideo();
+                            flashCenterIcon('ph-play');
+                        }
+                    } catch (e) {}
+                }
+
+                function toggleMute(forceUnmute) {
+                    if (!player || !isReady) return;
+                    hapticTap('light');
+                    bumpHudVisibility();
+                    try {
+                        const shouldUnmute = forceUnmute === true ? true : isMuted;
+                        if (shouldUnmute) {
+                            player.unMute();
+                            player.setVolume(100);
+                            isMuted = false;
+                            if (!isPlaying) player.playVideo();
+                            flashCenterIcon('ph-speaker-high');
+                        } else {
+                            player.mute();
+                            isMuted = true;
+                            flashCenterIcon('ph-speaker-slash');
+                        }
+                        updateStatusUI();
+                    } catch (e) {}
+                }
+
+                if (tapLayer) {
+                    tapLayer.addEventListener('click', function () {
+                        if (!isReady) return;
+                        if (isPlaying && isMuted) {
+                            toggleMute(true);
+                        } else {
+                            togglePlay();
+                        }
+                    });
+                }
+
+                if (unmutePill) {
+                    unmutePill.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        toggleMute(true);
+                    });
+                }
+
+                if (playBtn) {
+                    playBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        togglePlay();
+                    });
+                }
+
+                if (muteBtn) {
+                    muteBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        toggleMute();
+                    });
+                }
+
+                if (cinemaBtn) {
+                    cinemaBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        let tNow = lastKnownTime;
+                        try {
+                            if (player && isReady) {
+                                tNow = Number(player.getCurrentTime()) || lastKnownTime;
+                                player.pauseVideo();
+                            }
+                        } catch (err) {}
+                        openCinemaModal(link, tNow);
+                    });
+                }
+
+                if (scrubber) {
+                    scrubber.addEventListener('pointerdown', function () {
+                        isScrubbing = true;
+                        clearTimeout(hudHideTimer);
+                    });
+                    scrubber.addEventListener('input', function () {
+                        const pct = parseFloat(scrubber.value) || 0;
+                        if (progressFill) progressFill.style.width = `${pct}%`;
+                        if (player && isReady) {
+                            try {
+                                const dur = Number(player.getDuration()) || 0;
+                                if (dur > 0 && timeLabel) {
+                                    timeLabel.textContent = `${formatTime((pct / 100) * dur)} / ${formatTime(dur)}`;
+                                }
+                            } catch (e) {}
+                        }
+                    });
+                    scrubber.addEventListener('change', function () {
+                        isScrubbing = false;
+                        if (player && isReady) {
+                            try {
+                                const dur = Number(player.getDuration()) || 0;
+                                const pct = parseFloat(scrubber.value) || 0;
+                                if (dur > 0) {
+                                    player.seekTo((pct / 100) * dur, true);
+                                    if (!isPlaying) player.playVideo();
+                                }
+                            } catch (e) {}
+                        }
+                        bumpHudVisibility();
+                    });
+                }
+
+                if (stage) {
+                    stage.addEventListener('mousemove', bumpHudVisibility, { passive: true });
+                    stage.addEventListener('touchstart', bumpHudVisibility, { passive: true });
+                    stage.addEventListener('mouseleave', function () {
+                        if (isPlaying && !isScrubbing) {
+                            clearTimeout(hudHideTimer);
+                            hudHideTimer = setTimeout(function () {
+                                if (isPlaying && !isScrubbing) stage.classList.add('hud-hidden');
+                            }, 900);
+                        }
+                    });
+                }
+
+                function mountPlayer() {
+                    if (isDestroyed || !mountEl) return;
+                    const mountId = `yt-spot-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+                    mountEl.innerHTML = `<div id="${mountId}" class="w-full h-full"></div>`;
+
+                    loadYouTubeIframeApi().then(function (YT) {
+                        if (isDestroyed || !document.getElementById(mountId)) return;
+                        const playerVars = {
+                            autoplay: 1,
+                            mute: 1,
+                            controls: 0,
+                            rel: 0,
+                            modestbranding: 1,
+                            playsinline: 1,
+                            iv_load_policy: 3,
+                            disablekb: 1,
+                            fs: 0
+                        };
+                        if (window.location.origin && window.location.origin !== 'null' && window.location.protocol.startsWith('http')) {
+                            playerVars.origin = window.location.origin;
+                        }
+
+                        player = new YT.Player(mountId, {
+                            host: 'https://www.youtube-nocookie.com',
+                            videoId: link.videoId,
+                            playerVars: playerVars,
+                            events: {
+                                onReady: function (ev) {
+                                    if (isDestroyed) return;
+                                    isReady = true;
+                                    try {
+                                        ev.target.mute();
+                                        ev.target.playVideo();
+                                    } catch (e) {}
+                                    updateStatusUI();
+                                    syncProgress();
+                                    progressInterval = setInterval(syncProgress, 250);
+                                },
+                                onStateChange: function (ev) {
+                                    if (isDestroyed) return;
+                                    const state = ev.data;
+                                    if (state === YT.PlayerState.PLAYING) {
+                                        isPlaying = true;
+                                        if (thumbEl) thumbEl.classList.add('opacity-0');
+                                        updateStatusUI();
+                                        bumpHudVisibility();
+                                    } else if (state === YT.PlayerState.PAUSED) {
+                                        isPlaying = false;
+                                        updateStatusUI();
+                                    } else if (state === YT.PlayerState.ENDED) {
+                                        isPlaying = false;
+                                        updateStatusUI();
+                                        try {
+                                            if (isMuted) {
+                                                ev.target.seekTo(0, true);
+                                                ev.target.playVideo();
+                                            }
+                                        } catch (e) {}
+                                    }
+                                },
+                                onError: function () {
+                                    activateFallbackIframe();
+                                }
+                            }
+                        });
+                    }).catch(function () {
+                        activateFallbackIframe();
+                    });
+                }
+
+                mountPlayer();
+
+                return {
+                    destroy: function () {
+                        isDestroyed = true;
+                        clearInterval(progressInterval);
+                        clearTimeout(hudHideTimer);
+                        try {
+                            if (player && typeof player.destroy === 'function') {
+                                player.destroy();
+                            }
+                        } catch (e) {}
+                        player = null;
+                        if (mountEl) mountEl.innerHTML = '';
+                        if (thumbEl) thumbEl.classList.remove('opacity-0', 'pointer-events-none');
+                        if (stage) stage.classList.remove('hud-hidden');
+                    }
+                };
+            }
+
+            /* =========================================================
+4. THEME, SURFACE, BACKGROUND & CHROME TINTING
                ========================================================= */
             function updateChromeThemeColor() {
                 const meta = document.getElementById('meta-theme-color');
@@ -1329,6 +1953,9 @@
                 setTxt('qr-modal-title', t.qrTitle);
                 setTxt('qr-copy-text', t.qrCopy);
                 setTxt('qr-share-text', t.qrShare);
+                setTxt('cinema-hint-text', t.spotlightCinemaHint);
+                setTxt('cinema-copy-label', t.spotlightCopyLink);
+                setTxt('cinema-yt-label', t.spotlightCta);
 
                 const themeIcon = document.getElementById('theme-icon');
                 if (themeIcon) themeIcon.className = isDark ? 'ph-bold ph-sun' : 'ph-bold ph-moon';
@@ -1361,7 +1988,7 @@
             }
 
             /* =========================================================
-               4. AVATAR MORPH, SHARE & QR CODE MODAL
+5. AVATAR MORPH, SHARE & QR CODE MODAL
                ========================================================= */
             function getShareablePageUrl() {
                 try {
@@ -1445,7 +2072,7 @@
             }
 
             /* =========================================================
-               5. SCHEDULE, HEADER, PAGE SWITCH, ABOUT ME & CAPSULES
+6. SCHEDULE, HEADER, PAGE SWITCH, ABOUT ME & CAPSULES
                ========================================================= */
             function computeNextOccurrences() {
                 const now = new Date();
@@ -1600,6 +2227,8 @@
             function setPage(targetPage) {
                 const wantAbout = targetPage === 'about';
                 if (wantAbout === isAboutPageOpen) return;
+
+                if (wantAbout) destroyActiveSpotlightPlayer();
 
                 hapticTap('medium');
                 const linksContainer = document.getElementById('links-container');
@@ -1760,19 +2389,87 @@
                     let expInnerHtml = '';
 
                     if (link.isSpotlight) {
+                        const thumbUrl = `https://i.ytimg.com/vi/${link.videoId}/maxresdefault.jpg`;
+                        const fallbackThumbUrl = `https://i.ytimg.com/vi/${link.videoId}/hqdefault.jpg`;
+                        const headline = link.videoTitle || t.spotlightHeadline;
+
                         expInnerHtml = `
-                            <div class="rounded-xl overflow-hidden border border-black/10 dark:border-white/10 p-3.5 flex flex-col gap-2.5 bg-black/5 dark:bg-white/5">
-                                <div class="w-full h-28 rounded-xl flex items-center justify-center relative overflow-hidden border border-white/15" style="background: linear-gradient(135deg, #f59e0b 0%, #ea580c 48%, #7c3aed 100%);">
-                                    <span class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-black/45 text-amber-200 backdrop-blur-sm border border-white/20">${t.spotlightBadge}</span>
-                                    <div class="w-12 h-12 rounded-full bg-white/95 text-slate-900 flex items-center justify-center shadow-lg">
-                                        <i class="ph-fill ph-play text-xl ml-0.5"></i>
+                            <div class="relative rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 p-3 flex flex-col gap-2.5 bg-black/5 dark:bg-white/5">
+                                <!-- Ambient Glow Backdrop -->
+                                <div class="absolute -top-6 -left-6 -right-6 h-40 opacity-35 dark:opacity-45 blur-2xl pointer-events-none bg-cover bg-center -z-0" style="background-image: url('${fallbackThumbUrl}');"></div>
+
+                                <!-- Interactive Video Stage -->
+                                <div class="video-stage relative z-10 w-full aspect-video rounded-xl overflow-hidden bg-black border border-white/15 shadow-m3-2 select-none">
+                                    <!-- YouTube API Mount -->
+                                    <div class="yt-player-mount absolute inset-0 w-full h-full pointer-events-none"></div>
+
+                                    <!-- Crisp Thumbnail (Crossfades out once video actually starts playing) -->
+                                    <img
+                                        src="${thumbUrl}"
+                                        onerror="this.onerror=null;this.src='${fallbackThumbUrl}';"
+                                        alt="${headline}"
+                                        class="video-thumb-img absolute inset-0 w-full h-full object-cover transition-opacity duration-500 pointer-events-none z-[2]"
+                                        loading="lazy"
+                                    >
+
+                                    <!-- Tap Surface (Unmutes on first tap if muted, otherwise toggles play/pause) -->
+                                    <button type="button" class="video-tap-layer absolute inset-0 z-[5] w-full h-full bg-transparent cursor-pointer focus:outline-none" aria-label="${t.spotlightPlay}"></button>
+
+                                    <!-- Center Play/Pause/Volume Pop Feedback -->
+                                    <div class="video-center-feedback absolute inset-0 z-[8] flex items-center justify-center pointer-events-none"></div>
+
+                                    <!-- Top Floating HUD -->
+                                    <div class="video-top-hud absolute top-0 left-0 right-0 z-[10] flex items-center justify-between gap-2 p-2.5 bg-gradient-to-b from-black/70 via-black/25 to-transparent pointer-events-none">
+                                        <span class="video-status-badge flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-black/55 text-white backdrop-blur-md border border-white/15">
+                                            <span class="video-status-dot w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                                            <span class="video-status-text">${t.spotlightPreviewBadge}</span>
+                                        </span>
+                                        <button type="button" class="video-unmute-pill press-btn pointer-events-auto opacity-0 pointer-events-none scale-90 flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-black/65 hover:bg-black/80 text-white backdrop-blur-md border border-white/20 shadow-md transition-all">
+                                            <i class="ph-bold ph-speaker-high text-xs text-amber-300"></i>
+                                            <span>${t.spotlightTapSound}</span>
+                                        </button>
+                                    </div>
+
+                                    <!-- Bottom Liquid Glass Media Control Bar -->
+                                    <div class="video-hud absolute bottom-0 left-0 right-0 z-[12] px-2.5 pt-6 pb-2 bg-gradient-to-t from-black/85 via-black/50 to-transparent flex flex-col gap-1.5">
+                                        <!-- Timeline Scrubber -->
+                                        <div class="relative w-full h-4 flex items-center group/scrub">
+                                            <div class="w-full h-1 rounded-full bg-white/25 overflow-hidden relative">
+                                                <div class="vp-buffer-fill absolute inset-y-0 left-0 bg-white/35 rounded-full transition-all duration-300" style="width: 0%;"></div>
+                                                <div class="vp-progress-fill absolute inset-y-0 left-0 bg-md-primary rounded-full" style="width: 0%;"></div>
+                                            </div>
+                                            <input type="range" min="0" max="100" step="0.1" value="0" aria-label="Seek" class="video-scrubber absolute inset-0 w-full m-0">
+                                        </div>
+
+                                        <!-- Controls Row -->
+                                        <div class="flex items-center justify-between gap-1.5 text-white">
+                                            <div class="flex items-center gap-1">
+                                                <button type="button" class="vp-play-btn press-btn w-7 h-7 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/15 flex items-center justify-center transition-colors" title="${t.spotlightPause}" aria-label="${t.spotlightPause}">
+                                                    <i class="vp-play-icon ph-fill ph-play text-sm"></i>
+                                                </button>
+                                                <button type="button" class="vp-mute-btn press-btn w-7 h-7 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/15 flex items-center justify-center transition-colors" title="${t.spotlightUnmute}" aria-label="${t.spotlightUnmute}">
+                                                    <i class="vp-mute-icon ph-bold ph-speaker-slash text-sm"></i>
+                                                </button>
+                                                <span class="vp-time-label text-[10px] font-medium tabular-nums text-white/90 ml-1">0:00 / 0:00</span>
+                                            </div>
+
+                                            <div class="flex items-center gap-1">
+                                                <button type="button" class="vp-cinema-btn press-btn w-7 h-7 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/15 flex items-center justify-center transition-colors" title="${t.spotlightCinema}" aria-label="${t.spotlightCinema}">
+                                                    <i class="ph-bold ph-arrows-out text-sm"></i>
+                                                </button>
+                                                <a href="${link.url}" target="_blank" rel="noopener" class="vp-yt-btn press-btn w-7 h-7 rounded-full bg-white/15 hover:bg-red-500/80 backdrop-blur-md border border-white/15 flex items-center justify-center transition-colors" title="${t.spotlightOpenHint}" aria-label="${t.spotlightOpenHint}">
+                                                    <i class="ph-bold ph-arrow-up-right text-sm"></i>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="flex flex-col gap-1 px-0.5">
-                                    <span class="text-md-onSurface font-bold text-base leading-snug">${t.spotlightHeadline}</span>
+
+                                <div class="relative z-10 flex flex-col gap-1 px-0.5">
+                                    <span class="spotlight-headline text-md-onSurface font-bold text-sm sm:text-base leading-snug line-clamp-2">${headline}</span>
                                     <span class="text-xs text-md-onSurfaceVariant opacity-85 leading-relaxed">${t.spotlightDesc}</span>
                                 </div>
-                                <a href="${link.url}" target="_blank" rel="noopener" class="press-btn w-full py-2.5 bg-md-primary text-md-onPrimary rounded-xl flex items-center justify-center gap-2 text-xs font-bold hover:opacity-90 transition-opacity">
+                                <a href="${link.url}" target="_blank" rel="noopener" class="spotlight-cta-link relative z-10 press-btn w-full py-2.5 bg-md-primary text-md-onPrimary rounded-xl flex items-center justify-center gap-2 text-xs font-bold hover:opacity-90 transition-opacity">
                                     <i class="ph-bold ph-youtube-logo text-base"></i> ${t.spotlightCta}
                                 </a>
                             </div>
@@ -1815,16 +2512,28 @@
                         const icon = header.querySelector('.expand-icon');
                         const inner = expWrap.querySelector('.expand-inner');
                         if (!inner) return;
+
                         if (isOpen) {
                             expWrap.style.height = `${expWrap.scrollHeight}px`;
                             void expWrap.offsetHeight;
                             expWrap.style.height = '0px';
                             expWrap.classList.remove('expanded');
                             if (icon) icon.style.transform = 'rotate(0deg)';
+                            if (link.isSpotlight) {
+                                setTimeout(function () {
+                                    if (!expWrap.classList.contains('expanded')) {
+                                        destroyActiveSpotlightPlayer();
+                                    }
+                                }, 300);
+                            }
                         } else {
                             expWrap.classList.add('expanded');
                             expWrap.style.height = `${inner.scrollHeight}px`;
                             if (icon) icon.style.transform = 'rotate(180deg)';
+                            if (link.isSpotlight && link.videoId) {
+                                destroyActiveSpotlightPlayer();
+                                activeSpotlightController = createSpotlightPlayerController(expWrap, link);
+                            }
                             setTimeout(function () {
                                 if (expWrap.classList.contains('expanded')) expWrap.style.height = 'auto';
                             }, 360);
@@ -1848,6 +2557,8 @@
             }
 
             function renderLinks() {
+                destroyActiveSpotlightPlayer();
+
                 const container = document.getElementById('links-container');
                 const pillContainer = document.getElementById('bottom-pill');
                 if (!container || !pillContainer) return;
@@ -1932,7 +2643,7 @@
             }
 
             /* =========================================================
-               6. POINTER SHEEN, OVERSCROLL & DRAGGABLE FAB
+7. POINTER SHEEN, OVERSCROLL & DRAGGABLE FAB
                ========================================================= */
             function setupGlassSheen() {
                 try {
@@ -2088,8 +2799,24 @@
             }
 
             /* =========================================================
-               7. TWITCH LIVE CHECK & STATIC CONTROL WIRING
+8. SPOTLIGHT METADATA, TWITCH LIVE CHECK & STATIC CONTROLS
                ========================================================= */
+            async function fetchSpotlightMetadata() {
+                const spotlight = CONFIG.links.find(function (l) { return l.isSpotlight && l.url; });
+                if (!spotlight) return;
+                try {
+                    const res = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(spotlight.url)}&format=json`);
+                    if (!res.ok) return;
+                    const data = await res.json();
+                    if (data && data.title) {
+                        spotlight.videoTitle = data.title;
+                        document.querySelectorAll('.spotlight-headline').forEach(function (el) {
+                            el.textContent = data.title;
+                        });
+                    }
+                } catch (e) {}
+            }
+
             async function checkTwitchLiveStatus() {
                 const twitchLink = CONFIG.links.find(function (l) { return l.id === 'twitch'; });
                 if (!twitchLink) return;
@@ -2190,9 +2917,31 @@
                 const qrShareBtn = document.getElementById('qr-share-btn');
                 if (qrShareBtn) qrShareBtn.addEventListener('click', shareProfile);
 
+                const cinemaCloseBtn = document.getElementById('cinema-close-btn');
+                if (cinemaCloseBtn) cinemaCloseBtn.addEventListener('click', closeCinemaModal);
+
+                const cinemaBackdrop = document.getElementById('cinema-modal-backdrop');
+                if (cinemaBackdrop) {
+                    cinemaBackdrop.addEventListener('click', function (e) {
+                        if (e.target === cinemaBackdrop) closeCinemaModal();
+                    });
+                }
+
+                const cinemaCopyBtn = document.getElementById('cinema-copy-btn');
+                if (cinemaCopyBtn) {
+                    cinemaCopyBtn.addEventListener('click', function () {
+                        if (cinemaCurrentUrl) {
+                            copyTextSafe(cinemaCurrentUrl);
+                            hapticTap('light');
+                            showToast(I18N[currentLang].copiedToast, 'ph-copy');
+                        }
+                    });
+                }
+
                 document.addEventListener('keydown', function (e) {
                     if (e.key === 'Escape') {
-                        if (isQrOpen) closeQrModal();
+                        if (isCinemaOpen) closeCinemaModal();
+                        else if (isQrOpen) closeQrModal();
                         else if (isFabExpanded && typeof collapseFabFn === 'function') collapseFabFn();
                         else if (isAboutPageOpen) setPage('links');
                     }
@@ -2200,7 +2949,7 @@
             }
 
             /* =========================================================
-               8. PREFERENCES & INITIALIZATION
+9. PREFERENCES & INITIALIZATION
                ========================================================= */
             function applySavedPreferences() {
                 const prefs = loadPrefs();
@@ -2238,6 +2987,7 @@
                     renderLinks();
                     setupDraggableFAB();
                     setupGlassSheen();
+                    fetchSpotlightMetadata();
                     checkTwitchLiveStatus();
                     setTimeout(function () { isInitialRender = false; }, 160);
                 } catch (err) {
