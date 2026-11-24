@@ -58,7 +58,7 @@
 
     <style>
         /* =========================================================
-1. MATERIAL 3 COLOR THEMES (9 Presets + Custom)
+           1. MATERIAL 3 COLOR THEMES (9 Presets + Custom)
            ========================================================= */
         :root, [data-theme="lavender"] {
             --md-primary: #6750a4; --md-on-primary: #ffffff;
@@ -251,7 +251,7 @@
         }
 
         /* =========================================================
-2. BASE, VIEW TRANSITIONS & AMBIENT BACKGROUNDS
+           2. BASE, VIEW TRANSITIONS & AMBIENT BACKGROUNDS
            ========================================================= */
         ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
         ::view-transition-old(root) { z-index: 1; }
@@ -318,7 +318,7 @@
         }
 
         /* =========================================================
-3. SURFACE MODES: SOLID | FROSTED (Milchglas) | LIQUID
+           3. SURFACE MODES: SOLID | FROSTED (Milchglas) | LIQUID
            ========================================================= */
         /* SOLID */
         html[data-surface="solid"] .glass-card {
@@ -457,7 +457,7 @@
         }
 
         /* =========================================================
-4. MICRO-ANIMATIONS (Aura, Wobbly Name, Ripple, Accordions)
+           4. MICRO-ANIMATIONS (Aura, Wobbly Name, Ripple, Accordions)
            ========================================================= */
         @keyframes auraPulse { 0%, 100% { transform: scale(1); opacity: 0.42; } 50% { transform: scale(1.14); opacity: 0.68; } }
         @keyframes liveAuraPulse { 0%, 100% { transform: scale(1); opacity: 0.55; } 50% { transform: scale(1.22); opacity: 0.9; } }
@@ -518,7 +518,7 @@
         .expand-wrapper.expanded .expand-inner { opacity: 1; transform: translateY(0) scale(1); }
 
         /* =========================================================
-5. ENHANCED SPOTLIGHT VIDEO PLAYER STYLES
+           5. ENHANCED SPOTLIGHT VIDEO PLAYER STYLES
            ========================================================= */
         .video-stage iframe {
             width: 100% !important;
@@ -594,7 +594,7 @@
         }
 
         /* =========================================================
-6. DRAGGABLE SINGLE-VIEW CUSTOMIZATION FAB
+           6. DRAGGABLE SINGLE-VIEW CUSTOMIZATION FAB
            ========================================================= */
         #fab-container {
             touch-action: none;
@@ -638,10 +638,6 @@
                 <stop offset="80%" stop-color="#962fbf"/>
                 <stop offset="100%" stop-color="#4f5bd5"/>
             </linearGradient>
-            <linearGradient id="sched-brand-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#a855f7"/>
-                <stop offset="100%" stop-color="#6366f1"/>
-            </linearGradient>
             <linearGradient id="spot-brand-grad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#fbbf24"/>
                 <stop offset="55%" stop-color="#f59e0b"/>
@@ -677,7 +673,7 @@
         <header id="profile-header" class="flex flex-col items-center text-center relative z-10 origin-top"></header>
 
         <div id="page-content" class="w-full relative block z-10">
-            <!-- Links Section (8 Separate Uniform Compact Horizontal Capsules) -->
+            <!-- Links Section (7 Separate Uniform Compact Horizontal Capsules) -->
             <section id="links-container" class="flex flex-col gap-3 w-full relative z-20 pb-2"></section>
 
             <!-- Separated About Me Section -->
@@ -853,7 +849,7 @@
             'use strict';
 
             /* =========================================================
-1. CONSTANTS, TRANSLATIONS & CONFIG
+               1. CONSTANTS, TRANSLATIONS & CONFIG
                ========================================================= */
             const STORAGE_KEY = 'ir_fabi_links_prefs_v6';
             const ALLOWED_THEMES = ['lavender', 'blue', 'green', 'rose', 'peach', 'mint', 'amber', 'cyan', 'liquid-crystal', 'custom'];
@@ -905,13 +901,8 @@
                     spotlightHeadline: 'Neuestes Video auf YouTube',
                     spotlightDesc: 'Direkt hier abspielen, spulen oder im Theater-Modus ansehen.',
                     spotlightCta: 'Auf YouTube ansehen',
-                    scheduleTitle: 'Stream-Plan',
-                    scheduleSubtitle: 'Was als Nächstes läuft',
-                    nextUp: 'NEXT UP',
                     nowStreaming: 'JETZT LIVE',
                     watchLive: 'Jetzt live ansehen',
-                    days: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-                    inTime: (d, h, m) => d > 0 ? `in ${d}T ${h}Std` : (h > 0 ? `in ${h}Std ${m}Min` : `in ${m}Min`),
                     about: {
                         title: 'Über mich',
                         description: [
@@ -969,13 +960,8 @@
                     spotlightHeadline: 'Latest Video on YouTube',
                     spotlightDesc: 'Watch right here, scrub the timeline, or expand into Theater Mode.',
                     spotlightCta: 'Watch on YouTube',
-                    scheduleTitle: 'Stream Schedule',
-                    scheduleSubtitle: "What I'm playing next",
-                    nextUp: 'NEXT UP',
                     nowStreaming: 'NOW STREAMING',
                     watchLive: 'Watch Live Now',
-                    days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-                    inTime: (d, h, m) => d > 0 ? `in ${d}d ${h}h` : (h > 0 ? `in ${h}h ${m}m` : `in ${m}m`),
                     about: {
                         title: 'About me',
                         description: [
@@ -998,8 +984,6 @@
                 switch (id) {
                     case 'spotlight':
                         return `<svg viewBox="0 0 24 24" class="${sz}" fill="none" aria-hidden="true"><path d="M12 2.2L14.65 8.55L21.4 9.25L16.3 13.75L17.85 20.4L12 16.9L6.15 20.4L7.7 13.75L2.6 9.25L9.35 8.55L12 2.2Z" fill="url(#spot-brand-grad)"/><circle cx="19.5" cy="4.8" r="1.4" fill="#FEF08A"/></svg>`;
-                    case 'schedule':
-                        return `<svg viewBox="0 0 24 24" class="${sz}" fill="none" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="4" fill="url(#sched-brand-grad)"/><path d="M3 9.5H21" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/><rect x="7.5" y="2" width="2.2" height="4.5" rx="1.1" fill="#e9d5ff"/><rect x="14.3" y="2" width="2.2" height="4.5" rx="1.1" fill="#e9d5ff"/><circle cx="8.5" cy="13.5" r="1.35" fill="#fff"/><circle cx="12" cy="13.5" r="1.35" fill="#fff"/><circle cx="15.5" cy="13.5" r="1.35" fill="#fff"/><circle cx="8.5" cy="17" r="1.35" fill="#fff"/><circle cx="12" cy="17" r="1.35" fill="#fde047"/></svg>`;
                     case 'youtube':
                         return `<svg viewBox="0 0 24 24" class="${sz}" fill="none" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z" fill="#FF0033"/><path d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#FFFFFF"/></svg>`;
                     case 'twitch':
@@ -1019,11 +1003,6 @@
 
             const CONFIG = {
                 profile: { name: 'ir_Fabi', avatarUrl: './avatar.jpg' },
-                scheduleSlots: [
-                    { weekday: 1, hour: 18, minute: 0, game: 'Zelda: Tears of the Kingdom' },
-                    { weekday: 3, hour: 19, minute: 0, game: 'Splatoon 3' },
-                    { weekday: 5, hour: 20, minute: 0, game: 'Paper Mario' }
-                ],
                 links: [
                     {
                         id: 'spotlight',
@@ -1035,15 +1014,6 @@
                         brandColor: '#f59e0b',
                         isExpandable: true,
                         isSpotlight: true
-                    },
-                    {
-                        id: 'schedule',
-                        name: 'Stream Schedule',
-                        subtitle: "What I'm playing next",
-                        url: '#',
-                        brandColor: '#8b5cf6',
-                        isExpandable: true,
-                        isSchedule: true
                     },
                     {
                         id: 'youtube',
@@ -1110,7 +1080,7 @@
             ];
 
             /* =========================================================
-2. STATE & SAFE UTILITY HELPERS
+               2. STATE & SAFE UTILITY HELPERS
                ========================================================= */
             let currentLang = 'de';
             let currentSurface = 'liquid';
@@ -1251,7 +1221,7 @@
             }
 
             /* =========================================================
-3. YOUTUBE IFRAME API LOADER & ENHANCED SPOTLIGHT PLAYER
+               3. YOUTUBE IFRAME API LOADER & ENHANCED SPOTLIGHT PLAYER
                ========================================================= */
             function loadYouTubeIframeApi() {
                 if (window.YT && window.YT.Player) return Promise.resolve(window.YT);
@@ -1711,7 +1681,7 @@
             }
 
             /* =========================================================
-4. THEME, SURFACE, BACKGROUND & CHROME TINTING
+               4. THEME, SURFACE, BACKGROUND & CHROME TINTING
                ========================================================= */
             function updateChromeThemeColor() {
                 const meta = document.getElementById('meta-theme-color');
@@ -1991,7 +1961,7 @@
             }
 
             /* =========================================================
-5. AVATAR MORPH, SHARE & QR CODE MODAL
+               5. AVATAR MORPH, SHARE & QR CODE MODAL
                ========================================================= */
             function getShareablePageUrl() {
                 try {
@@ -2075,75 +2045,8 @@
             }
 
             /* =========================================================
-6. SCHEDULE, HEADER, PAGE SWITCH, ABOUT ME & CAPSULES
+               6. HEADER, PAGE SWITCH, ABOUT ME & CAPSULES
                ========================================================= */
-            function computeNextOccurrences() {
-                const now = new Date();
-                const t = I18N[currentLang];
-
-                function berlinWallToDate(year, month, day, hour, minute) {
-                    const approx = new Date(Date.UTC(year, month, day, hour, minute));
-                    const berlinStr = approx.toLocaleString('en-US', { timeZone: 'Europe/Berlin' });
-                    const berlinAsUtc = new Date(berlinStr + ' UTC');
-                    return new Date(approx.getTime() - (berlinAsUtc - approx));
-                }
-
-                const results = CONFIG.scheduleSlots.map(function (slot) {
-                    let candidate = new Date(now.getTime() + 86400000);
-                    try {
-                        for (let addDays = 0; addDays <= 7; addDays++) {
-                            const testDate = new Date(now.getTime() + addDays * 86400000);
-                            const parts = new Intl.DateTimeFormat('en-US', {
-                                timeZone: 'Europe/Berlin',
-                                year: 'numeric',
-                                month: 'numeric',
-                                day: 'numeric',
-                                weekday: 'short'
-                            }).formatToParts(testDate);
-                            const map = Object.fromEntries(parts.map(function (p) { return [p.type, p.value]; }));
-                            const wkMap = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
-                            if (wkMap[map.weekday] === slot.weekday) {
-                                const dt = berlinWallToDate(Number(map.year), Number(map.month) - 1, Number(map.day), slot.hour, slot.minute);
-                                if (dt.getTime() > now.getTime() - 1800000) {
-                                    candidate = dt;
-                                    break;
-                                }
-                            }
-                        }
-                    } catch (e) {}
-
-                    const diffMs = Math.max(0, candidate - now);
-                    const totalMins = Math.floor(diffMs / 60000);
-                    let localTimeStr = `${String(slot.hour).padStart(2, '0')}:${String(slot.minute).padStart(2, '0')}`;
-                    try {
-                        localTimeStr = candidate.toLocaleTimeString(
-                            currentLang === 'de' ? 'de-DE' : 'en-US',
-                            { hour: '2-digit', minute: '2-digit', timeZoneName: 'short' }
-                        );
-                    } catch (e) {}
-
-                    return {
-                        ...slot,
-                        diffMs: diffMs,
-                        localDay: t.days[candidate.getDay()],
-                        localTime: localTimeStr,
-                        countdown: t.inTime(Math.floor(totalMins / 1440), Math.floor((totalMins % 1440) / 60), totalMins % 60),
-                        isNext: false
-                    };
-                });
-
-                let minDiff = Infinity;
-                let nextIdx = 0;
-                results.forEach(function (r, i) {
-                    if (r.diffMs < minDiff) {
-                        minDiff = r.diffMs;
-                        nextIdx = i;
-                    }
-                });
-                if (results[nextIdx]) results[nextIdx].isNext = true;
-                return results;
-            }
-
             function triggerWobbleWave(el) {
                 if (!el) return;
                 el.classList.remove('wobble-wave-active');
@@ -2348,8 +2251,8 @@
             function createLinkCardElement(link, index) {
                 const t = I18N[currentLang];
                 const linkId = `link-${index}`;
-                const displayName = link.isSchedule ? t.scheduleTitle : (link.isSpotlight ? t.spotlightTitle : link.name);
-                const displaySub = link.isSchedule ? t.scheduleSubtitle : (link.isSpotlight ? t.spotlightSub : link.subtitle);
+                const displayName = link.isSpotlight ? t.spotlightTitle : link.name;
+                const displaySub = link.isSpotlight ? t.spotlightSub : link.subtitle;
 
                 const card = document.createElement('div');
                 card.className = 'link-card glass-button glass-sheen relative flex flex-col w-full rounded-[20px] shadow-m3-1 transition-all duration-300 ease-bouncy hover:shadow-m3-2 overflow-hidden transform-gpu';
@@ -2478,22 +2381,6 @@
                                 </a>
                             </div>
                         `;
-                    } else if (link.isSchedule) {
-                        const upcoming = computeNextOccurrences();
-                        expInnerHtml = `<div class="flex flex-col gap-2 bg-black/5 dark:bg-white/5 p-2 rounded-xl">${upcoming.map(function (item) {
-                            return `
-                                <div class="flex justify-between items-center gap-2 ${item.isNext ? 'bg-md-primaryContainer/30 border-md-primary/35' : 'bg-black/5 dark:bg-white/5 border-black/5 dark:border-white/5'} p-3 rounded-xl border">
-                                    <div class="flex flex-col min-w-0">
-                                        <div class="flex items-center gap-2 flex-wrap">
-                                            <span class="font-bold text-md-primary text-sm">${item.localDay}</span>
-                                            ${item.isNext ? `<span class="text-[9px] font-bold uppercase tracking-wider bg-md-primary text-md-onPrimary px-1.5 py-0.5 rounded-full">${t.nextUp} • ${item.countdown}</span>` : ''}
-                                        </div>
-                                        <span class="text-md-onSurface font-medium text-sm truncate">${item.game}</span>
-                                    </div>
-                                    <span class="text-xs font-bold text-md-onSurface bg-black/10 dark:bg-white/10 px-2 py-1 rounded-md shrink-0">${item.localTime}</span>
-                                </div>
-                            `;
-                        }).join('')}</div>`;
                     } else if (link.id === 'twitch' && link.isLive) {
                         expInnerHtml = `
                             <div class="bg-black/5 dark:bg-white/5 p-4 rounded-xl border border-black/10 dark:border-white/10 flex flex-col gap-1">
@@ -2583,7 +2470,7 @@
                     }, { threshold: 0.1 });
                 }
 
-                // Live Twitch floats to top; all 8 links render as separate uniform compact capsules
+                // Live Twitch floats to top; all 7 links render as separate uniform compact capsules
                 const sorted = [...CONFIG.links].sort(function (a, b) {
                     if (a.isLive && !b.isLive) return -1;
                     if (!a.isLive && b.isLive) return 1;
@@ -2647,7 +2534,7 @@
             }
 
             /* =========================================================
-7. POINTER SHEEN, OVERSCROLL & DRAGGABLE FAB
+               7. POINTER SHEEN, OVERSCROLL & DRAGGABLE FAB
                ========================================================= */
             function setupGlassSheen() {
                 try {
@@ -2803,7 +2690,7 @@
             }
 
             /* =========================================================
-8. SPOTLIGHT METADATA, TWITCH LIVE CHECK & STATIC CONTROLS
+               8. SPOTLIGHT METADATA, TWITCH LIVE CHECK & STATIC CONTROLS
                ========================================================= */
             async function fetchSpotlightMetadata() {
                 const spotlight = CONFIG.links.find(function (l) { return l.isSpotlight && l.videoId; });
@@ -2954,7 +2841,7 @@
             }
 
             /* =========================================================
-9. PREFERENCES & INITIALIZATION
+               9. PREFERENCES & INITIALIZATION
                ========================================================= */
             function applySavedPreferences() {
                 const prefs = loadPrefs();
